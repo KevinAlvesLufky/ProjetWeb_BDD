@@ -34,9 +34,13 @@
     <div id="menu">
         <ul>
             <li><a href="index.php?action=home">Home</a></li>
-            <li><a href="#" title="">Nos Cours</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#" style="color:#FC05CB">Register</a></li>
+            <li><a href="index.php?action=courses" title="">Nos Cours</a></li>
+            <?php  if (!isset($_SESSION["user"])): ?>
+            <li><a href="index.php?action=login">Login</a></li>
+            <li><a href="index.php?action=register" style="color:#FC05CB">Register</a></li>
+            <?php else: ?>
+            <li><a href="index.php?action=logout">Logout</a></li>
+            <?php endif; ?>
         </ul>
     </div>
 </div>

@@ -9,4 +9,22 @@
  * Git source  :    [link]
  */
 
+
+function loginCheck($mailForm,$passwordForm){
+    $return = false;
+    $strSeparator = '\'';
+    $query = "Select userEmailAddress, userPsw, pseudo from users where userEmailAddress =".$strSeparator.$mailForm.$strSeparator;
+    require_once "model/dbConnector.php";
+    $result = executeQuerySelect($query);
+
+    if (isset($result[0])){
+        if ($result[0]["userPsw"]==$passwordForm){
+            $return = true;
+        }
+    }
+
+
+    return $return;
+}
+
 ?>

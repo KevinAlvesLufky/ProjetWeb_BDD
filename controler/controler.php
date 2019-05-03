@@ -19,6 +19,38 @@ function home(){
 }
 
 //region users management
+
+/**
+ * This function id designed to show the login and connect someone to the site
+ * @param $form -> formulaire reçu en post de la page login
+ */
+function login($form){
+
+    if (isset($form["user_mail"])){
+        require_once "model/usersManager.php";
+        if (loginCheck($form["user_mail"],$form["user_password"])){
+            $_SESSION["user"] = $form["user_mail"];
+            $_GET['action'] = "home";
+            require "view/home.php";
+        }else{
+            $warning = "login faux";
+            $_GET['action'] = "login";
+            require "view/login.php";
+        }
+
+    }else {
+        $_GET['action'] = "login";
+        require "view/login.php";
+    }
+}
+
+function register($form){
+
+    $_GET['action'] = "register";
+    require "view/register.php";
+
+}
+
 //endregion
 
 //region courses management
