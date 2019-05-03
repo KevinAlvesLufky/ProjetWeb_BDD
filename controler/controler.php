@@ -44,11 +44,31 @@ function login($form){
     }
 }
 
+
+
+
 function register($form){
 
-    $_GET['action'] = "register";
-    require "view/register.php";
+    if (isset($form["user_mail"])){
 
+        if ($form["user_password"]==$form["user_password2"]){
+            require_once "model/usersManager.php";
+            if (userAlreadyExist){
+
+            }else {
+                addUser($form["user_mail"], $form["user_pseudo"], $form["user_password"]);
+            }
+
+        }else{
+            $warning = "inscription refusée";
+        }
+
+
+
+    }else {
+        $_GET['action'] = "register";
+        require "view/register.php";
+    }
 }
 
 //this function is designed to manage logout

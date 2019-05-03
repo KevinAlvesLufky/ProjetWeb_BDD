@@ -32,4 +32,14 @@ function loginCheck($mailForm,$passwordForm){
     return $return;
 }
 
+
+function addUser ($userEmail,$userPseudo,$userPsw){
+    $strSeparator = '\'';
+    //$userPswHashed = password_hash($userPsw,PASSWORD_DEFAULT);
+    $query = "insert into users (userEmailAddress,UserPsw,pseudo) values (".$strSeparator.$userEmail.$strSeparator.",".$strSeparator.$userPsw.$strSeparator.",".$strSeparator.$userPseudo.$strSeparator.")";
+
+    require "model/dbConnector.php";
+    executeQuery($query);
+
+}
 ?>
