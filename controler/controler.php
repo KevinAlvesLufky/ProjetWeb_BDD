@@ -51,6 +51,17 @@ function register($form){
 
 }
 
+//this function is designed to manage logout
+function logout(){
+
+    $_SESSION = array();
+    session_destroy();
+    $_GET["action"]="home";
+    require "view/home.php";
+
+
+}
+
 //endregion
 
 //region courses management

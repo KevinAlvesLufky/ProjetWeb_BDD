@@ -9,7 +9,12 @@
  * Git source  :    [link]
  */
 
-
+/**
+ * this function is designed for checking the logging
+ * @param $mailForm
+ * @param $passwordForm
+ * @return bool
+ */
 function loginCheck($mailForm,$passwordForm){
     $return = false;
     $strSeparator = '\'';
