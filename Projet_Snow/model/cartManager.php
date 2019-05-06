@@ -33,3 +33,22 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
 //array_push() https://www.php.net/manual/en/function.array-push.php
 //array_search
 //unset
+
+/**
+ *
+ *
+ */
+
+function isDispo($snowCode,$qtyOfSnow){
+    require_once "model/snowsManager.php";
+    $theSnow = getASnow($snowCode);
+
+    if ($theSnow["qtyAvailable"]>=$qtyOfSnow){
+        return true;
+
+    }
+
+    return false;
+
+
+}
