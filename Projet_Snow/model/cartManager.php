@@ -26,7 +26,7 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
     foreach ($cartUpdated as $cart){
 
         if ($cart["code"]=$snowCodeToAdd && $cart["nbD"]=$howManyLeasingDays){
-            $cart["qty"] = $cart["qty"]+$qtyOfSnowsToAdd;
+            $cart["qty"] = $cart["qty"]+$qtyOfSnowsToAdd;   //la ou ça beug
             $alreadyExist = true;
         }
 
