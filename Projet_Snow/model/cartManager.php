@@ -22,6 +22,13 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
     if($currentCartArray != null){
         $cartUpdated = $currentCartArray;
     }
+    foreach ($cartUpdated as $cart){
+
+        if ($cart["code"]=$snowCodeToAdd && $cart["nbD"]=$howManyLeasingDays){
+            $cart["qty"] = $cart["qty"]+$qtyOfSnowsToAdd;
+        }
+
+    }
     $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("d-m-y"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
 
     array_push($cartUpdated, $newSnowLeasing);
