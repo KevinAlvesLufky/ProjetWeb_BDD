@@ -19,6 +19,7 @@
 
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
     $cartUpdated = array();
+    $alreadyExist = false;
     if($currentCartArray != null){
         $cartUpdated = $currentCartArray;
     }
@@ -26,12 +27,16 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
 
         if ($cart["code"]=$snowCodeToAdd && $cart["nbD"]=$howManyLeasingDays){
             $cart["qty"] = $cart["qty"]+$qtyOfSnowsToAdd;
+            $alreadyExist = true;
         }
 
     }
-    $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("d-m-y"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
+    if (!$alreadyExist) {
+        $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("d-m-y"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
+        array_push($cartUpdated, $newSnowLeasing);
+    }
 
-    array_push($cartUpdated, $newSnowLeasing);
+
 
     return $cartUpdated;
 }
