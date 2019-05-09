@@ -1,19 +1,19 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Pascal.BENZONANA
- * Date: 08.05.2017
- * Time: 08:54
- * Update : 31-JAN-2019 - nicolas.glassey
- *          Simplify index. Remove all pages references.
+ * User: Thomas Huguet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 session_start();
 require "controler/controler.php";
 
-if (isset($_GET['action'])) {
+if (isset($_GET['action']))
+{
   $action = $_GET['action'];
-  switch ($action) {
+  switch ($action)
+  {
       case 'home' :
           home();
           break;
@@ -35,8 +35,14 @@ if (isset($_GET['action'])) {
       case 'snowLeasingRequest':
           snowLeasingRequest($_GET['code']);
           break;
+      case 'putInCart':
+          putInCart($_POST, $_GET['code']);
+          break;
       case 'updateCartRequest':
            updateCartRequest($_GET['code'], $_POST);
+          break;
+      case 'deleteCartRequest':
+          deleteCartRequest($_GET['line']);
           break;
       case 'displayCart':
           displayCart();
@@ -45,6 +51,7 @@ if (isset($_GET['action'])) {
           home();
   }
 }
-else {
+else
+{
     home();
 }
