@@ -478,6 +478,14 @@ h6,.page-content h6 a {font-weight: normal; font-style: normal; font-family: 'So
     .navbar .ddmenu {margin-top: 0px;margin-bottom: 0px;}
 
 }
+/* Ajout d'une classe pour affichage de message d'Erreur*/
+
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.isa_error {
+    margin: 10px 0px;
+    padding:12px;
+}
 
 
 

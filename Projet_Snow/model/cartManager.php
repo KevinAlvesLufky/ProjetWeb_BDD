@@ -26,10 +26,12 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
     //foreach the cart to see if the cart to update exist already, and need just to add the quantity to the good cart
     foreach ($cartUpdated as $key => &$cart){
 
-        if ($cart["code"]=$snowCodeToAdd && $cart["nbD"]=$howManyLeasingDays){
-            $tempQty=$cart["qty"];
-            $cart["qty"] = $tempQty+$qtyOfSnowsToAdd;
-            $alreadyExist = true;
+        if ($snowCodeToAdd==$cart["code"]){
+            if ($howManyLeasingDays==$cart["nbD"]) {
+                $tempQty = $cart["qty"];
+                $cart["qty"] = $tempQty + $qtyOfSnowsToAdd;
+                $alreadyExist = true;
+            }
         }
 
     }

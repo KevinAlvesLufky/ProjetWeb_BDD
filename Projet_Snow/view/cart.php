@@ -34,7 +34,7 @@ ob_start();
                     echo "<td><input type='number' name='uQty' value='".$article['qty']."' disabled></td>";
                     echo "<td><input type='number' name='uNbD' value='".$article['nbD']."' disabled></td>";
 
-                    echo "<td><a href='index.php?action=updateCartRequest&code=".$article['code']."'><img src='view/content/images/delete2.png'></a></td>";
+                    echo "<td><a href='index.php?action=deleteCartRequest&line=".$article['code']."'><img src='view/content/images/delete2.png'></a></td>";
                     echo "</form></tr>";
                 }
                 ?>

@@ -41,6 +41,14 @@ ob_start();
     </table>
     <br/>
     <h4>Votre demande</h4>
+    <!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
+    <?php if(isset($warning)): ?>
+        <div class="isa_error">
+            <i class="fa fa-times-circle"></i>
+            <p> Erreur ! Veuillez entrer des valeurs plus élevées à 0 ! </p>
+        </div>
+    <?php endif; ?>
+
     <form class="form" method="POST" action="index.php?action=updateCartRequest&code=<?= $result['code']; ?>">
 
         <table class="table">
