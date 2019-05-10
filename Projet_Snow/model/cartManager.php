@@ -23,10 +23,12 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
     if($currentCartArray != null){
         $cartUpdated = $currentCartArray;
     }
-    foreach ($cartUpdated as $cart){
+    //foreach the cart to see if the cart to update exist already, and need just to add the quantity to the good cart
+    foreach ($cartUpdated as $key => &$cart){
 
         if ($cart["code"]=$snowCodeToAdd && $cart["nbD"]=$howManyLeasingDays){
-            $cart["qty"] = $cart["qty"]+$qtyOfSnowsToAdd;   //la ou ça beug
+            $tempQty=$cart["qty"];
+            $cart["qty"] = $tempQty+$qtyOfSnowsToAdd;
             $alreadyExist = true;
         }
 
@@ -45,6 +47,12 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
 //array_push() https://www.php.net/manual/en/function.array-push.php
 //array_search
 //unset
+
+
+function deleteCart(){
+    $_SESSION[""] = array();
+
+}
 
 /**
  *
