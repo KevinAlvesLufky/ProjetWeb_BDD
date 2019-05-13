@@ -482,10 +482,14 @@ h6,.page-content h6 a {font-weight: normal; font-style: normal; font-family: 'So
 
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
+
 .isa_error {
     margin: 10px 0px;
     padding:12px;
+    color: #D8000C;
+    background-color: #FFD2D2;
 }
+
 
 
 
