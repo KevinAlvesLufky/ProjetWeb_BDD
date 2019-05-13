@@ -40,7 +40,9 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
         array_push($cartUpdated, $newSnowLeasing);
     }
 
-    isDispo()
+    if (isDispo($snowCodeToAdd,$)){
+
+    }
 
     return $cartUpdated;
 }
