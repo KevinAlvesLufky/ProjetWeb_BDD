@@ -215,6 +215,7 @@ function updateCartRequest($snowCode, $snowLocationRequest)
     {
         if(isset($snowLocationRequest) && isset($snowCode))
         {
+            
             if($qty > 0 && $days >0)
             {
                 if (isDispo($qty, $days))
