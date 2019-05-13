@@ -29,6 +29,7 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
         if ($snowCodeToAdd==$cart["code"]){
             if ($howManyLeasingDays==$cart["nbD"]) {
                 $tempQty = $cart["qty"];
+                $qtyOfSnowsToAdd = $qtyOfSnowsToAdd+$tempQty;
                 $cart["qty"] = $tempQty + $qtyOfSnowsToAdd;
                 $alreadyExist = true;
             }
@@ -40,7 +41,8 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
         array_push($cartUpdated, $newSnowLeasing);
     }
 
-    if (isDispo($snowCodeToAdd,$)){
+    if (!isDispo($snowCodeToAdd,$qtyOfSnowsToAdd,$cartUpdated)){
+        return false;
 
     }
 
@@ -66,20 +68,20 @@ function deleteCart(){
 function isDispo($snowCode,$qtyOfSnowRequested,$cart){
     require_once "model/snowsManager.php";
     $theSnow = getASnow($snowCode);
-    if (isset($_SESSION["cart"])) {
-        foreach ($_SESSION["cart"] as $cart) {
-            if ($snowCode == $cart["code"]) {
+    if (isset($cart)) {
+        foreach ($cart as $item) {
+            if ($snowCode == $item["code"]) {
                 if (isset($tempQty)){
-                 $tempQty = $tempQty + $cart["qty"];
+                 $tempQty = $tempQty + $item["qty"];
                 }else {
-                    $tempQty = $cart["qty"];
+                    $tempQty = $item["qty"];
                 }
             }
         }
     }
 
     if (isset($tempQty)){
-        $qtyOfSnowRequested = $qtyOfSnowRequested+$tempQty;
+        $qtyOfSnowRequested = $tempQty;
     }
 
     if ($theSnow[0]["qtyAvailable"]>=$qtyOfSnowRequested){
