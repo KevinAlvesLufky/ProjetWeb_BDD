@@ -232,8 +232,10 @@ function updateCartRequest($snowCode, $snowLocationRequest)
                         $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
                         $_GET["action"]="snowLeasingRequest";
                         snowLeasingRequest($snowCode,$warning);
+                    }else {
+                        $_SESSION['cart'] = $cartArrayTemp;
                     }
-                    $_SESSION['cart'] = $cartArrayTemp;
+                    
 
             }
             else
@@ -279,6 +281,11 @@ function deleteCartRequest($snowCode)
         }
 }
 
+/**
+ * This function designed to manage to update an article from cart
+ * @param $snowCode containing the code of the snow
+ * @param $snowUpdateRequest is the fields form update
+ */
 function updateCartItem($snowCode, $snowUpdateRequest)
 {
     $qty =$snowUpdateRequest['inputQuantity'];

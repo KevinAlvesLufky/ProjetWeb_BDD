@@ -23,22 +23,39 @@ ob_start();
                 <tr>
                     <th>Code</th><th>Date</th><th>Quantité</th><th>Nombre de jours</th><th>Retirer</th>
                 </tr>
-                <?php
-                // Displays cart session's content
-                $cartArray = $_SESSION['cart'];
-                foreach ($cartArray as $article){
-                    echo "<tr>";
-                    echo "<td>".$article['code']."</td>";
-                    echo "<td>".$article['dateD']."</td>";
-                    echo "<form method='POST' action='index.php?action=updateCartItem'>";
-                    echo "<td><input type='number' name='uQty' value='".$article['qty']."'></td>";
-                    echo "<td><input type='number' name='uNbD' value='".$article['nbD']."'></td>";
 
-                    echo "<td><a href='index.php?action=deleteCartRequest&line=".$article['code']."'><img src='view/content/images/delete2.png'></a></td>";
-                    echo "<td><a href='index.php?action=updateCartItem&line=".$article['code']."'><img src='view/content/images/edit2.png'></a></td>";
+
+                <?php
+
+                // Displays cart session's content
+                for ($i=0; $i < count($_SESSION['cart']); $i++)
+                {
+                    echo "<tr>";
+                    echo "<td>".$_SESSION['cart'][$i]['code']."</td>";
+                    echo "<td>".$_SESSION['cart'][$i]['dateD']."</td>";
+
+                    if ((isset($_SESSION['line'])) &&(@$_SESSION['line']==$i))
+                    {
+                        echo "<form method='POST' action='index.php?action=updateCartItem&line=".$i."'>";
+                        echo "<td><input type='number' name='uQty' value='".$_SESSION['cart'][$i]['qty']."'></td>";
+                        echo "<td><input type='number' name='uNbD' value='".$_SESSION['cart'][$i]['nbD']."'></td>";
+                    }
+                    else
+                    {
+                        echo "<td>".$_SESSION['cart'][$i]['qty']."</td>";
+                        echo "<td>".$_SESSION['cart'][$i]['nbD']."</td>";
+                    }
+
+                    echo "<td><a href='index.php?action=deleteCartRequest&line=".$i."'><img src='view/content/images/delete2.png'></a>";
+                    if ((isset($_SESSION['line'])) &&(@$_SESSION['line']==$i))
+                        echo "<input type='submit' src='view/content/images/edit2.png'></td>";
+                    else
+                        echo "<a href='index.php?action=updateCartItem&line=".$i."'><img src='view/content/images/edit2.png'></td>";
                     echo "</form></tr>";
                 }
                 ?>
+
+
             </table>
             <input type="submit" value="Louer encore" class="btn btn-success" name="backToCatalog">
             <input type="submit" value="Vider le panier" class="btn btn-cancel" name="resetCart">
