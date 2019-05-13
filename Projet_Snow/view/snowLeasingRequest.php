@@ -45,7 +45,7 @@ ob_start();
     <?php if(isset($warning)): ?>
         <div class="isa_error">
             <i class="fa fa-times-circle"></i>
-            <p> Erreur ! Veuillez entrer des valeurs plus élevées à 0 ! </p>
+            <p> <?=$warning;?> </p>
         </div>
     <?php endif; ?>
 

@@ -234,6 +234,7 @@ function updateCartRequest($snowCode, $snowLocationRequest)
     $cartArrayTemp = array();
     if(isset($snowLocationRequest) && isset($snowCode))
     {
+
         if (isset($_SESSION['cart']))
         {
             $cartArrayTemp = $_SESSION['cart'];
