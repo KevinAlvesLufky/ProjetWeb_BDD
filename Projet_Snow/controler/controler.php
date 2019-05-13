@@ -279,8 +279,11 @@ function deleteCartRequest($snowCode)
         }
 }
 
-function updateOnCart()
+function updateCartItem($snowCode, $snowUpdateRequest)
 {
+    $qty =$snowUpdateRequest['inputQuantity'];
+    $days = $snowUpdateRequest['inputDays'];
+    $cartArrayTemp = $_SESSION['cart'];
     require_once "model/cartManager.php";
     $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
     if ($cartArrayTemp == false){

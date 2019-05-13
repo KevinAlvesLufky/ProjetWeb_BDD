@@ -41,6 +41,9 @@ if (isset($_GET['action']))
       case 'deleteCartRequest':
           deleteCartRequest($_GET['line']);
           break;
+      case 'updateCartItem':
+          updateCartItem($_GET['line'], $_POST);
+          break;
       case 'displayCart':
           displayCart();
           break;

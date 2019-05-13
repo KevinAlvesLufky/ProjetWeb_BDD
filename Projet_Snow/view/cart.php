@@ -31,10 +31,11 @@ ob_start();
                     echo "<td>".$article['code']."</td>";
                     echo "<td>".$article['dateD']."</td>";
                     echo "<form method='POST' action='index.php?action=updateCartItem'>";
-                    echo "<td><input type='number' name='uQty' value='".$article['qty']."' disabled></td>";
-                    echo "<td><input type='number' name='uNbD' value='".$article['nbD']."' disabled></td>";
+                    echo "<td><input type='number' name='uQty' value='".$article['qty']."'></td>";
+                    echo "<td><input type='number' name='uNbD' value='".$article['nbD']."'></td>";
 
                     echo "<td><a href='index.php?action=deleteCartRequest&line=".$article['code']."'><img src='view/content/images/delete2.png'></a></td>";
+                    echo "<td><a href='index.php?action=updateCartItem&line=".$article['code']."'><img src='view/content/images/edit2.png'></a></td>";
                     echo "</form></tr>";
                 }
                 ?>
