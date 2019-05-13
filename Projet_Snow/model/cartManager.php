@@ -52,7 +52,7 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
 
 
 function deleteCart(){
-    $_SESSION[""] = array();
+    $_SESSION["cart"] = array();
 
 }
 
@@ -64,6 +64,16 @@ function deleteCart(){
 function isDispo($snowCode,$qtyOfSnow){
     require_once "model/snowsManager.php";
     $theSnow = getASnow($snowCode);
+
+    foreach ($_SESSION["cart"] as $cart) {
+        if ($snowCode == $cart["code"]) {
+            $tempQty = $cart["qty"];
+        }
+    }
+
+    if (isset($tempQty)){
+        $qtyOfSnow = $qtyOfSnow+$tempQty;
+    }
 
     if ($theSnow["qtyAvailable"]>=$qtyOfSnow){
         return true;
