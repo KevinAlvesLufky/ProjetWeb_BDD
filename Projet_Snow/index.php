@@ -33,7 +33,7 @@ if (isset($_GET['action']))
           displayASnow($_GET['code']);
           break;
       case 'snowLeasingRequest':
-          snowLeasingRequest($_GET['code']);
+          snowLeasingRequest($_GET['code'],"");
           break;
       case 'updateCartRequest':
            updateCartRequest($_GET['code'], $_POST);

@@ -185,14 +185,17 @@ function displayCart()
  * This function is designed to get only one snow results (for aSnow view)
  * @param $snowCode containing the code of the snow
  */
-function snowLeasingRequest($snowCode)
+function snowLeasingRequest($snowCode,$error)
 {
     if(isset($_SESSION['userEmailAddress']))
     {
-         require "model/snowsManager.php";
+         require_once "model/snowsManager.php";
          $snowsResults = getASnow($snowCode);
+         if ($error !=""){
+             $warning = $error;
+         }
          $_GET['action'] = "snowLeasingRequest";
-         require "view/snowLeasingRequest.php";
+         require_once "view/snowLeasingRequest.php";
     }
     else
     {
@@ -216,26 +219,28 @@ function updateCartRequest($snowCode, $snowLocationRequest)
         if(isset($snowLocationRequest) && isset($snowCode))
         {
             
-            if($qty > 0 || $days > 0)
+            if($qty > 0 && $days > 0)
             {
-                if (isDispo($qty, $days))
-                {
+
                     if (isset($_SESSION['cart']))
                     {
                         $cartArrayTemp = $_SESSION['cart'];
                     }
-                    require "model/cartManager.php";
+                    require_once "model/cartManager.php";
                     $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
+                    if ($cartArrayTemp == false){
+                        $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
+                        $_GET["action"]="snowLeasingRequest";
+                        snowLeasingRequest($snowCode,$warning);
+                    }
                     $_SESSION['cart'] = $cartArrayTemp;
-                }
-                else
-                {
-                    $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
-                }
+
             }
             else
             {
                 $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
+                $_GET["action"]="snowLeasingRequest";
+                snowLeasingRequest($snowCode,$warning);
             }
         }
         $_GET['action'] = "displayCart";
