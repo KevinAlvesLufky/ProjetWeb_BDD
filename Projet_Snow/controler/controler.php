@@ -235,7 +235,7 @@ function updateCartRequest($snowCode, $snowLocationRequest)
                     }else {
                         $_SESSION['cart'] = $cartArrayTemp;
                     }
-                    
+
 
             }
             else
@@ -271,7 +271,7 @@ function deleteCartRequest($snowCode)
                 require_once "model/snowsManager.php";
                 $snowsResults=getSnows();
                 $_GET['action'] = "displaySnows";
-                require "view/snowsSeller.php";
+                require "view/snows.php";
             }
             else
             {
