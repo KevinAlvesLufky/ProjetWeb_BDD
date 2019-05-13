@@ -278,4 +278,16 @@ function deleteCartRequest($snowCode)
             }
         }
 }
+
+function updateOnCart()
+{
+    require_once "model/cartManager.php";
+    $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
+    if ($cartArrayTemp == false){
+        $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
+        $_GET["action"]="displayCart";
+        displayCart();
+    }
+    $_SESSION['cart'] = $cartArrayTemp;
+}
 //endregion
