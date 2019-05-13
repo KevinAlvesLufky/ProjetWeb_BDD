@@ -216,7 +216,7 @@ function updateCartRequest($snowCode, $snowLocationRequest)
         if(isset($snowLocationRequest) && isset($snowCode))
         {
             
-            if($qty > 0 && $days >0)
+            if($qty > 0 || $days > 0)
             {
                 if (isDispo($qty, $days))
                 {
@@ -230,12 +230,12 @@ function updateCartRequest($snowCode, $snowLocationRequest)
                 }
                 else
                 {
-                    $warning ="Ce snow n'est pas disponible !";
+                    $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
                 }
             }
             else
             {
-                $warning ="Veuillez entrer un nombre positif !";
+                $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
             }
         }
         $_GET['action'] = "displayCart";
