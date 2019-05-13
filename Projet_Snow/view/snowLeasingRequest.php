@@ -17,6 +17,13 @@ ob_start();
 ?>
 <h2>Demande de location</h2>
 <article>
+    <!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
+    <?php if(isset($warning)): ?>
+        <div class="isa_error">
+            <i class="fa fa-times-circle"></i>
+            <p> <?=$warning;?> </p>
+        </div>
+    <?php endif; ?>
     <h4>Votre choix</h4>
     <table class="table">
         <tr>
@@ -41,13 +48,7 @@ ob_start();
     </table>
     <br/>
     <h4>Votre demande</h4>
-    <!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
-    <?php if(isset($warning)): ?>
-        <div class="isa_error">
-            <i class="fa fa-times-circle"></i>
-            <p> <?=$warning;?> </p>
-        </div>
-    <?php endif; ?>
+
 
     <form class="form" method="POST" action="index.php?action=updateCartRequest&code=<?= $result['code']; ?>">
 
