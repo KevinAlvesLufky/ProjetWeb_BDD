@@ -187,63 +187,64 @@ function displayCart()
  */
 function snowLeasingRequest($snowCode)
 {
-     require "model/snowsManager.php";
-     $snowsResults = getASnow($snowCode);
-     $_GET['action'] = "snowLeasingRequest";
-     require "view/snowLeasingRequest.php";
+    if(isset($_SESSION['userEmailAddress']))
+    {
+         require "model/snowsManager.php";
+         $snowsResults = getASnow($snowCode);
+         $_GET['action'] = "snowLeasingRequest";
+         require "view/snowLeasingRequest.php";
+    }
+    else
+    {
+        $_GET['action'] = "login";
+        require "view/login.php";
+    }
 }
 
 /**
- * This function is designed to put the leasing request in the cart
- * @param $choices containing leasing request fields
- * @param $snowCode containing the code of the snow
- */
-function putInCart($choices, $snowCode)
-{
-        require "model/snowsManager.php";
-        $snowsResults = getASnow($snowCode);
-
-        if(isset($choices['inputDays']))
-        {
-            foreach ($snowsResults as $res)
-            {
-                $tab_tampon = array ('code'=>$res['code'],'dateD'=>Date("d-m-y"),'nbD'=>$choices['inputDays'],'qty'=>$choices['inputQuantity']);
-            }
-
-            if (!isset($_SESSION['cart']))
-            {
-                $_SESSION['cart']= array($tab_tampon);
-            }
-            else
-            {
-                array_push($_SESSION['cart'],$tab_tampon);
-            }
-        }
-
-        $_GET['action'] = "cartManage";
-        require "view/cart.php";
-}
-
-/**
- * This function designed to manage all request impacting the cart content
+ * This function designed to put the leasing request in the cart
  * @param $snowCode containing the code of the snow
  * @param $snowLocationRequest containing the updates request fields
  */
 function updateCartRequest($snowCode, $snowLocationRequest)
 {
+    $qty =$snowLocationRequest['inputQuantity'];
+    $days = $snowLocationRequest['inputDays'];
     $cartArrayTemp = array();
-    if(isset($snowLocationRequest) && isset($snowCode))
+    if(isset($_SESSION['userType']))
     {
-        if (isset($_SESSION['cart']))
+        if(isset($snowLocationRequest) && isset($snowCode))
         {
-            $cartArrayTemp = $_SESSION['cart'];
+            if($qty > 0 && $days >0)
+            {
+                if (isDispo($qty, $days))
+                {
+                    if (isset($_SESSION['cart']))
+                    {
+                        $cartArrayTemp = $_SESSION['cart'];
+                    }
+                    require "model/cartManager.php";
+                    $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $snowLocationRequest['inputQuantity'], $snowLocationRequest['inputDays']);
+                    $_SESSION['cart'] = $cartArrayTemp;
+                }
+                else
+                {
+                    $warning ="Ce snow n'est pas disponible !";
+                }
+            }
+            else
+            {
+                $warning ="Veuillez entrer un nombre positif !";
+            }
         }
-        require "model/cartManager.php";
-        $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $snowLocationRequest['inputQuantity'], $snowLocationRequest['inputDays']);
-        $_SESSION['cart'] = $cartArrayTemp;
+        $_GET['action'] = "displayCart";
+        displayCart();
     }
-    $_GET['action'] = "displayCart";
-    displayCart();
+    else
+    {
+        $_GET['action'] = "login";
+        require "view/login.php";
+    }
 }
 
 /**
@@ -262,7 +263,7 @@ function deleteCartRequest($snowCode)
                 require_once "model/snowsManager.php";
                 $snowsResults=getSnows();
                 $_GET['action'] = "displaySnows";
-                require "view/snowsUser.php";
+                require "view/snowsSeller.php";
             }
             else
             {
