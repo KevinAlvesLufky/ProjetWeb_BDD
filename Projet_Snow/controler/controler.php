@@ -214,6 +214,7 @@ function updateCartRequest($snowCode, $snowLocationRequest)
     $qty =$snowLocationRequest['inputQuantity'];
     $days = $snowLocationRequest['inputDays'];
     $cartArrayTemp = array();
+
     if(isset($_SESSION['userType']))
     {
         if(isset($snowLocationRequest) && isset($snowCode))
@@ -228,15 +229,14 @@ function updateCartRequest($snowCode, $snowLocationRequest)
                     }
                     require_once "model/cartManager.php";
                     $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
-                    if ($cartArrayTemp == false){
+                    if ($cartArrayTemp == false)
+                    {
                         $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
                         $_GET["action"]="snowLeasingRequest";
                         snowLeasingRequest($snowCode,$warning);
                     }else {
                         $_SESSION['cart'] = $cartArrayTemp;
                     }
-
-
             }
             else
             {
@@ -291,9 +291,12 @@ function updateCartItem($snowCode, $snowUpdateRequest)
     $qty =$snowUpdateRequest['inputQuantity'];
     $days = $snowUpdateRequest['inputDays'];
     $cartArrayTemp = $_SESSION['cart'];
+
     require_once "model/cartManager.php";
     $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
-    if ($cartArrayTemp == false){
+
+    if ($cartArrayTemp == false)
+    {
         $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
         $_GET["action"]="displayCart";
         displayCart();

@@ -20,6 +20,7 @@
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
     $cartUpdated = array();
     $alreadyExist = false;
+
     if($currentCartArray != null){
         $cartUpdated = $currentCartArray;
     }
@@ -29,23 +30,18 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
         if ($snowCodeToAdd==$cart["code"]){
             if ($howManyLeasingDays==$cart["nbD"]) {
                 $tempQty = $cart["qty"];
-                $qtyOfSnowsToAdd = $qtyOfSnowsToAdd+$tempQty;
                 $cart["qty"] = $tempQty + $qtyOfSnowsToAdd;
                 $alreadyExist = true;
             }
         }
-
     }
     if (!$alreadyExist) {
         $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("d-m-y"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
         array_push($cartUpdated, $newSnowLeasing);
     }
-
     if (!isDispo($snowCodeToAdd,$qtyOfSnowsToAdd,$cartUpdated)){
         return false;
-
     }
-
     return $cartUpdated;
 }
 
@@ -54,26 +50,21 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
 //array_search
 //unset
 
-
-function deleteCart(){
-    $_SESSION["cart"] = array();
-
-}
-
-/**
- *
- *
- */
-
 function isDispo($snowCode,$qtyOfSnowRequested,$cart){
     require_once "model/snowsManager.php";
     $theSnow = getASnow($snowCode);
-    if (isset($cart)) {
-        foreach ($cart as $item) {
-            if ($snowCode == $item["code"]) {
-                if (isset($tempQty)){
-                 $tempQty = $tempQty + $item["qty"];
-                }else {
+    if (isset($cart))
+    {
+        foreach ($cart as $item)
+        {
+            if ($snowCode == $item["code"])
+            {
+                if (isset($tempQty))
+                {
+                    $tempQty = $tempQty + $item["qty"];
+                }
+                else
+                {
                     $tempQty = $item["qty"];
                 }
             }
@@ -86,10 +77,6 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
 
     if ($theSnow[0]["qtyAvailable"]>=$qtyOfSnowRequested){
         return true;
-
     }
-
     return false;
-
-
 }
