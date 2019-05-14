@@ -1,5 +1,6 @@
 <?php
 /**
+ * This file is used to redirect the user according to his actions
  * Created by PhpStorm.
  * User: Thomas Huguet
  * Date: 06.05.2017
