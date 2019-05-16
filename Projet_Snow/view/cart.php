@@ -1,16 +1,11 @@
 <?php
 /**
- * This php file is designed to manage all operation regarding cart's management
- * Author   : pascal.benzonana@cpnv.ch
- * Project  : Code
- * Created  : 23.03.2019 - 21:40
- *
- * Last update :    [24.03.2019 PBA]
- *                  []
- * Source       :   pascal.benzonana
+ * This file permit to display the cart
+ * Created by PhpStorm.
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
-
-
 
 $title = 'Rent A Snow - Demande de location';
 

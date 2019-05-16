@@ -1,26 +1,27 @@
 <?php
 /**
- * Author   : nicolas.glassey@cpnv.ch
- * Project  : 151_2019_code
- * Created  : 04.04.2019 - 18:48
- *
- * Last update :    [01.12.2018 author]
- *                  [add $logName in function setFullPath]
- * Git source  :    [link]
+ * This file contains all functions to manage the cart
+ * Created by PhpStorm.
+ * User: Kevin Alves
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 /**
- * @param $currentCartArray
- * @param $snowCodeToAdd
- * @param $qtyOfSnowsToAdd
- * @param $howManyLeasingDays
- * @return array
+ * This function is designed to insert data in cart
+ * @param $currentCartArray : contains array of the cart
+ * @param $snowCodeToAdd : contains the code of the snow
+ * @param $qtyOfSnowsToAdd : contains the quantity of the snows
+ * @param $howManyLeasingDays : contains the days
+ * @return $cartUpdated : contains array of the cart update
  */
-
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
+
+    //set variables
     $cartUpdated = array();
     $alreadyExist = false;
 
+    //take data cart
     if($currentCartArray != null){
         $cartUpdated = $currentCartArray;
     }
@@ -36,6 +37,8 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
         }
     }
     if (!$alreadyExist) {
+
+        //put data in the array
         $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("d-m-y"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
         array_push($cartUpdated, $newSnowLeasing);
     }
@@ -45,16 +48,17 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
     return $cartUpdated;
 }
 
-//in_array https://www.php.net/manual/en/function.in-array.php
-//array_push() https://www.php.net/manual/en/function.array-push.php
-//array_search
-//unset
-
-
+/**
+ * This function is designed to update data in cart
+ * @param $lineToChange : contains the line of the snow
+ * @param $qtyToChange : contains the quantity of snows
+ * @param $nbDaysToChange : contains the days
+ * @param $currentCart : contains the array of the cart
+ * @return $currentCart : contains array of the cart update
+ */
 function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
 
-
-
+    //change data in cart
     for ($i =0;$i<count($currentCart);$i++){
         if ($i == $lineToChange){
             if (isDispo($currentCart[$i]["code"],$qtyToChange,$currentCart)) {
@@ -66,14 +70,22 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
         }
     }
     return $currentCart;
-
 }
 
+/**
+ * This function is designed to manage the disposable of the quantity
+ * @param $snowCode : contains the code of the snow
+ * @param $qtyOfSnowRequested: contains the quantity of snows
+ * @param $cart : contains the array of the cart
+ * @return false
+ */
 function isDispo($snowCode,$qtyOfSnowRequested,$cart){
+
     require_once "model/snowsManager.php";
     $theSnow = getASnow($snowCode);
     if (isset($cart))
     {
+        //check the quantity
         foreach ($cart as $item)
         {
             if ($snowCode == $item["code"])

@@ -1,10 +1,10 @@
 <?php
 /**
- * This php file is designed to show snow's details
- * Author : Pascal.BENZONANA
- * Project : ASnow
- * Created: 26.02.2019 - 8:04
- * Time: 15:00
+ * This file permit to display one snow
+ * Created by PhpStorm.
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 $title="";

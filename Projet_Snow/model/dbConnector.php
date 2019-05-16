@@ -1,12 +1,10 @@
 <?php
 /**
- * Author   : nicolas.glassey@cpnv.ch
- * Project  : dbConnector
- * Created  : 28.01.2019 - 20:13
- *
- * Last update :    [01.12.2018 author]
- *                  [add $logName in function setFullPath]
- * Git source  :    [link]
+ * This file contains all functions to manage the connection to the database
+ * Created by PhpStorm.
+ * User: Kevin Alves
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 /**

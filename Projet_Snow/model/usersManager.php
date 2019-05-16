@@ -1,13 +1,10 @@
 <?php
 /**
- * This php file is designed to manage all operations regarding user's management
- * Author   : nicolas.glassey@cpnv.ch
- * Project  : Code
- * Created  : 31.01.2019 - 18:40
- *
- * Last update :    [01.12.2018 author]
- *                  [add $logName in function setFullPath]
- * Source       :   pascal.benzonana
+ * This file contain all functions to manage the users
+ * Created by PhpStorm.
+ * User: Kevin Alves
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 /**

@@ -1,9 +1,10 @@
 <?php
 /**
+ * This file permit to display the home page
  * Created by PhpStorm.
- * User: Pascal.BENZONANA
- * Date: 08.05.2017
- * Time: 09:16
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 // tampon de flux stocké en mémoire

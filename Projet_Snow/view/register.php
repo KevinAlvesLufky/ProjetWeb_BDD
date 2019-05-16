@@ -1,12 +1,13 @@
 <?php
-  $title ='Rent A Snow - Login/Logout';
-
-/* This file manages the form used to enable user being register on the platform
- * Title            : vue_login.php
- * Creation         : 12/03/19
- * Author           : nicolas.glassey@cpnv.ch
- * Update           : 31/01/19 - nicolas.glassey@cpnv.ch
+/**
+ * This file permit to display the register
+ * Created by PhpStorm.
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
+
+$title ='Rent A Snow - Login/Logout';
 
 ob_start();
 ?>

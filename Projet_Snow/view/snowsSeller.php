@@ -1,12 +1,10 @@
 <?php
 /**
- * Author: Pascal.benzonana@cpnv.ch
- * Project  : snowsSeller.php
- * Created  : 28.01.2019 - 20:13
- *
- * Last update :    [18.02.2019 pba]
- *                  [modele.php splitted]
- * Git source  :    [link]
+ * This file permit to display admin snows page
+ * Created by PhpStorm.
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 $title="Nos snowboards";

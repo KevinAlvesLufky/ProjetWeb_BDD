@@ -19,7 +19,7 @@ function home()
 //region users management
 /**
  * This function is designed to manage login request
- * @param $loginRequest containing login fields required to authenticate the user
+ * @param $loginRequest : contains login fields required to authenticate the user
  */
 function login($loginRequest)
 {
@@ -47,22 +47,21 @@ function login($loginRequest)
         }
     }
     else
-    {   //the user does not yet fill the form
+    {   //the user does not yet fills the form
         $_GET['action'] = "login";
         require "view/login.php";
     }
 }
 
 /**
- * This fonction is designed
- * @param $registerRequest containing register fields required to register the user
+ * This fonction is designed to mange register request
+ * @param $registerRequest : contains register fields required to register the user
  */
 function register($registerRequest)
 {
     //if a register request was submitted
     if (isset($registerRequest['inputUserEmailAddress']) && isset($registerRequest['inputUserPsw']) && isset($registerRequest['inputUserPswRepeat']))
     {
-
         //extract register parameters
         $userEmailAddress = $registerRequest['inputUserEmailAddress'];
         $userPsw = $registerRequest['inputUserPsw'];
@@ -95,7 +94,7 @@ function register($registerRequest)
 
 /**
  * This function is designed to create a new user session
- * @param $userEmailAddress : user unique id
+ * @param $userEmailAddress : contains user's email address
  */
 function createSession($userEmailAddress)
 {
@@ -158,7 +157,7 @@ function displaySnows()
 
 /**
  * This function is designed to get only one snow results (for aSnow view)
- * @param $snowCode containing the code of the snow
+ * @param $snowCode : contains the code of the snow
  */
 function displayASnow($snowCode)
 {
@@ -184,17 +183,17 @@ function displayCart()
 
 /**
  * This function is designed to get only one snow results (for aSnow view)
- * @param $snowCode containing the code of the snow
- * @param $warning containing the error of the command (error quantity)
+ * @param $snowCode : contains the code of the snow
+ * @param $error : contains the error of the command (error quantity)
  */
 function snowLeasingRequest($snowCode,$error)
 {
-    //If the user is connected, display the rent page
+    //if the user is connected, display the rent page
     if(isset($_SESSION['userEmailAddress']))
     {
          require_once "model/snowsManager.php";
          $snowsResults = getASnow($snowCode);
-         if ($error !="")
+         if ($error !="") //check if there is an error
          {
              $warning = $error;
          }
@@ -210,8 +209,8 @@ function snowLeasingRequest($snowCode,$error)
 
 /**
  * This function designed to put the leasing request in the cart
- * @param $snowCode containing the code of the snow
- * @param $snowLocationRequest containing the updates request fields
+ * @param $snowCode : contains the code of the snow
+ * @param $snowLocationRequest : contains the updates request fields
  */
 function updateCartRequest($snowCode, $snowLocationRequest)
 {
@@ -223,7 +222,7 @@ function updateCartRequest($snowCode, $snowLocationRequest)
         //check the fields of the form
         if(isset($snowLocationRequest) && isset($snowCode))
         {
-            if($qty > 0 && $days > 0)
+            if($qty > 0 && $days > 0) //check if there are negative numbers
             {
                     //check if the user have something in the cart
                     if (isset($_SESSION['cart']))
@@ -232,8 +231,10 @@ function updateCartRequest($snowCode, $snowLocationRequest)
                     }
                     require_once "model/cartManager.php";
 
-                    //insert datas snow in cart
+                    //insert data snow in cart
                     $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
+
+                    //if the quantity isn't correct display an error
                     if ($cartArrayTemp == false)
                     {
                         $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
@@ -257,14 +258,15 @@ function updateCartRequest($snowCode, $snowLocationRequest)
 
 /**
  * This function designed to manage to delete an article from cart
- * @param $snowLine containing the line of the snow
+ * @param $snowLine : contains the line of the snow
  */
 function deleteCartRequest($snowLine)
 {
         if (isset($snowLine))
         {
-            //Reorders the datas of selected snow
+            //Reorders the data of selected snow
             array_splice($_SESSION['cart'],$snowLine,1);
+
             // Test if the cart is empty
             if (count($_SESSION['cart'])<1)
             {
@@ -284,11 +286,12 @@ function deleteCartRequest($snowLine)
 
 /**
  * This function is designed to handle the update of a cart item.
- * @param $snowLine containing the line of the snow
- * @param $snowUpdateRequest is the fields of the update form
+ * @param $snowLine : contains the line of the snow
+ * @param $snowUpdateRequest : contains the fields of the update form
  */
 function updateCartItem($snowLine, $snowUpdateRequest)
 {
+    //set variables
     $qty =$snowUpdateRequest['uQty'];
     $days = $snowUpdateRequest['uNbD'];
     $cartArrayTemp = $_SESSION['cart'];
@@ -300,6 +303,7 @@ function updateCartItem($snowLine, $snowUpdateRequest)
             require_once "model/cartManager.php";
             $currentCart = updateInCart($snowLine, $qty, $days, $cartArrayTemp);
 
+            //if the quantity isn't correct display an error
             if ($currentCart == false)
             {
                 $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";

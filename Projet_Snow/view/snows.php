@@ -1,12 +1,10 @@
 <?php
 /**
- * Author: Pascal.benzonana@cpnv.ch
- * Project  : snowUser.php
- * Created  : 04.03.2019 - 22:13
- *
- * Last update :    [18.02.2019 pba]
- *                  [modele.php splitted]
- * Git source  :    [link]
+ * This file permit to display all snows
+ * Created by PhpStorm.
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 
 $title="Snows";

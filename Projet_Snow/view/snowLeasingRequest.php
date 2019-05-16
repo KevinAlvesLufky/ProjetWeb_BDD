@@ -1,15 +1,11 @@
 <?php
 /**
- * This php file is designed to allow users to ask for a snow's rent
- * Author   : pascal.benzonana@cpnv.ch
- * Project  : Code
- * Created  : 22.03.2019 - 18:40
- *
- * Last update :    [24.03.2019 PBA]
- *                  [add Code selected in Get]
- * Source       :   pascal.benzonana
+ * This file permit to display the snow leasing
+ * Created by PhpStorm.
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
-
 
 $title = 'Rent A Snow - Demande de location';
 
