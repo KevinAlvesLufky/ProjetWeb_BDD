@@ -53,10 +53,16 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
 
 function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
 
+
+
     for ($i =0;$i<=count($currentCart);$i++){
         if ($i == $lineToChange){
-            $currentCart[$i]["qty"] = $qtyToChange;
-            $currentCart[$i]["nbD"] = $nbDaysToChange;
+            if (isDispo($currentCart[$i]["code"],$qtyToChange,$currentCart)) {
+                $currentCart[$i]["qty"] = $qtyToChange;
+                $currentCart[$i]["nbD"] = $nbDaysToChange;
+            }else{
+                return false;
+            }
         }
     }
     return $currentCart;
