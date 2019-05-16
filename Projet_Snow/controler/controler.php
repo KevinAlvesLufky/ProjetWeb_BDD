@@ -257,14 +257,14 @@ function updateCartRequest($snowCode, $snowLocationRequest)
 
 /**
  * This function designed to manage to delete an article from cart
- * @param $snowCode containing the code of the snow
+ * @param $snowLine containing the line of the snow
  */
-function deleteCartRequest($snowCode)
+function deleteCartRequest($snowLine)
 {
-        if (isset($snowCode))
+        if (isset($snowLine))
         {
             //Reorders the datas of selected snow
-            array_splice($_SESSION['cart'],$_GET['line'],1);
+            array_splice($_SESSION['cart'],$snowLine,1);
             // Test if the cart is empty
             if (count($_SESSION['cart'])<1)
             {
@@ -284,32 +284,33 @@ function deleteCartRequest($snowCode)
 
 /**
  * This function is designed to handle the update of a cart item.
- * @param $snowCode containing the code of the snow
+ * @param $snowLine containing the line of the snow
  * @param $snowUpdateRequest is the fields of the update form
  */
-function updateCartItem($snowCode, $snowUpdateRequest)
+function updateCartItem($snowLine, $snowUpdateRequest)
 {
-    $qty =$snowUpdateRequest['inputQuantity'];
-    $days = $snowUpdateRequest['inputDays'];
+    $qty =$snowUpdateRequest['uQty'];
+    $days = $snowUpdateRequest['uNbD'];
     $cartArrayTemp = $_SESSION['cart'];
 
-    if($qty > 0 && $days > 0)
+    if (isset($snowLine))
     {
-        require_once "model/cartManager.php";
-        $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
-
-        if ($cartArrayTemp == false)
+        if ($qty > 0 && $days > 0)
         {
-            $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
-            $_GET["action"]="displayCart";
-            displayCart();
+            require_once "model/cartManager.php";
+            $currentCart = updateInCart($snowLine, $qty, $days, $cartArrayTemp);
+
+            if ($currentCart == false)
+            {
+                $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
+            }
+            $_SESSION['cart'] = $currentCart;
         }
-        $_SESSION['cart'] = $cartArrayTemp;
-    }
-    else
-    {
-        $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
-        $_GET["action"]="snowLeasingRequest";
+        else
+        {
+            $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
+        }
+        $_GET['action'] = "displayCart";
         displayCart();
     }
 }

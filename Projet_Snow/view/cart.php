@@ -18,6 +18,14 @@ ob_start();
 ?>
     <h2>Votre panier</h2>
     <article>
+        <!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
+        <?php if(isset($warning)): ?>
+            <div class="isa_error">
+                <i class="fa fa-times-circle"></i>
+                <p> <?=$warning;?> </p>
+            </div>
+        <?php endif; ?>
+
         <form method="POST" action="index.php?action=displaySnows">
             <table class="table">
                 <tr>

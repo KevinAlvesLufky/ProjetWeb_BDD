@@ -55,7 +55,7 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
 
 
 
-    for ($i =0;$i<=count($currentCart);$i++){
+    for ($i =0;$i<count($currentCart);$i++){
         if ($i == $lineToChange){
             if (isDispo($currentCart[$i]["code"],$qtyToChange,$currentCart)) {
                 $currentCart[$i]["qty"] = $qtyToChange;
