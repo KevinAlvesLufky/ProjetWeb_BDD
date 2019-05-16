@@ -50,6 +50,19 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
 //array_search
 //unset
 
+
+function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
+
+    for ($i =0;$i<=count($currentCart);$i++){
+        if ($i == $lineToChange){
+            $currentCart[$i]["qty"] = $qtyToChange;
+            $currentCart[$i]["nbD"] = $nbDaysToChange;
+        }
+    }
+    return $currentCart;
+
+}
+
 function isDispo($snowCode,$qtyOfSnowRequested,$cart){
     require_once "model/snowsManager.php";
     $theSnow = getASnow($snowCode);
