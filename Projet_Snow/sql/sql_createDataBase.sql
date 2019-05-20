@@ -60,3 +60,24 @@ CREATE TABLE IF NOT EXISTS `users` (
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+-- Export de la structure de la table snows. locations
+CREATE TABLE IF NOT EXISTS `locations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `userEmailAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `userHashPsw` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `pseudo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(4) NOT NULL,
+  `brand` varchar(20) NOT NULL,
+  `model` varchar(30) NOT NULL,
+  `snowLength` int(4) unsigned NOT NULL,
+  `qtyAvailable` smallint(6) NOT NULL DEFAULT '0',
+  `description` varchar(200) NOT NULL DEFAULT '0',
+  `dailyPrice` float unsigned NOT NULL,
+  `photo` varchar(50) DEFAULT NULL,
+  `active` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `creationDate` date NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userEmailAddress` (`userEmailAddress`),
+  UNIQUE KEY `snow_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
