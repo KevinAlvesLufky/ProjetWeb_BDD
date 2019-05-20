@@ -64,20 +64,16 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Export de la structure de la table snows. locations
 CREATE TABLE IF NOT EXISTS `locations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userEmailAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `userHashPsw` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `pseudo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `code` varchar(4) NOT NULL,
-  `brand` varchar(20) NOT NULL,
-  `model` varchar(30) NOT NULL,
-  `snowLength` int(4) unsigned NOT NULL,
-  `qtyAvailable` smallint(6) NOT NULL DEFAULT '0',
-  `description` varchar(200) NOT NULL DEFAULT '0',
-  `dailyPrice` float unsigned NOT NULL,
-  `photo` varchar(50) DEFAULT NULL,
-  `active` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `creationDate` date NOT NULL,
+  `idUsers` int(10) unsigned NOT NULL,
+  `idSnows` int(10) unsigned NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `userEmailAddress` (`userEmailAddress`),
-  UNIQUE KEY `snow_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Add foreign keys in table
+Alter Table [locations]
+Add foreign key (idUsers) References [users](id)
+
+Alter Table [locations]
+Add foreign key (idSnows) References [snows](id)

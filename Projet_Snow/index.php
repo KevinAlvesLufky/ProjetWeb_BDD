@@ -49,7 +49,7 @@ if (isset($_GET['action']))
           displayCart();
           break;
       case 'displayLeasing':
-          displayLeasing():
+          displayLeasing();
           break;
       default :
           home();
