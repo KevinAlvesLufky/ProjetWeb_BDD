@@ -54,7 +54,7 @@ function login($loginRequest)
 }
 
 /**
- * This fonction is designed to mange register request
+ * This fonction is designed to manage register request
  * @param $registerRequest : contains register fields required to register the user
  */
 function register($registerRequest)
@@ -319,25 +319,22 @@ function updateCartItem($snowLine, $snowUpdateRequest)
     }
 }
 
-
 /**
-* Function to show UserLeasing
-* Add comment
-* TODO
-*
-*/
+ * This function is designed to display the user's leasing
+ */
 function displayLeasing()
 {
+    $_GET['action'] = "displayLeasing";
+    require "view/UserLeasing.php";
+}
 
-  /**
-  * TODO
-  * Prepare SQL Request if new data come by cart
-  * Insert Data if need to prepare the SQL insert Request
-  * Prepare SQL Resquest to catch Data to show
-  * Delete Cart
-  * 
-  */
-  require "view/UserLeasing.php";
+/**
+ * This function is designed to manage the confirmation of the leazing
+ */
+function confirmLeazing()
+{
+    $_GET['action'] = "displayLeasing";
+    displayLeasing();
 }
 
 //endregion

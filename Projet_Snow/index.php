@@ -51,6 +51,9 @@ if (isset($_GET['action']))
       case 'displayLeasing':
           displayLeasing();
           break;
+      case 'confirmLeazing':
+          confirmLeazing($_GET['line'], $_POST);
+          break;
       default :
           home();
   }
