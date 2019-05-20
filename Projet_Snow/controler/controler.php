@@ -328,6 +328,15 @@ function updateCartItem($snowLine, $snowUpdateRequest)
 */
 function displayLeasing()
 {
+
+  /**
+  * TODO
+  * Prepare SQL Request if new data come by cart
+  * Insert Data if need to prepare the SQL insert Request
+  * Prepare SQL Resquest to catch Data to show
+  * Delete Cart
+  * 
+  */
   require "view/UserLeasing.php";
 }
 
