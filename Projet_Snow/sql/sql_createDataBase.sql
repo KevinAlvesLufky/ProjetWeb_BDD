@@ -18,7 +18,7 @@ USE `snows`;
 
 -- Export de la structure de la table snows. snows
 CREATE TABLE IF NOT EXISTS `snows` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `code` varchar(4) NOT NULL,
   `brand` varchar(20) NOT NULL,
   `model` varchar(30) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `snows` (
   `active` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `snow_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci;
 
 -- Export de données de la table snows.snows : ~9 rows (environ)
 DELETE FROM `snows`;
@@ -49,10 +49,10 @@ INSERT INTO `snows` (`id`, `code`, `brand`, `model`, `snowLength`, `qtyAvailable
 
 -- Export de la structure de la table snows. users
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userEmailAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `userHashPsw` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `pseudo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `userEmailAddress` varchar(255) NOT NULL,
+  `userHashPsw` varchar(255) NOT NULL,
+  `pseudo` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `userEmailAddress` (`userEmailAddress`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -61,19 +61,19 @@ CREATE TABLE IF NOT EXISTS `users` (
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
--- Export de la structure de la table snows. locations
-CREATE TABLE IF NOT EXISTS `locations` (
+-- Export de la structure de la table snows. leazings
+CREATE TABLE IF NOT EXISTS `leazings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idUsers` int(10) unsigned NOT NULL,
   `idSnows` int(10) unsigned NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
-  PRIMARY KEY (`id`),
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Add foreign keys in table
-Alter Table [locations]
-Add foreign key (idUsers) References [users](id)
+Alter TABLE `leazings`
+Add foreign key (`idUsers`) REFERENCES `users`(`id`);
 
-Alter Table [locations]
-Add foreign key (idSnows) References [snows](id)
+Alter TABLE `leazings`
+Add foreign key (`idSnows`) REFERENCES `snows`(`id`);
