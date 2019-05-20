@@ -489,12 +489,3 @@ h6,.page-content h6 a {font-weight: normal; font-style: normal; font-family: 'So
     color: #D8000C;
     background-color: #FFD2D2;
 }
-
-.btn-validate {
-  background-color: #33ff33; /* Green */
-  border:1px solid #c75503;
-  border-bottom:1px solid #9d4302;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-}
