@@ -86,7 +86,7 @@ margin-right:7px;margin-bottom:7px;float:left;
 
 [class*="general foundicon-"]:before {font-family: "GeneralFoundicons";}
 
-        
+
 /* Menu Side */
 
 .menu_menu_simple ul {margin-top:0px;margin-bottom:0px;}
@@ -97,7 +97,7 @@ margin-right:7px;margin-bottom:7px;float:left;
 /* Header Area */
 
 #decorative1 {
-margin-top:-2px;padding-top:2px;    
+margin-top:-2px;padding-top:2px;
 margin-left: -20px !important;
 margin-right: -20px !important; /* fix bg cover issue */
 }
@@ -138,11 +138,11 @@ img {max-width:100%;height:auto;width:auto;-moz-box-sizing:border-box;-webkit-bo
 
     }
 
-    
+
 /* Additional */
-    
+
 #divBoxed {position:relative}
- 
+
 .nav-links > a {margin-right:20px;}
 
 .btn-secondary, .btn-secondary:hover {text-shadow:none;}
@@ -201,7 +201,7 @@ img.pull-left { margin-right:15px !important; margin-top:7px !important;}
 /* Adjustments */
 
 .search.adjust {margin-bottom:15px}
-      
+
 .divPanel {}
 
 .divPanel.notop {padding-top:0px}
@@ -318,7 +318,7 @@ h2 {font-weight: normal; font-style: normal; font-family: 'Source Sans Pro', san
 
 a.btn, a.btn-large, a.btn-small, a.btn-mini {color:#333}
 
- a.btn-info, a.btn-success, a.btn-warning, a.btn-danger, a.btn-inverse {color:#ffffff}
+ a.btn-info, a.btn-success, a.btn-warning, a.btn-danger, a.btn-inverse, {color:#ffffff}
 
  .btn-secondary, .btn-secondary:hover, a.btn-secondary, a.btn-secondary:hover {color:#323232;}
 
@@ -424,17 +424,17 @@ h6,.page-content h6 a {font-weight: normal; font-style: normal; font-family: 'So
 }
 
 
-@media (max-width: 767px) {    
+@media (max-width: 767px) {
     #divLogo {margin-top:10px;margin-bottom:10px;}
 
     #divSiteTitle {font-size: 25px;}
 
-    
+
     #divHeaderText {margin:0px;padding:10px 0px;}
-   
+
     #divHeaderLine1 {margin-top: 0px;}
-     
-    
+
+
     #divMenuRight {width:100%;margin-top: 0px;padding-top:0px}
 
     .ddmenu, .navbar .ddmenu {margin-top: 0px; margin-bottom: 0px;}
@@ -443,34 +443,34 @@ h6,.page-content h6 a {font-weight: normal; font-style: normal; font-family: 'So
 
     .navbar {width:100%;margin-top: 0px;padding-top:0px}
 
-    
+
     #decorative1, #decorative2, #decorative3 {margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px;}
 
-    
+
     /* Fixed Top */
 
     #decorative2 {position:static}
 
     body {padding-top:0px}
 
-    
+
     #divFooter {margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px;}
-    
+
     #divBoxed > #divFooter {margin-left:0px;margin-right:0px;padding-left:0px;padding-right:0px;}
 
-    
+
     body > #footerOuterSeparator, body > #contentOuterSeparator {margin-left:-20px;margin-right:-20px;}
 
-    
+
     .headerArea, .topArea {padding:20px !important;}
  /*only for templates without divBoxed*/
 
-    
+
     #camera_wrap {margin-top:20px}
 
     #divVideo {margin-top:20px}
 
-    
+
     .dropdown-menu .sub-menu {left:0%;position:relative;top:0;visibility:visible;margin-top:3px;display:block}
 
     .dropdown-menu, .sub-menu {border-radius:5px !important;}
@@ -490,7 +490,11 @@ h6,.page-content h6 a {font-weight: normal; font-style: normal; font-family: 'So
     background-color: #FFD2D2;
 }
 
-
-
-
-
+.btn-validate {
+  background-color: #33ff33; /* Green */
+  border:1px solid #c75503;
+  border-bottom:1px solid #9d4302;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
