@@ -318,4 +318,17 @@ function updateCartItem($snowLine, $snowUpdateRequest)
         displayCart();
     }
 }
+
+
+/**
+* Function to show UserLeasing
+* Add comment
+* TODO
+*
+*/
+function displayLeasing()
+{
+  require "view/UserLeasing.php";
+}
+
 //endregion
