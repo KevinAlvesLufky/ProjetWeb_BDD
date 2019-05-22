@@ -329,10 +329,15 @@ function displayLeasing()
 }
 
 /**
- * This function is designed to manage the confirmation of the leazing
+ * This function is designed to manage the confirmation of the leasing
  */
-function confirmLeazing()
+function confirmLeasing()
 {
+    if(dataInsert() && deleteCart())
+    {
+        //Argument pour afficher le bouton vos locations
+    }
+
     $_GET['action'] = "displayLeasing";
     displayLeasing();
 }

@@ -50,8 +50,8 @@ ob_start();
             </table>
             <input type="submit" value="Louer encore" class="btn btn-info" name="backToCatalog">
             <input type="submit" value="Vider le panier" class="btn btn-cancel" name="resetCart">
-            <form method='POST' action='index.php?action=confirmLeazing'>
-                    <input type="submit" value="Finaliser ma location" class="btn btn-success" name="sumbitLeasing">
+            <form method='POST' action='index.php?action=confirmLeasing'>
+                    <input type="submit" value="Finaliser ma location" class="btn btn-success" name="submitLeasing">
             </form>
         </form>
     </article>
