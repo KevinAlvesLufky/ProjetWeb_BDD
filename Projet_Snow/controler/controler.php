@@ -315,17 +315,8 @@ function updateCartItem($snowLine, $snowUpdateRequest)
             $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
         }
         $_GET['action'] = "displayCart";
-        displayCart();
+        require"view/cart.php";
     }
-}
-
-/**
- * This function is designed to display the user's leasing
- */
-function displayLeasing()
-{
-    $_GET['action'] = "displayLeasing";
-    require "view/UserLeasing.php";
 }
 
 /**
@@ -340,7 +331,7 @@ function confirmLeasing()
     }
 
     $_GET['action'] = "displayLeasing";
-    displayLeasing();
+    require "view/UserLeasing.php";
 }
 
 //endregion
