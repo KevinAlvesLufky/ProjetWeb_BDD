@@ -333,9 +333,10 @@ function displayLeasing()
  */
 function confirmLeasing()
 {
-    if(dataInsert() && deleteCart())
+    if(dataInsert())
     {
         //Argument pour afficher le bouton vos locations
+        unset ($_SESSION['cart']);
     }
 
     $_GET['action'] = "displayLeasing";

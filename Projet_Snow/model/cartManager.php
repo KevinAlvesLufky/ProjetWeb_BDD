@@ -121,3 +121,13 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
     }
     return false;
 }
+
+function dataInsert()
+{
+    for($i=0; $i < count($_SESSION['cart']); $i++)
+    {
+
+    }
+}
+
+
