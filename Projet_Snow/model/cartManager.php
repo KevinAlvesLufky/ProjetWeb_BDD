@@ -28,6 +28,7 @@
  * @param $howManyLeasingDays : contains the days
  * @return $cartUpdated : contains array of the cart update
  */
+
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
 
     //set variables
@@ -137,13 +138,34 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
 
 function dataInsert()
 {
+    $strSeparator = '\'';
+
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$i.','.$_SESSION["userId"].' )';
+        //set variables
+        $snowsInsertResults = false;
+        $id = $i+1;
+        $date = $_SESSION['cart'][$i]['dateD'];
+        $startDate = date('d-m-y', strtotime($date));
+        $addDate = $_SESSION['cart'][$i]['nbD'];
+        $timeStamp = strtotime($startDate);
+        $endDate = date('d-m-y', strtotime('+'.$addDate.'days', $timeStamp ));
+        $snowCode = $_SESSION['cart'][$i]['code'];
+
+        $snowsIdQuery = 'SELECT id FROM snows WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
-        $snowsInsertResults = executeQuerySelect($snowsInsertQuery);
+        $snowsId = executeQuerySelect($snowsIdQuery);
 
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][$i]["id"].','.$snowsId[$i]["id"].','.$date.','.$endDate.' )';
+
+        require_once 'model/dbConnector.php';
+        $queryResult = executeQueryInsert($snowsInsertQuery);
+
+        if($queryResult)
+        {
+            $snowsInsertResults = $queryResult;
+        }
         return $snowsInsertResults;
     }
 }
@@ -158,4 +180,7 @@ function getSnowsCart()
     return $snowsCartResults;
 }
 
+function reductStock()
+{
 
+}

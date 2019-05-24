@@ -99,9 +99,13 @@ function register($registerRequest)
 function createSession($userEmailAddress)
 {
     $_SESSION['userEmailAddress'] = $userEmailAddress;
-    //set user type in Session
+
+    //set user type and id in Session
+    $userId = getUserId($userEmailAddress);
     $userType = getUserType($userEmailAddress);
+
     $_SESSION['userType'] = $userType;
+    $_SESSION['userId'] = $userId;
 }
 
 /**
@@ -316,9 +320,11 @@ function updateCartItem($snowLine, $snowUpdateRequest)
  */
 function confirmLeasing()
 {
+    require_once"model/cartManager.php";
     if(dataInsert() && getSnowsCart())
     {
         //Argument pour afficher le bouton vos locations
+        reductStock();
         unset ($_SESSION['cart']);
     }
 

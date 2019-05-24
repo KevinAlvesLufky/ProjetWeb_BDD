@@ -75,3 +75,19 @@ function getUserType($userEmailAddress){
     }
     return $result;
 }
+
+function getUserId($userEmailAddress){
+    $result = false;
+
+    $strSeparator = '\'';
+
+    $getUserIdQuery = 'SELECT id FROM users WHERE users.userEmailAddress =' . $strSeparator . $userEmailAddress . $strSeparator;
+
+    require_once 'model/dbConnector.php';
+    $queryResult = executeQuerySelect($getUserIdQuery);
+
+    if($queryResult){
+        $result = $queryResult;
+    }
+    return $result;
+}
