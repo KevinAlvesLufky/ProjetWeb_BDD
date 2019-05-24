@@ -101,7 +101,10 @@ function createSession($userEmailAddress)
     $_SESSION['userEmailAddress'] = $userEmailAddress;
     //set user type in Session
     $userType = getUserType($userEmailAddress);
+    $userId = getUserId($userEmailAddress);
+
     $_SESSION['userType'] = $userType;
+    $_SESSION['userId'] = $userId;
 }
 
 /**

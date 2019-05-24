@@ -7,19 +7,6 @@
  * Time: 09:10
  */
 
-
-/** TODO
-* Fonction pour enlever les snows lorsque loués
-* Récupère la QTY dans le cart pour chaque snows
-* Récupère les data de disponibilité des snows en fonction du code
-* Enlève la QTY du snow (DB) avec la qty du cart pour chaque snows
-* Prépare la requête SQL pour insertion de donnée dans la DB
-* Envoie la requête vers la DB
-*/
-
-/*TODO
-
-
 /**
  * This function is designed to insert data in cart
  * @param $currentCartArray : contains array of the cart
@@ -28,6 +15,18 @@
  * @param $howManyLeasingDays : contains the days
  * @return $cartUpdated : contains array of the cart update
  */
+
+/** TODO
+ * Fonction pour enlever les snows lorsque loués
+ * Récupère la QTY dans le cart pour chaque snows
+ * Récupère les data de disponibilité des snows en fonction du code
+ * Enlève la QTY du snow (DB) avec la qty du cart pour chaque snows
+ * Prépare la requête SQL pour insertion de donnée dans la DB
+ * Envoie la requête vers la DB
+ */
+
+/*TODO
+
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
 
     //set variables
@@ -137,9 +136,21 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
 
 function dataInsert()
 {
+    $strSeparator = '\'';
+
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$i.','.$_SESSION["userId"].' )';
+        $snowCode = $_SESSION['cart'][$i]['code'];
+        $startDate = $_SESSION['cart'][$i]['dateD'];
+        $addDate = $_SESSION['cart'][$i]['nbD'];
+       // $endDate = date(‘d-m-Y’, strtotime(‘+15 days’));
+
+        $snowIdQuerry = 'SELECT id FROM snows WHERE snows.code = ' . $strSeparator . $snowCode . $strSeparator;
+
+        require_once 'model/dbConnector.php';
+        $snowId = executeQuerySelect($snowIdQuerry);
+
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$i.'.,.'.$_SESSION["userId"].'.,.'.$snowId.'.,.'.$startDate.'.,.'.$endDate.'.)';
 
         require_once 'model/dbConnector.php';
         $snowsInsertResults = executeQuerySelect($snowsInsertQuery);
