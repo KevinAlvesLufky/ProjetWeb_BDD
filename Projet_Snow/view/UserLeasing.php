@@ -23,7 +23,11 @@ ob_start();
                 </tr>
                 <?php
                 // Displays user's leasing content
-
+                for ($i=0; $i < count($_SESSION['leasing']); $i++)
+                {
+                        echo "<tr>";
+                        echo "<td>".$_SESSION['leasing'][$i]['NLeasing']."</td>";
+                }
                 ?>
 
             </table>
