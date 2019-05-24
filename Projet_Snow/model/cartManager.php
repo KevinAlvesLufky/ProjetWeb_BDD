@@ -7,6 +7,19 @@
  * Time: 09:10
  */
 
+
+/** TODO
+* Fonction pour enlever les snows lorsque loués
+* Récupère la QTY dans le cart pour chaque snows
+* Récupère les data de disponibilité des snows en fonction du code
+* Enlève la QTY du snow (DB) avec la qty du cart pour chaque snows
+* Prépare la requête SQL pour insertion de donnée dans la DB
+* Envoie la requête vers la DB
+*/
+
+/*TODO
+
+
 /**
  * This function is designed to insert data in cart
  * @param $currentCartArray : contains array of the cart
