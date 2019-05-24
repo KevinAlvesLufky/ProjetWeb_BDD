@@ -126,7 +126,12 @@ function dataInsert()
 {
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$i.','.$_SESSION["userId"].' )';
 
+        require_once 'model/dbConnector.php';
+        $snowsInsertResults = executeQuerySelect($snowsInsertQuery);
+
+        return $snowsInsertResults;
     }
 }
 
