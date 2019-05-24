@@ -172,14 +172,6 @@ function displayASnow($snowCode)
 //endregion
 
 //region Cart Management
-/**
- * This function is designed to display the cart
- */
-function displayCart()
-{
-    $_GET['action'] = "cart";
-    require "view/cart.php";
-}
 
 /**
  * This function is designed to get only one snow results (for aSnow view)
@@ -253,7 +245,7 @@ function updateCartRequest($snowCode, $snowLocationRequest)
             }
         }
         $_GET['action'] = "displayCart";
-        displayCart();
+        require "view/cart.php";
 }
 
 /**
@@ -324,7 +316,7 @@ function updateCartItem($snowLine, $snowUpdateRequest)
  */
 function confirmLeasing()
 {
-    if(dataInsert())
+    if(dataInsert() && getSnowsCart())
     {
         //Argument pour afficher le bouton vos locations
         unset ($_SESSION['cart']);

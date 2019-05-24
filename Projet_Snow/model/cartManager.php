@@ -130,4 +130,14 @@ function dataInsert()
     }
 }
 
+function getSnowsCart()
+{
+    $snowsCartQuery =
+
+    require_once 'model/dbConnector.php';
+    $snowsCartResults = executeQuerySelect($snowsCartQuery);
+
+    return $snowsCartResults;
+}
+
 
