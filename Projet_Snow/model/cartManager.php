@@ -180,6 +180,7 @@ function dataInsert()
 
 function getSnowsCart()
 {
+    //TODO faire la requête sql pour aller chercher les informations dans la table leasing (attention multitable)
     $snowsCartQuery =
 
     require_once 'model/dbConnector.php';
