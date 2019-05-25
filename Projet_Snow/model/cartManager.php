@@ -159,10 +159,11 @@ function dataInsert()
         $snowsData = executeQuerySelect($snowsDataQuery);
 
         //change the qantity snows
+        $snowsData[$i]["qtyAvailable"] -= $_SESSION['cart'][$i]['qty'];
         $snowsQtyQuery = 'INSERT INTO snows (qtyAvailable ) VALUES ('.$snowsData[$i]["qtyAvailable"].') snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
-        $queryQty = executeQueryInsert($snowsQtyQuery);
+        executeQueryInsert($snowsQtyQuery);
 
         //insert leasing informations
         $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][$i]["id"].','.$snowsData[$i]["id"].','.$date.','.$endDate.' )';
@@ -178,13 +179,13 @@ function dataInsert()
     }
 }
 
-function getSnowsCart()
+function getSnowsLeasing()
 {
     //TODO faire la requête sql pour aller chercher les informations dans la table leasing (attention multitable)
-    $snowsCartQuery =
+    $snowsLeasingQuery =
 
     require_once 'model/dbConnector.php';
-    $snowsCartResults = executeQuerySelect($snowsCartQuery);
+    $snowsLeasingResults = executeQuerySelect($snowsLeasingQuery);
 
-    return $snowsCartResults;
+    return $snowsLeasingResults;
 }

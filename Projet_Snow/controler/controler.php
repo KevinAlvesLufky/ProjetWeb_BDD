@@ -321,9 +321,9 @@ function updateCartItem($snowLine, $snowUpdateRequest)
 function confirmLeasing()
 {
     require_once"model/cartManager.php";
-    if(dataInsert() && getSnowsCart())
+    if(dataInsert() && getSnowsLeasing())
     {
-        $Location = 1;
+        $Leasing = 1;
         unset ($_SESSION['cart']);
     }
 
