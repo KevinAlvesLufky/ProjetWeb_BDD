@@ -323,8 +323,7 @@ function confirmLeasing()
     require_once"model/cartManager.php";
     if(dataInsert() && getSnowsCart())
     {
-        //Argument pour afficher le bouton vos locations
-        reductStock();
+        $Location = 1;
         unset ($_SESSION['cart']);
     }
 
