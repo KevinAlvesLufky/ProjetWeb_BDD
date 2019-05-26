@@ -144,7 +144,7 @@ function dataInsert()
     {
         //set variables
         $snowsInsertResults = false;
-        $id = $i+1;
+        $id = $i+1; //Revoir pour les numéros des locations
         $date = $_SESSION['cart'][$i]['dateD'];
         $startDate = date('d-m-y', strtotime($date));
         $addDate = $_SESSION['cart'][$i]['nbD'];
@@ -160,7 +160,7 @@ function dataInsert()
 
         //change the qantity snows
         $snowsData[$i]["qtyAvailable"] -= $_SESSION['cart'][$i]['qty'];
-        $snowsQtyQuery = 'INSERT INTO snows (qtyAvailable ) VALUES ('.$snowsData[$i]["qtyAvailable"].') snows.code =' . $strSeparator . $snowCode . $strSeparator;
+        $snowsQtyQuery = 'INSERT INTO snows (qtyAvailable ) VALUES ('.$snowsData[$i]["qtyAvailable"].') WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
         executeQueryInsert($snowsQtyQuery);
@@ -181,8 +181,10 @@ function dataInsert()
 
 function getSnowsLeasing()
 {
+    $strSeparator = '\'';
+    $idUser = $_SESSION["userId"][0]["id"];
     //TODO faire la requête sql pour aller chercher les informations dans la table leasing (attention multitable)
-    $snowsLeasingQuery =
+    $snowsLeasingQuery = 'SELECT snows.code, snows.brand, snows.model, snows.dailyPrice, snows.qtyAvailable FROM snows INNER JOIN leasings ON snows.id = leasings.idSnows INNER JOIN leasings ON users.id = leasings.idUsers WHERE leasing.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
     $snowsLeasingResults = executeQuerySelect($snowsLeasingQuery);

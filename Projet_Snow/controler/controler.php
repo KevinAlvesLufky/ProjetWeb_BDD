@@ -326,6 +326,7 @@ function confirmLeasing()
         $Leasing = 1;
         unset ($_SESSION['cart']);
     }
+    $date = date("d-m-Y");
 
     $_GET['action'] = "displayLeasing";
     require "view/UserLeasing.php";
