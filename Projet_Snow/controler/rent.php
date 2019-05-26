@@ -16,10 +16,10 @@ function confirmLeasing()
     require_once"model/cartManager.php";
     if(dataInsert() && getSnowsLeasing())
     {
-        $Leasing = 1;
-        unset ($_SESSION['cart']);
+        $Leasing = 1; //display button "Vos locations"
+        unset ($_SESSION['cart']); //delete cart
     }
-    $date = date("d-m-Y");
+    $date = date("d-m-Y"); //Get the date
 
     $_GET['action'] = "displayLeasing";
     require "view/UserLeasing.php";

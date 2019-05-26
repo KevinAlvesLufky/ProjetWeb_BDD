@@ -101,7 +101,7 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
  * @param $snowCode : contains the code of the snow
  * @param $qtyOfSnowRequested: contains the quantity of snows
  * @param $cart : contains the array of the cart
- * @return false
+ * @return true or false
  */
 function isDispo($snowCode,$qtyOfSnowRequested,$cart){
 
@@ -136,6 +136,10 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
     return false;
 }
 
+/**
+ * This function is designed to manage the insert data cart in the DB
+ * @return true or  false
+ */
 function dataInsert()
 {
     $strSeparator = '\'';
@@ -166,7 +170,7 @@ function dataInsert()
         executeQueryInsert($snowsQtyQuery);
 
         //insert leasing informations
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][$i]["id"].','.$snowsData[$i]["id"].','.$date.','.$endDate.' )';
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][$i]["id"].','.$snowsData[$i]["id AND qtyAvailable"].','.$date.','.$endDate.' )';
 
         require_once 'model/dbConnector.php';
         $queryResult = executeQueryInsert($snowsInsertQuery);
@@ -179,6 +183,10 @@ function dataInsert()
     }
 }
 
+/**
+ * This function is designed to manage the
+ * @return true or  false
+ */
 function getSnowsLeasing()
 {
     $strSeparator = '\'';
@@ -187,7 +195,11 @@ function getSnowsLeasing()
     $snowsLeasingQuery = 'SELECT snows.code, snows.brand, snows.model, snows.dailyPrice, snows.qtyAvailable FROM snows INNER JOIN leasings ON snows.id = leasings.idSnows INNER JOIN leasings ON users.id = leasings.idUsers WHERE leasing.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    $snowsLeasingResults = executeQuerySelect($snowsLeasingQuery);
+    $queryResultLeasing = executeQuerySelect($snowsLeasingQuery);
 
+    if($queryResultLeasing)
+    {
+        $snowsLeasingResults = $queryResultLeasing;
+    }
     return $snowsLeasingResults;
 }
