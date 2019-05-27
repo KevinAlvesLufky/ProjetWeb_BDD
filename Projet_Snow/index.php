@@ -39,6 +39,9 @@ if (isset($_GET['action']))
       case 'snowLeasingRequest':
           snowLeasingRequest($_GET['code'],"");
           break;
+      case 'displayCart':
+          displayCart();
+          break;
       case 'updateCartRequest':
            updateCartRequest($_GET['code'], $_POST);
           break;

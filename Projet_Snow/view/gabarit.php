@@ -7,6 +7,7 @@
  * Time: 09:10
  */
 
+global $Leasing;
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -82,6 +83,7 @@
                                 <!-- Puis la situation "connecté"-->
                                 <?php else :?>
                                     <li><a href="index.php?action=logout">Logout</a></li>
+                                    <?php $Leasing = false ?>
                                 <?php endif; ?>
                                 <?php if(isset($_SESSION['cart'])) :?>
                                     <li><a href="index.php?action=displayCart"><img src="view/content/images/cart.png">  <?=  count($_SESSION['cart']);?> snow(s)</a></li>
@@ -90,7 +92,7 @@
 
 
                                 <!-- Affiche le bouton Location si il y a une location-->
-                                <?php if($Leasing == 1):?>
+                                <?php if($Leasing == true):?>
                                     <li><a href="index.php?action=displayLeasing">Vos Locations</a></li>
                                 <?php endif; ?>
                             </ul>

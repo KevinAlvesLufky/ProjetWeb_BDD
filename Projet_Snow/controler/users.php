@@ -101,11 +101,17 @@ function createSession($userEmailAddress)
     $_SESSION['userEmailAddress'] = $userEmailAddress;
 
     //set user type and id in Session
+    require_once "model/usersManager.php";
     $userId = getUserId($userEmailAddress);
+
+    require_once "model/usersManager.php";
     $userType = getUserType($userEmailAddress);
 
     $_SESSION['userType'] = $userType;
     $_SESSION['userId'] = $userId;
+
+    require_once 'model/cartManager.php';
+    isLeasingOk();
 }
 
 /**

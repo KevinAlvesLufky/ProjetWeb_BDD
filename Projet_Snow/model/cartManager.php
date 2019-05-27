@@ -192,3 +192,24 @@ function getSnowsLeasing()
     }
     return $snowsLeasingResults;
 }
+
+function isLeasingOk()
+{
+    $strSeparator = '\'';
+    $idUser = $_SESSION["userId"][0]["id"];
+
+    $snowsLeasingQuery = 'SELECT snows.code, snows.brand, snows.model, snows.dailyPrice, snows.qtyAvailable FROM snows INNER JOIN leasings ON snows.id = leasings.idSnows INNER JOIN leasings ON users.id = leasings.idUsers WHERE leasing.idUsers ='. $strSeparator . $idUser . $strSeparator;
+
+    require_once 'model/dbConnector.php';
+    $queryResult = executeQuerySelect($snowsLeasingQuery);
+
+    if($queryResult)
+    {
+        $Leasing = true;
+    }
+    else
+    {
+        $Leasing = false;
+    }
+    return $Leasing;
+}

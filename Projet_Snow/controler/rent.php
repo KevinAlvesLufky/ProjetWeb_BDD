@@ -8,6 +8,11 @@
  */
 
 //region Rent Management
+function displayLeasing()
+{
+    $_GET['action'] = "displayLeasing";
+    require "view/UserLeasing.php";
+}
 /**
  * This function is designed to manage the confirmation of the leasing
  */
@@ -16,12 +21,7 @@ function confirmLeasing()
     require_once"model/cartManager.php";
     if(dataInsert() && getSnowsLeasing())
     {
-        $Leasing = 1; //display button "Vos locations"
         unset ($_SESSION['cart']); //delete cart
-    }
-    else
-    {
-        $Leasing = 0; //hide button "Vos locations"
     }
     require "view/UserLeasing.php";
 }
