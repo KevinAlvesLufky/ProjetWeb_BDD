@@ -103,6 +103,7 @@ function createSession($userEmailAddress)
     //set user type and id in Session
     require_once "model/usersManager.php";
     $userId = getUserId($userEmailAddress);
+    $userId = (int)$userId;
 
     require_once "model/usersManager.php";
     $userType = getUserType($userEmailAddress);
