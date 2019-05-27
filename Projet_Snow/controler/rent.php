@@ -19,9 +19,10 @@ function confirmLeasing()
         $Leasing = 1; //display button "Vos locations"
         unset ($_SESSION['cart']); //delete cart
     }
-    $date = date("d-m-Y"); //Get the date
-
-    $_GET['action'] = "displayLeasing";
+    else
+    {
+        $Leasing = 0; //hide button "Vos locations"
+    }
     require "view/UserLeasing.php";
 }
 

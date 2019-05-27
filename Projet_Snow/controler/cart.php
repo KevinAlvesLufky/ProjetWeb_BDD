@@ -145,7 +145,6 @@ function updateCartItem($snowLine, $snowUpdateRequest)
         {
             $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
         }
-        $_GET['action'] = "displayCart";
         require"view/cart.php";
     }
 }

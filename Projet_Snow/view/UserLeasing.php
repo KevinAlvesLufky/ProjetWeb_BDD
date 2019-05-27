@@ -26,13 +26,13 @@ ob_start();
                 for ($i=0; $i < count($_SESSION['leasing']); $i++)
                 {
                         echo "<tr>";
-                            echo "<td>".$id."</td>";
+                            echo "<td>".$snowsInsertResults[$i]['id']."</td>";
                             echo "<td>".$snowsLeasingResults[$i]['code']."</td>";
                             echo "<td>".$snowsLeasingResults[$i]['brand']."</td>";
                             echo "<td>".$snowsLeasingResults[$i]['model']."</td>";
                             echo "<td>".$snowsLeasingResults[$i]['dailyPrice']."</td>";
                             echo "<td>".$snowsLeasingResults[$i]['qtyAvailable']."</td>";
-                            echo "<td>".$date."</td>";
+                            echo "<td>".$snowsInsertResults[$i]['startDate']."</td>";
                          echo "</tr>";
                 }
                 ?>

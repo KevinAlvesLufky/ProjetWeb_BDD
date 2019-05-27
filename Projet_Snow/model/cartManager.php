@@ -16,17 +16,6 @@
  * @return $cartUpdated : contains array of the cart update
  */
 
-/** TODO
- * Fonction pour enlever les snows lorsque loués
- * Récupère la QTY dans le cart pour chaque snows
- * Récupère les data de disponibilité des snows en fonction du code
- * Enlève la QTY du snow (DB) avec la qty du cart pour chaque snows
- * Prépare la requête SQL pour insertion de donnée dans la DB
- * Envoie la requête vers la DB
- */
-
-
-
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
 
     //set variables
@@ -155,7 +144,7 @@ function dataInsert()
         $snowCode = $_SESSION['cart'][$i]['code'];
 
         //take informations snows
-        $snowsDataQuery = 'SELECT id AND qtyAvailable FROM snows WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
+        $snowsDataQuery = 'SELECT id, qtyAvailable FROM snows WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
         $snowsData = executeQuerySelect($snowsDataQuery);
@@ -168,11 +157,12 @@ function dataInsert()
         executeQueryInsert($snowsQtyQuery);
 
         //insert leasing informations
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][$i]["id"].','.$snowsData[$i]["id AND qtyAvailable"].','.$date.','.$endDate.' )';
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][0]["id"].','.$snowsData[$i]["id"].','.$date.','.$endDate.' )';
 
 
         require_once 'model/dbConnector.php';
-        $queryResult = executeQueryInsert($snowsInsertQuery);
+        //todo corriger l'erreur (return false)
+        $queryResult = executeQuerySelect($snowsInsertQuery);
 
         if($queryResult)
         {

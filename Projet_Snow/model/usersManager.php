@@ -88,7 +88,7 @@ function getUserId($userEmailAddress)
     $queryResult = executeQuerySelect($getUserIdQuery);
 
     if (count($queryResult) == 1) {
-        $result = $queryResult[0]['userId'];
+        $result = $queryResult[0]['id'];
     }
     return $result;
 }
