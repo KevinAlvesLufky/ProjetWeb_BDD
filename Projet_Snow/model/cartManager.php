@@ -124,18 +124,38 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
 }
 
 /**
+ * This function is designed to get the last leasing's id
+ * @return
+ */
+function getLastIdLeasing()
+{
+    $leasingsIdQuery = 'SELECT id FROM leasings';
+
+    require_once 'model/dbConnector.php';
+    $arrayId = executeQuerySelect($leasingsIdQuery);
+
+    foreach($arrayId as $array)
+    {
+        $lastId = $array['id'];
+    }
+    $lastId = (int)$lastId;
+    $lastId +=1;
+
+    return $lastId;
+}
+/**
  * This function is designed to manage the insert data cart in the DB
  * @return true or  false
  */
 function dataInsert()
 {
     $strSeparator = '\'';
+    $idLeasing = getLastIdLeasing();
 
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
         //set variables
         $snowsInsertResults = false;
-        $id = $i+1; //Revoir pour les numéros des locations
         $date = $_SESSION['cart'][$i]['dateD'];
         $startDate = date('d-m-y', strtotime($date));
         $addDate = $_SESSION['cart'][$i]['nbD'];
@@ -157,7 +177,7 @@ function dataInsert()
         executeQueryInsert($snowsQtyQuery);
 
         //insert leasing informations
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][0]["id"].','.$snowsData[$i]["id"].','.$date.','.$endDate.' )';
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$idLeasing.','.$_SESSION["userId"][0]["id"].','.$snowsData[$i]["id"].','.$date.','.$endDate.' )';
 
 
         require_once 'model/dbConnector.php';
