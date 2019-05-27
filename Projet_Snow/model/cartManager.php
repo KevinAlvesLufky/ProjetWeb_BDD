@@ -153,7 +153,7 @@ function dataInsert()
         $timeStamp = strtotime($startDate);
         $endDate = date('d-m-y', strtotime('+'.$addDate.'days', $timeStamp ));
         $snowCode = $_SESSION['cart'][$i]['code'];
-        
+
         //take informations snows
         $snowsDataQuery = 'SELECT id AND qtyAvailable FROM snows WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
