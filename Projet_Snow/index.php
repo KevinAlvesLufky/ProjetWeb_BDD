@@ -8,7 +8,10 @@
  */
 
 session_start();
-require "controler/controler.php";
+require "controler/users.php";
+require "controler/snows.php";
+require "controler/cart.php";
+require "controler/rent.php";
 
 if (isset($_GET['action']))
 {

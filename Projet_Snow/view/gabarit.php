@@ -1,12 +1,10 @@
 <?php
 /**
+ * This file is the template of our site
  * Created by PhpStorm.
- * User: Pascal.BENZONANA
- * Date: 08.05.2017
- * Time: 09:16
- * Last Update :    Nicolas Glassey
- *                  02.03.2019 - add action displaySnows
- *                  11.03.2019 - add ref javascript to customized scripts
+ * User: Damien Chervet
+ * Date: 06.05.2017
+ * Time: 09:10
  */
 ?>
 <!DOCTYPE HTML>
@@ -91,7 +89,7 @@
 
 
                                 <!-- Affiche le bouton Location si il y a une location-->
-                                <?php if($Location = 1):?>
+                                <?php if($Leasing = 1):?>
                                   <!-- TODO -->
                                     <li><a href="index.php?action=displayLeasing">Vos Locations</a></li>
                                 <?php endif; ?>
