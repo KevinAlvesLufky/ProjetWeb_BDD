@@ -30,17 +30,20 @@ ob_start();
                 <?php
 
                 // Displays cart session's content
-                for ($i=0; $i < count($_SESSION['cart']); $i++)
-                {
-                        echo "<tr>";
-                        echo "<td>".$_SESSION['cart'][$i]['code']."</td>";
-                        echo "<td>".$_SESSION['cart'][$i]['dateD']."</td>";
+                for ($i=0; $i < count($_SESSION['cart']); $i++) {
+                    echo "<tr>";
+                    echo "<td>" . $_SESSION['cart'][$i]['code'] . "</td>";
+                    echo "<td>" . $_SESSION['cart'][$i]['dateD'] . "</td>";
+                }
+                    ?>
+                    </form>
+                    <?php
+                    foreach ($i as $j){
+                        echo "<form method='POST' action='index.php?action=updateCartItem&line=".$j."'>";
+                        echo "<td><input type='number' name='uQty' value='".$_SESSION['cart'][$j]['qty']."'></td>";
+                        echo "<td><input type='number' name='uNbD' value='".$_SESSION['cart'][$j]['nbD']."'></td>";
 
-                        echo "<form method='POST' action='index.php?action=updateCartItem&line=".$i."'>";
-                        echo "<td><input type='number' name='uQty' value='".$_SESSION['cart'][$i]['qty']."'></td>";
-                        echo "<td><input type='number' name='uNbD' value='".$_SESSION['cart'][$i]['nbD']."'></td>";
-
-                    echo "<td><a href='index.php?action=deleteCartRequest&line=".$i."'><img src='view/content/images/delete2.png'></a>";
+                    echo "<td><a href='index.php?action=deleteCartRequest&line=".$j."'><img src='view/content/images/delete2.png'></a>";
                     echo "<input type='submit' src='view/content/images/edit2.png'></td>";
                     echo "</form></tr>";
                 }
