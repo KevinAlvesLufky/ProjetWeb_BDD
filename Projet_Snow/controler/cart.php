@@ -91,8 +91,12 @@ function deleteCartRequest($snowLine)
 {
         if (isset($snowLine))
         {
+          /**
+          *TODO debug du deletcart, commande de base :
+          * array_splice($_SESSION['cart'],$snowLine,1);
+          */
             //Reorders the data of selected snow
-            array_splice($_SESSION['cart'],$snowLine,1);
+            array_splice($_SESSION['cart'],$snowLine,0);
 
             // Test if the cart is empty
             if (count($_SESSION['cart'])<1)
