@@ -8,11 +8,6 @@
  */
 
 //region Cart Management
-function displayCart()
-{
-    $_GET['action'] = "displayCart";
-    require "view/cart.php";
-}
 /**
  * This function is designed to get only one snow results (for aSnow view)
  * @param $snowCode : contains the code of the snow
@@ -146,7 +141,7 @@ function updateCartItem($snowLine, $snowUpdateRequest)
         {
             $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
         }
-        require"view/cart.php";
     }
+    require"view/cart.php";
 }
 //endregion
