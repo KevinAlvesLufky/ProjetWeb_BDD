@@ -89,12 +89,11 @@
 
 
                                 <!-- Affiche le bouton Location si il y a une location-->
-                                <?php if($Leasing = 1):?>
-                                  <!-- TODO -->
+                                <?php if($Leasing == 1):?>
                                     <li><a href="index.php?action=displayLeasing">Vos Locations</a></li>
                                 <?php endif; ?>
                             </ul>
-                            
+
                             <!-- on affiche, si la session est active, l'adresse email de l'utilisateur-->
                             <?php if(isset($_SESSION['userEmailAddress'])) :?>
                                 <h6>Vous êtes connecté : <?= $_SESSION['userEmailAddress'];?></h6>
