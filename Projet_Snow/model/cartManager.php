@@ -25,7 +25,7 @@
  * Envoie la requête vers la DB
  */
 
-/*TODO
+
 
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
 
@@ -74,7 +74,7 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
 
     foreach ($currentCart as $key => &$item){
         if ($lineCode == $item["code"] && $nbDaysToChange == $item["nbD"]){
-            
+
 
         }
     }
@@ -99,7 +99,7 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
  * @param $snowCode : contains the code of the snow
  * @param $qtyOfSnowRequested: contains the quantity of snows
  * @param $cart : contains the array of the cart
- * @return false
+ * @return true or false
  */
 function isDispo($snowCode,$qtyOfSnowRequested,$cart){
 
@@ -134,39 +134,71 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
     return false;
 }
 
+/**
+ * This function is designed to manage the insert data cart in the DB
+ * @return true or  false
+ */
 function dataInsert()
 {
     $strSeparator = '\'';
 
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
-        $snowCode = $_SESSION['cart'][$i]['code'];
-        $startDate = $_SESSION['cart'][$i]['dateD'];
+        //set variables
+        $snowsInsertResults = false;
+        $id = $i+1; //Revoir pour les numéros des locations
+        $date = $_SESSION['cart'][$i]['dateD'];
+        $startDate = date('d-m-y', strtotime($date));
         $addDate = $_SESSION['cart'][$i]['nbD'];
-       // $endDate = date(‘d-m-Y’, strtotime(‘+15 days’));
-
-        $snowIdQuerry = 'SELECT id FROM snows WHERE snows.code = ' . $strSeparator . $snowCode . $strSeparator;
-
-        require_once 'model/dbConnector.php';
-        $snowId = executeQuerySelect($snowIdQuerry);
-
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$i.'.,.'.$_SESSION["userId"].'.,.'.$snowId.'.,.'.$startDate.'.,.'.$endDate.'.)';
+        $timeStamp = strtotime($startDate);
+        $endDate = date('d-m-y', strtotime('+'.$addDate.'days', $timeStamp ));
+        $snowCode = $_SESSION['cart'][$i]['code'];
+        
+        //take informations snows
+        $snowsDataQuery = 'SELECT id AND qtyAvailable FROM snows WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
-        $snowsInsertResults = executeQuerySelect($snowsInsertQuery);
+        $snowsData = executeQuerySelect($snowsDataQuery);
 
+        //change the qantity snows
+        $snowsData[$i]["qtyAvailable"] -= $_SESSION['cart'][$i]['qty'];
+        $snowsQtyQuery = 'INSERT INTO snows (qtyAvailable ) VALUES ('.$snowsData[$i]["qtyAvailable"].') WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
+
+        require_once 'model/dbConnector.php';
+        executeQueryInsert($snowsQtyQuery);
+
+        //insert leasing informations
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$id.','.$_SESSION["userId"][$i]["id"].','.$snowsData[$i]["id AND qtyAvailable"].','.$date.','.$endDate.' )';
+
+
+        require_once 'model/dbConnector.php';
+        $queryResult = executeQueryInsert($snowsInsertQuery);
+
+        if($queryResult)
+        {
+            $snowsInsertResults = $queryResult;
+        }
         return $snowsInsertResults;
     }
 }
 
-function getSnowsCart()
+/**
+ * This function is designed to manage the
+ * @return true or  false
+ */
+function getSnowsLeasing()
 {
-    $snowsCartQuery =
+    $strSeparator = '\'';
+    $idUser = $_SESSION["userId"][0]["id"];
+    //TODO faire la requête sql pour aller chercher les informations dans la table leasing (attention multitable)
+    $snowsLeasingQuery = 'SELECT snows.code, snows.brand, snows.model, snows.dailyPrice, snows.qtyAvailable FROM snows INNER JOIN leasings ON snows.id = leasings.idSnows INNER JOIN leasings ON users.id = leasings.idUsers WHERE leasing.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    $snowsCartResults = executeQuerySelect($snowsCartQuery);
+    $queryResultLeasing = executeQuerySelect($snowsLeasingQuery);
 
-    return $snowsCartResults;
+    if($queryResultLeasing)
+    {
+        $snowsLeasingResults = $queryResultLeasing;
+    }
+    return $snowsLeasingResults;
 }
-
-
