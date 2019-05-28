@@ -51,6 +51,9 @@ if (isset($_GET['action']))
       case 'updateCartItem':
           updateCartItem($_GET['line'], $_POST);
           break;
+      case 'emptyCart':
+          emptyCart();
+          break;
       case 'confirmLeasing':
           confirmLeasing();
           break;

@@ -106,10 +106,8 @@ function deleteCartRequest($snowLine)
             if (count($_SESSION['cart'])<1)
             {
                 unset ($_SESSION['cart']); //Delete cart
-                require_once "model/snowsManager.php";
-                $snowsResults=getSnows();
-                $_GET['action'] = "displaySnows";
-                require "view/snows.php";
+                $_GET['action'] = "displayCart";
+                require "view/cart.php";
             }
             else
             {
@@ -151,5 +149,19 @@ function updateCartItem($snowLine, $snowUpdateRequest)
         }
     }
     require"view/cart.php";
+}
+
+/**
+ * This function is designed to delete the cart
+ */
+function emptyCart()
+{
+    unset ($_SESSION['cart']); //delete cart
+
+    require_once "model/snowsManager.php";
+    $snowsResults=getSnows();
+
+    $_GET['action'] = "displaySnows";
+    require "view/snows.php";
 }
 //endregion
