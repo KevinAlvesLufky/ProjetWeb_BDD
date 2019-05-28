@@ -15,7 +15,6 @@
  * @param $howManyLeasingDays : contains the days
  * @return $cartUpdated : contains array of the cart update
  */
-
 function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
 
     //set variables
@@ -111,7 +110,8 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
         $qtyOfSnowRequested = $tempQty;
     }
 
-    if ($theSnow[0]["qtyAvailable"]>=$qtyOfSnowRequested){
+    if ($theSnow[0]["qtyAvailable"]>=$qtyOfSnowRequested)
+    {
         return true;
     }
     return false;
@@ -119,7 +119,7 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
 
 /**
  * This function is designed to get the last leasing's id
- * @return
+ * @return $lastId : the last leasing's id
  */
 function getLastIdLeasing()
 {
@@ -139,9 +139,10 @@ function getLastIdLeasing()
 
     return $lastId;
 }
+
 /**
  * This function is designed to manage the insert data cart in the DB
- * @return true or  false
+ * @return true
  */
 function dataInsert()
 {
@@ -182,15 +183,14 @@ function dataInsert()
         $snowsInsertQuery = 'INSERT INTO leasings (idLeasings, idUsers, idSnows, qtySelected, startDate, endDate) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.' )';
 
         require_once 'model/dbConnector.php';
-        //todo corriger l'erreur (return false)
         executeQueryInsert($snowsInsertQuery);
     }
     return true;
 }
 
 /**
- * This function is designed to manage the
- * @return true or  false
+ * This function is designed to get leasings's informations
+ * @return $snowsLeasingResults : array of informations leasing or false
  */
 function getSnowsLeasing()
 {
@@ -199,24 +199,25 @@ function getSnowsLeasing()
     $strSeparator = '\'';
     $idUser = $_SESSION["userId"];
 
+    //take informations leasings
     $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    $queryResultLeasing = executeQuerySelect($snowsLeasingQuery);
+    $snowsLeasingResults = executeQuerySelect($snowsLeasingQuery);
 
-    if($queryResultLeasing)
-    {
-        $snowsLeasingResults = $queryResultLeasing;
-    }
     return $snowsLeasingResults;
 }
 
-
+/**
+ * This function is designed to check if the user have leasings
+ * @return $snowsLeasingResults : array of informations leasing or false
+ */
 function isLeasingOk()
 {
     $strSeparator = '\'';
     $idUser = $_SESSION["userId"][0]["id"];
 
+    //take informations leasings
     $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';

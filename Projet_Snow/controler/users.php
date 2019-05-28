@@ -102,11 +102,11 @@ function createSession($userEmailAddress)
 
     //set user type and id in Session
     require_once "model/usersManager.php";
-    $userId = getUserId($userEmailAddress);
-    $userId = (int)$userId;
+    $userId = getUserId($userEmailAddress); //take user id
+    $userId = (int)$userId; //convert var in int
 
     require_once "model/usersManager.php";
-    $userType = getUserType($userEmailAddress);
+    $userType = getUserType($userEmailAddress); //take user type
 
     $_SESSION['userType'] = $userType;
     $_SESSION['userId'] = $userId;
@@ -124,6 +124,5 @@ function logout()
     session_destroy();
     $_GET['action'] = "home";
     require "view/home.php";
-    $GLOBALS['hasLeasing'] = false;
 }
 //endregion

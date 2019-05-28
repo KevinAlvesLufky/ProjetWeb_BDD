@@ -8,11 +8,14 @@
  */
 
 //region Rent Management
+/**
+ * This function is designed to display the user's leasing page
+ */
 function displayLeasing()
 {
     $_GET['action'] = "displayLeasing";
     require_once"model/cartManager.php";
-    $snowsLeasingResults = getSnowsLeasing();
+    $snowsLeasingResults = getSnowsLeasing(); //take data leasings
     require "view/UserLeasing.php";
 }
 /**
@@ -23,9 +26,8 @@ function confirmLeasing()
     require_once"model/cartManager.php";
     if(dataInsert())
     {
-        $snowsLeasingResults = getSnowsLeasing();
+        $snowsLeasingResults = getSnowsLeasing(); //take data leasings
         unset ($_SESSION['cart']); //delete cart
-        $hasLeasing = true;
     }
     require_once "view/UserLeasing.php";
 }

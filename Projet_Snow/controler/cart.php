@@ -8,6 +8,9 @@
  */
 
 //region Cart Management
+/**
+ * This function is designed to display the cart
+ */
 function displayCart()
 {
     $_GET['action'] = "displayCart";

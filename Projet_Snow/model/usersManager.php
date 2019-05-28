@@ -65,6 +65,7 @@ function getUserType($userEmailAddress){
 
     $strSeparator = '\'';
 
+    //take the id of the user
     $getUserTypeQuery = 'SELECT userType FROM users WHERE users.userEmailAddress =' . $strSeparator . $userEmailAddress . $strSeparator;
 
     require_once 'model/dbConnector.php';
@@ -76,12 +77,18 @@ function getUserType($userEmailAddress){
     return $result;
 }
 
+/**
+ * This function is designed to get the id of user
+ * @param $userEmailAddress : contain the user email address
+ * @return $result : the id of the user connected
+ */
 function getUserId($userEmailAddress)
 {
     $result = false;
 
     $strSeparator = '\'';
 
+    //take the id of the user
     $getUserIdQuery = 'SELECT id FROM users WHERE users.userEmailAddress =' . $strSeparator . $userEmailAddress . $strSeparator;
 
     require_once 'model/dbConnector.php';
