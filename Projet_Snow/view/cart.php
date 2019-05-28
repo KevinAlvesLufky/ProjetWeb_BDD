@@ -51,8 +51,7 @@ ob_start();
                     <th>Nombre de jours</th>
                     <th>Retirer</th>
                 </tr>
-
-
+                
                 <?php
 
                 // Displays cart session's content
