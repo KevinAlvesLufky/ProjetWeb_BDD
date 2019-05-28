@@ -124,5 +124,6 @@ function logout()
     session_destroy();
     $_GET['action'] = "home";
     require "view/home.php";
+    $GLOBALS['hasLeasing'] = false;
 }
 //endregion
