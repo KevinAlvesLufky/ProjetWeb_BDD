@@ -6,8 +6,6 @@
  * Date: 06.05.2017
  * Time: 09:10
  */
-
-global $Leasing;
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -83,16 +81,13 @@ global $Leasing;
                                 <!-- Puis la situation "connecté"-->
                                 <?php else :?>
                                     <li><a href="index.php?action=logout">Logout</a></li>
-                                    <?php $Leasing = false ?>
                                 <?php endif; ?>
                                 <?php if(isset($_SESSION['cart'])) :?>
                                     <li><a href="index.php?action=displayCart"><img src="view/content/images/cart.png">  <?=  count($_SESSION['cart']);?> snow(s)</a></li>
                                 <?php endif; ?>
 
-
-
                                 <!-- Affiche le bouton Location si il y a une location-->
-                                <?php if($Leasing == true):?>
+                                <?php if(isset($snowsLeasingResultsUsers)):?>
                                     <li><a href="index.php?action=displayLeasing">Vos Locations</a></li>
                                 <?php endif; ?>
                             </ul>

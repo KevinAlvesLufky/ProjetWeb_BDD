@@ -61,21 +61,15 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
 
     $lineCode = $currentCart[$lineToChange]["code"];
 
-    foreach ($currentCart as $key => &$item){
-        if ($lineCode == $item["code"] && $nbDaysToChange == $item["nbD"]){
-
-
-        }
-    }
-
     //change data in cart
     for ($i =0;$i<count($currentCart);$i++){
-        if ($i == $lineToChange){
+        if ($i == $lineCode){
 
             if (isDispo($currentCart[$i]["code"],$qtyToChange,$currentCart)) {
                 $currentCart[$i]["qty"] = $qtyToChange;
                 $currentCart[$i]["nbD"] = $nbDaysToChange;
-            }else{
+            }else
+            {
                 return false;
             }
         }
@@ -131,15 +125,16 @@ function getLastIdLeasing()
 {
     $lastId = 0;
 
-    $leasingsIdQuery = 'SELECT id FROM leasings';
+    $leasingsIdQuery = 'SELECT idLeasings FROM leasings';
 
     require_once 'model/dbConnector.php';
     $arrayId = executeQuerySelect($leasingsIdQuery);
 
     foreach($arrayId as $array)
     {
-        $lastId = $array['id'];
+        $lastId = $array['idLeasings'];
     }
+
     $lastId +=1;
 
     return $lastId;
@@ -152,11 +147,11 @@ function dataInsert()
 {
     $strSeparator = '\'';
     $idLeasing = getLastIdLeasing();
+    $snowsData[] = "";
 
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
         //set variables
-        $snowsInsertResults = false;
         $startDate = $_SESSION['cart'][$i]['dateD'];
         $addDate = $_SESSION['cart'][$i]['nbD'];
         $timeStamp = strtotime($startDate);
@@ -169,32 +164,28 @@ function dataInsert()
         $snowsDataQuery = 'SELECT id, qtyAvailable FROM snows WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
-        $snowsData = executeQuerySelect($snowsDataQuery);
+        $snowsData[$i] = executeQuerySelect($snowsDataQuery);
 
         //change the qantity snows
-        $snowsData[$i]["qtyAvailable"] -= $_SESSION['cart'][$i]['qty'];
-        $snowsQtyQuery = 'UPDATE snows SET qtyAvailable = '.$snowsData[$i]["qtyAvailable"].' WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
+        $snowsData[$i][0]["qtyAvailable"] -= $_SESSION['cart'][$i]['qty'];
+        $snowsQtyQuery = 'UPDATE snows SET qtyAvailable = '.$snowsData[$i][0]["qtyAvailable"].' WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
         executeQueryInsert($snowsQtyQuery);
 
         //insert leasing informations
         $idUser = $_SESSION["userId"];
-        $idSnow = $snowsData[$i]["id"];
+        $idSnow = $snowsData[$i][0]["id"];
         $idSnow = (int)$idSnow;
+        $qtySelected = $_SESSION['cart'][$i]['qty'];
 
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$startDate.','.$endDate.' )';
+        $snowsInsertQuery = 'INSERT INTO leasings (idLeasings, idUsers, idSnows, qtySelected, startDate, endDate) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.' )';
 
         require_once 'model/dbConnector.php';
         //todo corriger l'erreur (return false)
-        $queryResult = executeQueryInsert($snowsInsertQuery);
-
-        if($queryResult)
-        {
-            $snowsInsertResults = $queryResult;
-        }
-        return $snowsInsertResults;
+        executeQueryInsert($snowsInsertQuery);
     }
+    return true;
 }
 
 /**
@@ -203,10 +194,12 @@ function dataInsert()
  */
 function getSnowsLeasing()
 {
+    $snowsLeasingResults = false;
+
     $strSeparator = '\'';
-    $idUser = $_SESSION["userId"][0]["id"];
-    //TODO faire la requête sql pour aller chercher les informations dans la table leasing (attention multitable)
-    $snowsLeasingQuery = 'SELECT snows.code, snows.brand, snows.model, snows.dailyPrice, snows.qtyAvailable FROM snows INNER JOIN leasings ON snows.id = leasings.idSnows INNER JOIN leasings ON users.id = leasings.idUsers WHERE leasing.idUsers ='. $strSeparator . $idUser . $strSeparator;
+    $idUser = $_SESSION["userId"];
+
+    $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
     $queryResultLeasing = executeQuerySelect($snowsLeasingQuery);
@@ -218,23 +211,16 @@ function getSnowsLeasing()
     return $snowsLeasingResults;
 }
 
+
 function isLeasingOk()
 {
     $strSeparator = '\'';
     $idUser = $_SESSION["userId"][0]["id"];
 
-    $snowsLeasingQuery = 'SELECT snows.code, snows.brand, snows.model, snows.dailyPrice, snows.qtyAvailable FROM snows INNER JOIN leasings ON snows.id = leasings.idSnows INNER JOIN leasings ON users.id = leasings.idUsers WHERE leasing.idUsers ='. $strSeparator . $idUser . $strSeparator;
+    $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    $queryResult = executeQuerySelect($snowsLeasingQuery);
+    $snowsLeasingResults = executeQuerySelect($snowsLeasingQuery);
 
-    if($queryResult)
-    {
-        $Leasing = true;
-    }
-    else
-    {
-        $Leasing = false;
-    }
-    return $Leasing;
+    return $snowsLeasingResults;
 }

@@ -8,6 +8,11 @@
  */
 
 //region Cart Management
+function displayCart()
+{
+    $_GET['action'] = "displayCart";
+    require_once "view/cart.php";
+}
 /**
  * This function is designed to get only one snow results (for aSnow view)
  * @param $snowCode : contains the code of the snow

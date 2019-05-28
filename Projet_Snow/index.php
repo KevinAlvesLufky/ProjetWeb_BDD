@@ -54,6 +54,9 @@ if (isset($_GET['action']))
       case 'confirmLeasing':
           confirmLeasing();
           break;
+      case 'displayLeasing':
+          displayLeasing();
+          break;
       default :
           home();
   }

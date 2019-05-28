@@ -14,32 +14,40 @@ ob_start();
     <h2>Vos locations</h2>
     <?php
     // If user's leasing is valid, show a text Message
+                    if( $snowsLeasingResults == false)
+                    {
 
-    ?>
-    <article>
-            <table class="table">
-                <tr>
-                    <th>N° Location</th><th>Code</th><th>Marque</th><th>Modèle</th><th>Prix</th><th>Quantité</th><th>Date début de Location</th>
-                </tr>
-                <?php
-                // Displays user's leasing content
-                for ($i=0; $i < count($_SESSION['leasing']); $i++)
-                {
-                        echo "<tr>";
-                            echo "<td>".$snowsInsertResults[$i]['id']."</td>";
-                            echo "<td>".$snowsLeasingResults[$i]['code']."</td>";
-                            echo "<td>".$snowsLeasingResults[$i]['brand']."</td>";
-                            echo "<td>".$snowsLeasingResults[$i]['model']."</td>";
-                            echo "<td>".$snowsLeasingResults[$i]['dailyPrice']."</td>";
-                            echo "<td>".$snowsLeasingResults[$i]['qtyAvailable']."</td>";
-                            echo "<td>".$snowsInsertResults[$i]['startDate']."</td>";
-                         echo "</tr>";
-                }
+                        echo "<p>"."Vous n'avez aucune location pour le moment"."</p>";
+
+                    }
+                    else
+                    {
                 ?>
+                <article>
+                    <table class="table">
+                        <tr>
+                            <th>N° Location</th><th>Code</th><th>Marque</th><th>Modèle</th><th>Prix</th><th>Quantité</th><th>Date début de Location</th>
+                        </tr>
+                        <?php
+                        // Displays user's leasing content
+                        for ($i = 0; $i < count($snowsLeasingResults) ; $i++) {
+                            echo "<tr>";
+                            echo "<td>" . $snowsLeasingResults[$i]['idLeasings'] . "</td>";
+                            echo "<td>" . $snowsLeasingResults[$i]['code'] . "</td>";
+                            echo "<td>" . $snowsLeasingResults[$i]['brand'] . "</td>";
+                            echo "<td>" . $snowsLeasingResults[$i]['model'] . "</td>";
+                            echo "<td>" . $snowsLeasingResults[$i]['dailyPrice'] . "</td>";
+                            echo "<td>" . $snowsLeasingResults[$i]['qtySelected'] . "</td>";
+                            echo "<td>" . $snowsLeasingResults[$i]['startDate'] . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
 
-            </table>
-    </article>
-<?php
+                    </table>
+                </article>
+                        <?php
+                    }
+
 $content = ob_get_clean();
 require 'gabarit.php';
 ?>

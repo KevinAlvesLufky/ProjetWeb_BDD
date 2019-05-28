@@ -20,7 +20,6 @@ ob_start();
               <p> <?=$warning;?> </p>
           </div>
       <?php endif; ?>
-        <form method="POST" action="index.php?action=displaySnows">
             <table class="table">
                 <tr>
                     <th>Code</th><th>Date</th><th>Quantité</th><th>Nombre de jours</th><th>Retirer</th>
@@ -47,12 +46,11 @@ ob_start();
                 ?>
 
             </table>
-            <input type="submit" value="Louer encore" class="btn btn-info" name="backToCatalog">
+            <a href="index.php?action=displaySnows" class="btn btn-info">Louer encore</a>
             <input type="submit" value="Vider le panier" class="btn btn-cancel" name="resetCart">
             <form method='POST' action='index.php?action=confirmLeasing'>
                     <input type="submit" value="Finaliser ma location" class="btn btn-success" name="submitLeasing">
             </form>
-        </form>
     </article>
 <?php
 $content = ob_get_clean();

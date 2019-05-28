@@ -11,6 +11,8 @@
 function displayLeasing()
 {
     $_GET['action'] = "displayLeasing";
+    require_once"model/cartManager.php";
+    $snowsLeasingResults = getSnowsLeasing();
     require "view/UserLeasing.php";
 }
 /**
@@ -19,11 +21,13 @@ function displayLeasing()
 function confirmLeasing()
 {
     require_once"model/cartManager.php";
-    if(dataInsert() && getSnowsLeasing())
+    if(dataInsert())
     {
+        $snowsLeasingResults = getSnowsLeasing();
         unset ($_SESSION['cart']); //delete cart
+        $hasLeasing = true;
     }
-    require "view/UserLeasing.php";
+    require_once "view/UserLeasing.php";
 }
 
 //endregion

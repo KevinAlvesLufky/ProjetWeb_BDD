@@ -52,8 +52,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Export de la structure de la table snows. leasings
 CREATE TABLE IF NOT EXISTS `leasings` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idLeasings` int(10) UNSIGNED NOT NULL,
   `idUsers` int(10) UNSIGNED NOT NULL,
   `idSnows` int(10) UNSIGNED NOT NULL,
+  `qtySelected` int(10) UNSIGNED NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
   PRIMARY KEY (`id`)
