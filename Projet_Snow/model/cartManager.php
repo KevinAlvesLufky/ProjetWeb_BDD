@@ -40,7 +40,7 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
     if (!$alreadyExist) {
 
         //put data in the array
-        $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("d-m-y"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
+        $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("Y-m-d"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
         array_push($cartUpdated, $newSnowLeasing);
     }
     if (!isDispo($snowCodeToAdd,$qtyOfSnowsToAdd,$cartUpdated)){
@@ -129,6 +129,8 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
  */
 function getLastIdLeasing()
 {
+    $lastId = 0;
+
     $leasingsIdQuery = 'SELECT id FROM leasings';
 
     require_once 'model/dbConnector.php';
@@ -138,7 +140,6 @@ function getLastIdLeasing()
     {
         $lastId = $array['id'];
     }
-    $lastId = (int)$lastId;
     $lastId +=1;
 
     return $lastId;
@@ -156,11 +157,12 @@ function dataInsert()
     {
         //set variables
         $snowsInsertResults = false;
-        $date = $_SESSION['cart'][$i]['dateD'];
-        $startDate = date('d-m-y', strtotime($date));
+        $startDate = $_SESSION['cart'][$i]['dateD'];
         $addDate = $_SESSION['cart'][$i]['nbD'];
         $timeStamp = strtotime($startDate);
-        $endDate = date('d-m-y', strtotime('+'.$addDate.'days', $timeStamp ));
+        $endDate = date("Y-m-d", strtotime('+'.$addDate.'days', $timeStamp ));
+        $startDate = $strSeparator . $startDate . $strSeparator;
+        $endDate = $strSeparator . $endDate . $strSeparator;
         $snowCode = $_SESSION['cart'][$i]['code'];
 
         //take informations snows
@@ -171,18 +173,21 @@ function dataInsert()
 
         //change the qantity snows
         $snowsData[$i]["qtyAvailable"] -= $_SESSION['cart'][$i]['qty'];
-        $snowsQtyQuery = 'INSERT INTO snows (qtyAvailable ) VALUES ('.$snowsData[$i]["qtyAvailable"].') WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
+        $snowsQtyQuery = 'UPDATE snows SET qtyAvailable = '.$snowsData[$i]["qtyAvailable"].' WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
         require_once 'model/dbConnector.php';
         executeQueryInsert($snowsQtyQuery);
 
         //insert leasing informations
-        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$idLeasing.','.$_SESSION["userId"][0]["id"].','.$snowsData[$i]["id"].','.$date.','.$endDate.' )';
+        $idUser = $_SESSION["userId"];
+        $idSnow = $snowsData[$i]["id"];
+        $idSnow = (int)$idSnow;
 
+        $snowsInsertQuery = 'INSERT INTO leasings (id, idUsers, idSnows, startDate, endDate) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$startDate.','.$endDate.' )';
 
         require_once 'model/dbConnector.php';
         //todo corriger l'erreur (return false)
-        $queryResult = executeQuerySelect($snowsInsertQuery);
+        $queryResult = executeQueryInsert($snowsInsertQuery);
 
         if($queryResult)
         {
