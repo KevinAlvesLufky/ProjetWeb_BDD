@@ -87,7 +87,7 @@
                                 <?php endif; ?>
 
                                 <!-- Affiche le bouton Location si il y a une location-->
-                                <?php if(isset($_SESSION["userId"])):?>
+                                <?php if(isset($_SESSION["userType"]==4 || $snowsLeasingResults)):?>
                                     <li><a href="index.php?action=displayLeasing">Vos Locations</a></li>
                                 <?php endif; ?>
                             </ul>
