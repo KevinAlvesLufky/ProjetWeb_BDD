@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `userEmailAddress` varchar(255) NOT NULL,
   `userHashPsw` varchar(255) NOT NULL,
-  `pseudo` varchar(255) NOT NULL,
+  `userType` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `userEmailAddress` (`userEmailAddress`)
 );
@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `leasings` (
   `qtySelected` int(10) UNSIGNED NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
+  `status` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
