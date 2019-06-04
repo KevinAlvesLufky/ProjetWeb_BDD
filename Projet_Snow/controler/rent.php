@@ -9,14 +9,34 @@
 
 //region Rent Management
 /**
- * This function is designed to display the user's leasing page
+ * This function is designed to display the leasing page
  */
 function displayLeasing()
 {
     $_GET['action'] = "displayLeasing";
     require_once"model/rentManager.php";
+
     $snowsLeasingResults = getSnowsLeasing(); //take data leasings
-    require "view/UserLeasing.php";
+
+    if (isset($_SESSION['userType']))
+    {
+        switch ($_SESSION['userType'])
+        {
+            case 1://this is a customer
+                require "view/UserLeasing.php";
+                break;
+            case 2://this a seller
+                require "view/sellerOverview.php";
+                break;
+            default:
+                require "view/UserLeasing.php";
+                break;
+        }
+    }
+    else
+    {
+        require "view/UserLeasing.php";
+    }
 }
 /**
  * This function is designed to manage the confirmation of the leasing
