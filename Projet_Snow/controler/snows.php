@@ -9,7 +9,7 @@
 
 //region snows management
 /**
- * This function is designed to display Snows
+ * This function is designed to display all Snows
  * There are two different view available.
  * One for the seller, an other one for the customer.
  */

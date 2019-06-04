@@ -1,4 +1,11 @@
 <?php
+/**
+ * This file contain all functions about the rent
+ * Created by PhpStorm.
+ * User: Thomas Huguet
+ * Date: 06.05.2017
+ * Time: 09:10
+ */
 
 /**
  * This function is designed to get the last leasing's id
@@ -62,8 +69,9 @@ function dataInsert()
         $idSnow = $snowsData[$i][0]["id"];
         $idSnow = (int)$idSnow;
         $qtySelected = $_SESSION['cart'][$i]['qty'];
+        $status = "En cours";
 
-        $snowsInsertQuery = 'INSERT INTO leasings (idLeasings, idUsers, idSnows, qtySelected, startDate, endDate) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.' )';
+        $snowsInsertQuery = 'INSERT INTO leasings (idLeasings, idUsers, idSnows, qtySelected, startDate, endDate, status) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.','.$status.')';
 
         require_once 'model/dbConnector.php';
         executeQueryInsert($snowsInsertQuery);
