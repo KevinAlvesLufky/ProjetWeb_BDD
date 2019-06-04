@@ -14,7 +14,7 @@
 function displayLeasing()
 {
     $_GET['action'] = "displayLeasing";
-    require_once"model/cartManager.php";
+    require_once"model/rentManager.php";
     $snowsLeasingResults = getSnowsLeasing(); //take data leasings
     require "view/UserLeasing.php";
 }
@@ -23,7 +23,7 @@ function displayLeasing()
  */
 function confirmLeasing()
 {
-    require_once"model/cartManager.php";
+    require_once"model/rentManager.php";
     if(dataInsert())
     {
         $snowsLeasingResults = getSnowsLeasing(); //take data leasings
