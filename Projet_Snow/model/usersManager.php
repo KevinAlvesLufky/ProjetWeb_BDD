@@ -41,10 +41,10 @@ function registerNewAccount($userEmailAddress, $userPsw){
     $result = false;
 
     $strSeparator = '\'';
-
     $userHashPsw = password_hash($userPsw, PASSWORD_DEFAULT);
+    $userType = 1;
 
-    $registerQuery = 'INSERT INTO users (`userEmailAddress`, `userHashPsw`, `pseudo`) VALUES ('.$strSeparator . $userEmailAddress .$strSeparator . ','.$strSeparator . $userHashPsw .$strSeparator.','.$strSeparator.$strSeparator.')';
+    $registerQuery = 'INSERT INTO users (`userEmailAddress`, `userHashPsw`, `userType`) VALUES ('.$strSeparator . $userEmailAddress .$strSeparator . ','.$strSeparator . $userHashPsw .$strSeparator.','.$strSeparator . $userType .$strSeparator.')';
 
     require_once 'model/dbConnector.php';
     $queryResult = executeQueryInsert($registerQuery);
