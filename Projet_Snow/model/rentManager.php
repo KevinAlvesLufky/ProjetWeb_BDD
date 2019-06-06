@@ -86,7 +86,7 @@ function dataInsert()
 function getSnowsLeasing()
 {
     global $haveLeasing;
-    $haveLeasing = false;
+    $GLOBALS['haveLeasing'] = false;
 
     $strSeparator = '\'';
     $idUser = $_SESSION["userId"];
@@ -95,7 +95,7 @@ function getSnowsLeasing()
     $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    $haveLeasing = executeQuerySelect($snowsLeasingQuery);
+    $GLOBALS['haveLeasing'] = executeQuerySelect($snowsLeasingQuery);
 
-    return $haveLeasing;
+    return $GLOBALS['haveLeasing'];
 }
