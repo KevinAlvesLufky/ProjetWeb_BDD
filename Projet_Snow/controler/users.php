@@ -112,7 +112,7 @@ function createSession($userEmailAddress)
     $_SESSION['userId'] = $userId;
 
     require_once 'model/rentManager.php';
-    isLeasingOk();
+    getSnowsLeasing();
 }
 
 /**

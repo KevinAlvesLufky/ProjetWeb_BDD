@@ -69,7 +69,7 @@ function dataInsert()
         $idSnow = $snowsData[$i][0]["id"];
         $idSnow = (int)$idSnow;
         $qtySelected = $_SESSION['cart'][$i]['qty'];
-        $status = "En cours";
+        $status = '"En cours"';
 
         $snowsInsertQuery = 'INSERT INTO leasings (idLeasings, idUsers, idSnows, qtySelected, startDate, endDate, status) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.','.$status.')';
 
@@ -85,7 +85,8 @@ function dataInsert()
  */
 function getSnowsLeasing()
 {
-    $snowsLeasingResults = false;
+    global $haveLeasing;
+    $haveLeasing = false;
 
     $strSeparator = '\'';
     $idUser = $_SESSION["userId"];
@@ -94,25 +95,7 @@ function getSnowsLeasing()
     $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    $snowsLeasingResults = executeQuerySelect($snowsLeasingQuery);
+    $haveLeasing = executeQuerySelect($snowsLeasingQuery);
 
-    return $snowsLeasingResults;
-}
-
-/**
- * This function is designed to check if the user have leasings
- * @return $snowsLeasingResults : array of informations leasing or false
- */
-function isLeasingOk()
-{
-    $strSeparator = '\'';
-    $idUser = $_SESSION["userId"][0]["id"];
-
-    //take informations leasings
-    $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
-
-    require_once 'model/dbConnector.php';
-    $snowsLeasingResults = executeQuerySelect($snowsLeasingQuery);
-
-    return $snowsLeasingResults;
+    return $haveLeasing;
 }

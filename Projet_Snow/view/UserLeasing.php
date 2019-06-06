@@ -14,7 +14,7 @@ ob_start();
     <h2>Vos locations</h2>
     <?php
     //if the user doesn't have leasings
-    if( $snowsLeasingResults == false)
+    if( $haveLeasing == false)
     {
         echo "<p>"."Vous n'avez aucune location pour le moment"."</p>";
     }
@@ -28,16 +28,16 @@ ob_start();
                 </tr>
                 <?php
                     // Displays user's leasing content
-                    for ($i = 0; $i < count($snowsLeasingResults) ; $i++)
+                    for ($i = 0; $i < count($haveLeasing) ; $i++)
                     {
                         echo "<tr>";
-                        echo "<td>" . $snowsLeasingResults[$i]['idLeasings'] . "</td>";
-                        echo "<td>" . $snowsLeasingResults[$i]['code'] . "</td>";
-                        echo "<td>" . $snowsLeasingResults[$i]['brand'] . "</td>";
-                        echo "<td>" . $snowsLeasingResults[$i]['model'] . "</td>";
-                        echo "<td>" . $snowsLeasingResults[$i]['dailyPrice'] . "</td>";
-                        echo "<td>" . $snowsLeasingResults[$i]['qtySelected'] . "</td>";
-                        echo "<td>" . $snowsLeasingResults[$i]['startDate'] . "</td>";
+                        echo "<td>" . $haveLeasing[$i]['idLeasings'] . "</td>";
+                        echo "<td>" . $haveLeasing[$i]['code'] . "</td>";
+                        echo "<td>" . $haveLeasing[$i]['brand'] . "</td>";
+                        echo "<td>" . $haveLeasing[$i]['model'] . "</td>";
+                        echo "<td>" . $haveLeasing[$i]['dailyPrice'] . "</td>";
+                        echo "<td>" . $haveLeasing[$i]['qtySelected'] . "</td>";
+                        echo "<td>" . $haveLeasing[$i]['startDate'] . "</td>";
                         echo "</tr>";
                     }
                 ?>
