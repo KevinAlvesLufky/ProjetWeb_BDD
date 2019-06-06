@@ -26,7 +26,7 @@ ob_start();
                     <th>Code</th><th>Quantité</th><th>Prise</th><th>Retour</th><th>Statut</th>
                 </tr>
                 <?php
-                foreach ($LocationResults as $result) : ?>
+                foreach ($LeasingResults as $result) : ?>
                     <tr>
                         <td><?= $result['code']; ?></td>
                         <td><?= $result['qty']; ?></td>

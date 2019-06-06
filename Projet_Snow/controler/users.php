@@ -111,7 +111,7 @@ function createSession($userEmailAddress)
     $_SESSION['userType'] = $userType;
     $_SESSION['userId'] = $userId;
 
-    require_once 'model/cartManager.php';
+    require_once 'model/rentManager.php';
     isLeasingOk();
 }
 

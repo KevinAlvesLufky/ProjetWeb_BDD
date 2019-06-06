@@ -58,13 +58,12 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
  */
 function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
 
-    $lineCode = $currentCart[$lineToChange]["code"];
-
     //change data in cart
     for ($i =0;$i<count($currentCart);$i++){
-        if ($i == $lineCode){
-
-            if (isDispo($currentCart[$i]["code"],$qtyToChange,$currentCart)) {
+        if ($i == $lineToChange)
+        {
+            if (isDispo($currentCart[$i]["code"],$qtyToChange,$currentCart))
+            {
                 $currentCart[$i]["qty"] = $qtyToChange;
                 $currentCart[$i]["nbD"] = $nbDaysToChange;
             }else
