@@ -46,8 +46,6 @@ ob_start();
         </div>
     </header>
 </article>
-<hr/>
-
 <?php
 $content = ob_get_clean();
 require 'gabarit.php';
