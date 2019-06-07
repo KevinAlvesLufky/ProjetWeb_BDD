@@ -14,7 +14,7 @@ ob_start();
     <h2>Vos locations</h2>
     <?php
     //if the user doesn't have leasings
-    if( $GLOBALS['haveLeasing'] == false)
+    if( $_SESSION["haveLeasing"] == false)
     {
         echo "<p>"."Vous n'avez aucune location pour le moment"."</p>";
     }
@@ -28,16 +28,16 @@ ob_start();
                 </tr>
                 <?php
                     // Displays user's leasing content
-                    for ($i = 0; $i < count($GLOBALS['haveLeasing']) ; $i++)
+                    for ($i = 0; $i < count($_SESSION["haveLeasing"]) ; $i++)
                     {
                         echo "<tr>";
-                        echo "<td>" . $GLOBALS['haveLeasing'][$i]['idLeasings'] . "</td>";
-                        echo "<td>" . $GLOBALS['haveLeasing'][$i]['code'] . "</td>";
-                        echo "<td>" . $GLOBALS['haveLeasing'][$i]['brand'] . "</td>";
-                        echo "<td>" . $GLOBALS['haveLeasing'][$i]['model'] . "</td>";
-                        echo "<td>" . $GLOBALS['haveLeasing'][$i]['dailyPrice'] . "</td>";
-                        echo "<td>" . $GLOBALS['haveLeasing'][$i]['qtySelected'] . "</td>";
-                        echo "<td>" . $GLOBALS['haveLeasing'][$i]['startDate'] . "</td>";
+                        echo "<td>" . $_SESSION["haveLeasing"][$i]['idLeasings'] . "</td>";
+                        echo "<td>" . $_SESSION["haveLeasing"][$i]['code'] . "</td>";
+                        echo "<td>" . $_SESSION["haveLeasing"][$i]['brand'] . "</td>";
+                        echo "<td>" . $_SESSION["haveLeasing"][$i]['model'] . "</td>";
+                        echo "<td>" . $_SESSION["haveLeasing"][$i]['dailyPrice'] . "</td>";
+                        echo "<td>" . $_SESSION["haveLeasing"][$i]['qtySelected'] . "</td>";
+                        echo "<td>" . $_SESSION["haveLeasing"][$i]['startDate'] . "</td>";
                         echo "</tr>";
                     }
                 ?>

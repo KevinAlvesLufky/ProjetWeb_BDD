@@ -16,7 +16,7 @@ function displayLeasing()
     $_GET['action'] = "displayLeasing";
     require_once"model/rentManager.php";
 
-    $GLOBALS['haveLeasing'] = getSnowsLeasing(); //take data leasings
+    $_SESSION["haveLeasing"] = getSnowsLeasing(); //take data leasings
 
     if (isset($_SESSION['userType']))
     {
@@ -38,6 +38,19 @@ function displayLeasing()
         require "view/UserLeasing.php";
     }
 }
+
+/**
+ * This function is designed to display the manage leasing page
+ */
+function displayManageLeasing($idLeasing)
+{
+    $_GET['action'] = "displayManageLeasing";
+    require_once"model/rentManager.php";
+    $leasingsResults= getALeasing($idLeasing);
+    require_once"view/sellerManageLeasing.php";
+
+}
+
 /**
  * This function is designed to manage the confirmation of the leasing
  */
@@ -46,7 +59,7 @@ function confirmLeasing()
     require_once"model/rentManager.php";
     if(dataInsert())
     {
-        $GLOBALS['haveLeasing'] = getSnowsLeasing();
+        $_SESSION["haveLeasing"] = getSnowsLeasing();
         unset ($_SESSION['cart']); //delete cart
     }
     require_once "view/UserLeasing.php";

@@ -60,6 +60,9 @@ if (isset($_GET['action']))
       case 'displayLeasing':
           displayLeasing();
           break;
+      case 'displayManageLeasing':
+          displayManageLeasing($_GET['idLeasing']);
+          break;
       default :
           home();
   }
