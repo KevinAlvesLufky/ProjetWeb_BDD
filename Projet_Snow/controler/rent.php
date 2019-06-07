@@ -52,6 +52,15 @@ function displayManageLeasing($idLeasing)
 }
 
 /**
+ * This function is designed to manage displaySellerOverview request
+ */
+function displaySellerOverview()
+{
+    $_GET['action'] = "displaySellerOverview";
+    require_once "view/sellerOverview.php";
+}
+
+/**
  * This function is designed to manage the confirmation of the leasing
  */
 function confirmLeasing()

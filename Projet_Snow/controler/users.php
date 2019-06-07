@@ -133,12 +133,5 @@ function logout()
     require "view/home.php";
 }
 
-/**
- * This function is designed to manage displaySellerOverview request
- */
-function displaySellerOverview()
-{
-    $_GET['action'] = "displaySellerOverview";
-    require_once "view/sellerOverview.php";
-}
+
 //endregion
