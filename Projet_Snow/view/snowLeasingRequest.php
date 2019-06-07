@@ -11,14 +11,17 @@ $title = 'Rent A Snow - Demande de location';
 
 ob_start();
 ?>
+</br>
 <h2>Demande de location</h2>
 <article>
+
     <!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
     <?php if(isset($warning)): ?>
         <div class="isa_error">
             <i class="fa fa-times-circle"></i>
             <p> <?=$warning;?> </p>
         </div>
+
     <?php endif; ?>
     <h4>Votre choix</h4>
     <table class="table">
