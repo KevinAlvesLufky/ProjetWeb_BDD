@@ -17,6 +17,7 @@ $title="RentASnow - Accueil";
     <div class="isa_error">
         <i class="fa fa-times-circle"></i>
         <p> <?=$warning;?> </p>
+<?php endif ?>
 <div class="span12" id="divMain">
   <h1>Nos activités</h1>
 
@@ -79,5 +80,6 @@ Un contrat sera signé à chaque location. D'autre part nous travaillons en étr
                 </div>
 
 <?php
-  $content = ob_get_clean();
-  require "gabarit.php";
+$content = ob_get_clean();
+require 'gabarit.php';
+?>
