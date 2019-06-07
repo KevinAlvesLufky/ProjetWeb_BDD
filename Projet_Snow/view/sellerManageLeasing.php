@@ -41,6 +41,8 @@ ob_start();
                 <?php endforeach ?>
               </form>
             </table>
+            <a href="index.php?action=" class="btn btn-info">Retour à la vue d'ensemble</a>
+            <a href="index.php?action=" class="btn btn-success">Enregistrer les modifications</a>
         </div>
     </header>
 </article>

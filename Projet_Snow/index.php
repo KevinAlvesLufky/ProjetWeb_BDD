@@ -43,7 +43,7 @@ if (isset($_GET['action']))
           displayCart();
           break;
       case 'updateCartRequest':
-           updateCartRequest($_GET['code'], $_POST);
+          updateCartRequest($_GET['code'], $_POST);
           break;
       case 'deleteCartRequest':
           deleteCartRequest($_GET['line']);
