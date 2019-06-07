@@ -63,9 +63,6 @@ if (isset($_GET['action']))
       case 'displayManageLeasing':
           displayManageLeasing($_GET['idLeasing']);
           break;
-      case 'displaySellerOverview':
-          displaySellerOverview();
-          break;
       default :
           home();
   }
