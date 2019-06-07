@@ -12,6 +12,11 @@ ob_start();
 $title="RentASnow - Accueil";
 ?>
 
+<!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
+<?php if(isset($warning)): ?>
+    <div class="isa_error">
+        <i class="fa fa-times-circle"></i>
+        <p> <?=$warning;?> </p>
 <div class="span12" id="divMain">
   <h1>Nos activités</h1>
 
