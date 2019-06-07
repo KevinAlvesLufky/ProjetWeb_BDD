@@ -15,33 +15,39 @@
  */
 function displaySnows()
 {
-    if (isset($_POST['resetCart']))
-    {
-        unset($_SESSION['cart']);
-    }
 
-    require_once "model/snowsManager.php";
-    $snowsResults = getSnows();
-
-    $_GET['action'] = "displaySnows";
-    if (isset($_SESSION['userType']))
+    //test the database connexion
+    require_once "model/dbConnector.php";
+    if(testDBConnexion())
     {
-        switch ($_SESSION['userType'])
+        if (isset($_POST['resetCart']))
         {
-            case 1://this is a customer
-                require "view/snows.php";
-                break;
-            case 2://this a seller
-                require "view/snowsSeller.php";
-                break;
-            default:
-                require "view/snows.php";
-                break;
+            unset($_SESSION['cart']);
         }
-    }
-    else
-    {
-        require "view/snows.php";
+
+        require_once "model/snowsManager.php";
+        $snowsResults = getSnows();
+
+        $_GET['action'] = "displaySnows";
+        if (isset($_SESSION['userType']))
+        {
+            switch ($_SESSION['userType'])
+            {
+                case 1://this is a customer
+                    require "view/snows.php";
+                    break;
+                case 2://this a seller
+                    require "view/snowsSeller.php";
+                    break;
+                default:
+                    require "view/snows.php";
+                    break;
+            }
+        }
+        else
+        {
+            require "view/snows.php";
+        }
     }
 }
 

@@ -23,33 +23,38 @@ function home()
  */
 function login($loginRequest)
 {
-    //if a login request was submitted
-    if (isset($loginRequest['inputUserEmailAddress']) && isset($loginRequest['inputUserPsw']))
+    //test the database connexion
+    require_once "model/dbConnector.php";
+    if(testDBConnexion())
     {
-        //extract login parameters
-        $userEmailAddress = $loginRequest['inputUserEmailAddress'];
-        $userPsw = $loginRequest['inputUserPsw'];
-
-        //try to check if user/psw are matching with the database
-        require_once "model/usersManager.php";
-        if (isLoginCorrect($userEmailAddress, $userPsw))
+        //if a login request was submitted
+        if (isset($loginRequest['inputUserEmailAddress']) && isset($loginRequest['inputUserPsw']))
         {
-            createSession($userEmailAddress);
-            $_GET['loginError'] = false;
-            $_GET['action'] = "home";
-            require "view/home.php";
+            //extract login parameters
+            $userEmailAddress = $loginRequest['inputUserEmailAddress'];
+            $userPsw = $loginRequest['inputUserPsw'];
+
+            //try to check if user/psw are matching with the database
+            require_once "model/usersManager.php";
+            if (isLoginCorrect($userEmailAddress, $userPsw))
+            {
+                createSession($userEmailAddress);
+                $_GET['loginError'] = false;
+                $_GET['action'] = "home";
+                require "view/home.php";
+            }
+            else
+            { //if the user/psw does not match, login form appears again
+                $_GET['loginError'] = true;
+                $_GET['action'] = "login";
+                require "view/login.php";
+            }
         }
         else
-        { //if the user/psw does not match, login form appears again
-            $_GET['loginError'] = true;
+        {   //the user does not yet fills the form
             $_GET['action'] = "login";
             require "view/login.php";
         }
-    }
-    else
-    {   //the user does not yet fills the form
-        $_GET['action'] = "login";
-        require "view/login.php";
     }
 }
 
@@ -59,36 +64,41 @@ function login($loginRequest)
  */
 function register($registerRequest)
 {
-    //if a register request was submitted
-    if (isset($registerRequest['inputUserEmailAddress']) && isset($registerRequest['inputUserPsw']) && isset($registerRequest['inputUserPswRepeat']))
+    //test the database connexion
+    require_once "model/dbConnector.php";
+    if(testDBConnexion())
     {
-        //extract register parameters
-        $userEmailAddress = $registerRequest['inputUserEmailAddress'];
-        $userPsw = $registerRequest['inputUserPsw'];
-        $userPswRepeat = $registerRequest['inputUserPswRepeat'];
-
-        if ($userPsw == $userPswRepeat)
+        //if a register request was submitted
+        if (isset($registerRequest['inputUserEmailAddress']) && isset($registerRequest['inputUserPsw']) && isset($registerRequest['inputUserPswRepeat']))
         {
-            require_once "model/usersManager.php";
-            if (registerNewAccount($userEmailAddress, $userPsw))
+            //extract register parameters
+            $userEmailAddress = $registerRequest['inputUserEmailAddress'];
+            $userPsw = $registerRequest['inputUserPsw'];
+            $userPswRepeat = $registerRequest['inputUserPswRepeat'];
+
+            if ($userPsw == $userPswRepeat)
             {
-                createSession($userEmailAddress);
-                $_GET['registerError'] = false;
-                $_GET['action'] = "home";
-                require "view/home.php";
+                require_once "model/usersManager.php";
+                if (registerNewAccount($userEmailAddress, $userPsw))
+                {
+                    createSession($userEmailAddress);
+                    $_GET['registerError'] = false;
+                    $_GET['action'] = "home";
+                    require "view/home.php";
+                }
+            }
+            else
+            {
+                $_GET['registerError'] = true;
+                $_GET['action'] = "register";
+                require "view/register.php";
             }
         }
         else
         {
-            $_GET['registerError'] = true;
             $_GET['action'] = "register";
             require "view/register.php";
         }
-    }
-    else
-    {
-        $_GET['action'] = "register";
-        require "view/register.php";
     }
 }
 
@@ -132,6 +142,5 @@ function logout()
     $_GET['action'] = "home";
     require "view/home.php";
 }
-
 
 //endregion

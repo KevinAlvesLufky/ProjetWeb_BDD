@@ -70,3 +70,32 @@ function openDBConnexion (){
     }
     return $tempDbConnexion;
 }
+
+/**
+ * This function is designed to manage the database connexion's test
+ * @return PDO|null
+ */
+function testDBConnexion()
+{
+    $tempDbConnexion = null;
+
+    $sqlDriver = 'mysql';
+    $hostname = 'localhost';
+    $port = 3306;
+    $charset = 'utf8';
+    $dbName = 'snows';
+    $userName = 'appliConnector';
+    $userPwd = '123qweasD$';
+    $dsn = $sqlDriver . ':host=' . $hostname . ';dbname=' . $dbName . ';port=' . $port . ';charset=' . $charset;
+
+    try
+    {
+        $tempDbConnexion = new PDO($dsn, $userName, $userPwd);
+    }
+    catch (PDOException $exception)
+    {
+        $_GET['action'] = "home";
+        require_once"view/home.php";
+    }
+    return $tempDbConnexion;
+}
