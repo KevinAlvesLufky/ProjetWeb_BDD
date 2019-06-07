@@ -96,5 +96,5 @@ function getSnowsLeasing()
     require_once 'model/dbConnector.php';
     $_SESSION["haveLeasing"] = executeQuerySelect($snowsLeasingQuery);
 
-    return$_SESSION["haveLeasing"];
+    return $_SESSION["haveLeasing"];
 }

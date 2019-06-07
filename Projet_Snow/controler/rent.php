@@ -38,6 +38,19 @@ function displayLeasing()
         require "view/UserLeasing.php";
     }
 }
+
+/**
+ * This function is designed to display the manage leasing page
+ */
+function displayManageLeasing($idLeasing)
+{
+    $_GET['action'] = "displayManageLeasing";
+    require_once"model/rentManager.php";
+    $leasingsResults= getALeasing($idLeasing);
+    require_once"view/sellerManageLeasing.php";
+
+}
+
 /**
  * This function is designed to manage the confirmation of the leasing
  */
