@@ -122,13 +122,13 @@ function createSession($userEmailAddress)
     $_SESSION['userId'] = $userId;
 
     require_once 'model/rentManager.php';
-    if(!getSnowsLeasing())
+    if(!getSnowLeasingsUser())
     {
         unset($_SESSION["haveLeasing"]);
     }
     else
     {
-        $_SESSION["haveLeasing"] = getSnowsLeasing();
+        $_SESSION["haveLeasing"] = getSnowLeasingsUser();
     }
 }
 

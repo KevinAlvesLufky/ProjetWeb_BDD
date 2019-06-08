@@ -16,7 +16,7 @@ function displayLeasing()
     $_GET['action'] = "displayLeasing";
     require_once"model/rentManager.php";
 
-    $_SESSION["haveLeasing"] = getSnowsLeasing(); //take data leasings
+    $_SESSION["haveLeasing"] = getSnowLeasingsUser(); //take data leasings
 
     if (isset($_SESSION['userType']))
     {
@@ -60,7 +60,7 @@ function confirmLeasing()
     require_once"model/rentManager.php";
     if(dataInsert())
     {
-        $_SESSION["haveLeasing"] = getSnowsLeasing();
+        $_SESSION["haveLeasing"] = getSnowLeasingsUser();
         unset ($_SESSION['cart']); //delete cart
     }
     require_once "view/UserLeasing.php";

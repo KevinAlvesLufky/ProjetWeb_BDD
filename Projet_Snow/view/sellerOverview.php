@@ -23,7 +23,7 @@ ob_start();
                 <?php
                 foreach ($LocationResults as $result) : ?>
                     <tr>
-                        <td><a href="index.php?action=displayManageLeasing=<?= $result['LeasingID']; ?>"><?= $result['LeasingID']; ?></a></td>
+                        <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['LeasingID']; ?>"><?= $result['LeasingID']; ?></a></td>
                         <td><?= $result['Client']; ?></td>
                         <td><?= $result['DateTake']; ?></td>
                         <td><?= $result['DateRetrun']; ?> cm</td>
@@ -50,7 +50,7 @@ require 'gabarit.php';
             </thead>
             <?php foreach ($snowsResults as $snow):?>
               <tr>
-                  <td><a href="index.php?action=displayManageLeasing=<?= $result['LeasingID']; ?>"><?= $result['LeasingID']; ?></a></td>
+                  <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['LeasingID']; ?>"><?= $result['LeasingID']; ?></a></td>
                   <td><?= $result['Client']; ?></td>
                   <td><?= $result['DateTake']; ?></td>
                   <td><?= $result['DateRetrun']; ?> cm</td>

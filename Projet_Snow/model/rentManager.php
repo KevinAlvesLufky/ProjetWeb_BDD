@@ -81,9 +81,9 @@ function dataInsert()
 
 /**
  * This function is designed to get leasings's informations
- * @return $snowsLeasingResults : array of informations leasing or false
+ * @return $_SESSION["haveLeasing"] : array of informations leasing or false
  */
-function getSnowsLeasing()
+function getSnowLeasingsUser()
 {
     $_SESSION["haveLeasing"] = false;
 
@@ -97,4 +97,43 @@ function getSnowsLeasing()
     $_SESSION["haveLeasing"] = executeQuerySelect($snowsLeasingQuery);
 
     return $_SESSION["haveLeasing"];
+}
+
+/**
+ * This function is designed to get leasing's informations
+ * @return $_SESSION["haveLeasing"] : array of informations leasing or false
+ */
+function getASnowLeasing()
+{
+    $leasingResults = false;
+
+    $strSeparator = '\'';
+    $idUser = $_SESSION["userId"];
+
+    //take informations leasings
+    $snowLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
+
+    require_once 'model/dbConnector.php';
+    $leasingResults = executeQuerySelect($snowLeasingQuery);
+
+    return $leasingResults;
+}
+
+/**
+ * This function is designed to get leasings's informations
+ * @return $_SESSION["haveLeasing"] : array of informations leasing or false
+ */
+function getAllSnowLeasings()
+{
+    $leasingsResults = false;
+
+    $idUser = $_SESSION["userId"];
+
+    //take informations leasings
+    $snowLeasingsQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id';
+
+    require_once 'model/dbConnector.php';
+    $leasingsResults = executeQuerySelect($snowLeasingsQuery);
+
+    return $leasingsResults;
 }
