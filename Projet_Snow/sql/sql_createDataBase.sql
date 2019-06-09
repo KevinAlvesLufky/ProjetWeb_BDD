@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `leasings` (
   `qtySelected` int(10) UNSIGNED NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
-  `status` varchar(20) NOT NULL,
+  `statut` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
 

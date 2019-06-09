@@ -17,7 +17,7 @@ function displayLeasing()
     require_once"model/rentManager.php";
 
     $_SESSION["haveLeasing"] = getSnowLeasingsUser(); //take data leasings
-
+    $leasingsResults = getAllSnowLeasings();
     if (isset($_SESSION['userType']))
     {
         switch ($_SESSION['userType'])
@@ -46,7 +46,7 @@ function displayManageLeasing($idLeasing)
 {
     $_GET['action'] = "displayManageLeasing";
     require_once"model/rentManager.php";
-    $leasingsResults= getALeasing($idLeasing);
+    $leasingResults = getASnowLeasing($idLeasing);
     require_once"view/sellerManageLeasing.php";
 
 }

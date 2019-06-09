@@ -87,7 +87,7 @@
                                 <?php endif; ?>
 
                                 <!-- Affiche le bouton Location si il y a une location-->
-                                <?php if(isset($_SESSION["userEmailAddress"]) && isset($_SESSION["haveLeasing"])):?>
+                                <?php if(isset($_SESSION["userEmailAddress"]) && isset($_SESSION["haveLeasing"]) || isset($_SESSION['userType']) && $_SESSION['userType'] == 2):?>
                                     <li><a href="index.php?action=displayLeasing">Vos Locations</a></li>
                                 <?php endif; ?>
                             </ul>

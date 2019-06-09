@@ -69,9 +69,9 @@ function dataInsert()
         $idSnow = $snowsData[$i][0]["id"];
         $idSnow = (int)$idSnow;
         $qtySelected = $_SESSION['cart'][$i]['qty'];
-        $status = '"En cours"';
+        $statut = '"En cours"';
 
-        $snowsInsertQuery = 'INSERT INTO leasings (idLeasings, idUsers, idSnows, qtySelected, startDate, endDate, status) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.','.$status.')';
+        $snowsInsertQuery = 'INSERT INTO leasings (idLeasings, idUsers, idSnows, qtySelected, startDate, endDate, statut) VALUES ('.$idLeasing.','.$idUser.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.','.$statut.')';
 
         require_once 'model/dbConnector.php';
         executeQueryInsert($snowsInsertQuery);
@@ -103,15 +103,14 @@ function getSnowLeasingsUser()
  * This function is designed to get leasing's informations
  * @return $_SESSION["haveLeasing"] : array of informations leasing or false
  */
-function getASnowLeasing()
+function getASnowLeasing($idLeasing)
 {
     $leasingResults = false;
 
     $strSeparator = '\'';
-    $idUser = $_SESSION["userId"];
 
     //take informations leasings
-    $snowLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
+    $snowLeasingQuery = 'SELECT idLeasings, users.userEmailAddress, snows.code, leasings.qtySelected, leasings.startDate, leasings.endDate, leasings.statut FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id INNER JOIN users ON leasings.idUsers = users.id WHERE leasings.idLeasings ='. $strSeparator . $idLeasing . $strSeparator;
 
     require_once 'model/dbConnector.php';
     $leasingResults = executeQuerySelect($snowLeasingQuery);
@@ -130,7 +129,7 @@ function getAllSnowLeasings()
     $idUser = $_SESSION["userId"];
 
     //take informations leasings
-    $snowLeasingsQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM leasings INNER JOIN snows ON leasings.idSnows = snows.id';
+    $snowLeasingsQuery = 'SELECT idLeasings, users.userEmailAddress, leasings.startDate, leasings.endDate, leasings.statut FROM leasings INNER JOIN users ON leasings.idUsers = users.id';
 
     require_once 'model/dbConnector.php';
     $leasingsResults = executeQuerySelect($snowLeasingsQuery);

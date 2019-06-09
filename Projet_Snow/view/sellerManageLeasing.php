@@ -15,9 +15,9 @@ ob_start();
 <article>
     <header>
         <h2> Gestion des Retours </h2>
-        <p>ID Location : <?= $result['LeasingID']?>   EMail : <?= $_SESSION['userEmailAddress'] ?> </p>
-        <p>Prise : <?= $result['DateTake']?>   Retour : <?= $result['DateRetrun']?> ?> </p>
-        <p>Statut : <?= $result['Statut'] ?></p>
+        <p>ID Location : <?= $leasingResults[0]['idLeasings']?>       Email : <?= $leasingResults[0]['userEmailAddress'] ?> </p>
+        <p>Prise : <?= $leasingResults[0]['startDate']?>              Retour : <?= $leasingResults[0]['endDate']?></p>
+        <p>Statut : <?= $leasingResults[0]['statut']?></p>
 
         <div class="table-responsive">
             <table class="table textcolor">
@@ -26,22 +26,22 @@ ob_start();
                     <th>Code</th><th>Quantité</th><th>Prise</th><th>Retour</th><th>Statut</th>
                 </tr>
                 <?php
-                foreach ($LeasingResults as $result) : ?>
+                foreach ($leasingResults as $result) : ?>
                     <tr>
                         <td><?= $result['code']; ?></td>
-                        <td><?= $result['qty']; ?></td>
-                        <td><?= $result['DateTake']; ?></td>
-                        <td><?= $result['DateRetrun']; ?></td>
+                        <td><?= $result['qtySelected']; ?></td>
+                        <td><?= $result['startDate']; ?></td>
+                        <td><?= $result['endDate']; ?></td>
                         <!-- Mettre checkbox pour choisir, tester ensuite l'état des statut -->
                         <td><select name="StatutLocation" size="l"
-                        <option> Rendu
-                        <option> En cours
+                            <option> Rendu </option>
+                            <option> En cours </option>
                         </select></td>
                     </tr>
                 <?php endforeach ?>
               </form>
             </table>
-            <a href="index.php?action=displaySellerOverview" class="btn btn-info">Retour à la vue d'ensemble</a>
+            <a href="index.php?action=displayLeasing" class="btn btn-info">Retour à la vue d'ensemble</a>
             <a href="index.php?action=" class="btn btn-success">Enregistrer les modifications</a>
         </div>
     </header>
@@ -58,13 +58,13 @@ require 'gabarit.php';
                   <th>Code</th><th>Quantité</th><th>Prise</th><th>Retour</th><th>Statut</th>
               </tr>
             </thead>
-            <?php foreach ($snowsResults as $snow):?>
+            <?php foreach ($leasingResults as $snow):?>
               <tr>
                   <td><?= $result['code']; ?></td>
-                  <td><?= $result['qty']; ?></td>
-                  <td><?= $result['DateTake']; ?></td>
-                  <td><?= $result['DateRetrun']; ?></td>
-                  <td><?= $result['Statut']; ?></td>
+                  <td><?= $result['qtySelected']; ?></td>
+                  <td><?= $result['startDate']; ?></td>
+                  <td><?= $result['endDate']; ?></td>
+                  <td><?= $result['statut']; ?></td>
               </tr>
             <?php endforeach ?>
         </table>

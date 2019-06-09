@@ -21,13 +21,13 @@ ob_start();
                     <th>Location</th><th>Client</th><th>Prise</th><th>Retour</th><th>Statut</th>
                 </tr>
                 <?php
-                foreach ($LocationResults as $result) : ?>
+                foreach ($leasingsResults as $result) : ?>
                     <tr>
-                        <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['LeasingID']; ?>"><?= $result['LeasingID']; ?></a></td>
-                        <td><?= $result['Client']; ?></td>
-                        <td><?= $result['DateTake']; ?></td>
-                        <td><?= $result['DateRetrun']; ?> cm</td>
-                        <td><?= $result['Statut']; ?></td>
+                        <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['idLeasings']; ?>"><?= $result['idLeasings']; ?></a></td>
+                        <td><?= $result['userEmailAddress']; ?></td>
+                        <td><?= $result['startDate']; ?></td>
+                        <td><?= $result['endDate']; ?> cm</td>
+                        <td><?= $result['statut']; ?></td>
                     </tr>
                 <?php endforeach ?>
             </table>
@@ -48,13 +48,13 @@ require 'gabarit.php';
                   <th>Location</th><th>Client</th><th>Prise</th><th>Retour</th><th>Statut</th>
               </tr>
             </thead>
-            <?php foreach ($snowsResults as $snow):?>
+            <?php foreach ($leasingsResults as $snow):?>
               <tr>
-                  <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['LeasingID']; ?>"><?= $result['LeasingID']; ?></a></td>
-                  <td><?= $result['Client']; ?></td>
-                  <td><?= $result['DateTake']; ?></td>
-                  <td><?= $result['DateRetrun']; ?> cm</td>
-                  <td><?= $result['Statut']; ?></td>
+                  <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['idLeasings']; ?>"><?= $result['idLeasings']; ?></a></td>
+                  <td><?= $result['userEmailAddress']; ?></td>
+                  <td><?= $result['startDate']; ?></td>
+                  <td><?= $result['endDate']; ?> cm</td>
+                  <td><?= $result['statut']; ?></td>
               </tr>
             <?php endforeach ?>
         </table>
