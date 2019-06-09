@@ -18,6 +18,7 @@ function displayLeasing()
 
     $_SESSION["haveLeasing"] = getSnowLeasingsUser(); //take data leasings
     $leasingsResults = getAllSnowLeasings();
+
     if (isset($_SESSION['userType']))
     {
         switch ($_SESSION['userType'])
@@ -47,10 +48,19 @@ function displayManageLeasing($idLeasing)
     $_GET['action'] = "displayManageLeasing";
     require_once"model/rentManager.php";
     $leasingResults = getASnowLeasing($idLeasing);
+
+    if($leasingResults[0]['statut'] == "En cours")
+    {
+        $option2 = "Rendu";
+    }
+    else
+    {
+        $option2 = "En cours";
+    }
+
     require_once"view/sellerManageLeasing.php";
 
 }
-
 
 /**
  * This function is designed to manage the confirmation of the leasing
@@ -64,6 +74,11 @@ function confirmLeasing()
         unset ($_SESSION['cart']); //delete cart
     }
     require_once "view/UserLeasing.php";
+}
+
+function updateStatut()
+{
+
 }
 
 //endregion

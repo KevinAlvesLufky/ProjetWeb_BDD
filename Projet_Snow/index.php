@@ -63,6 +63,10 @@ if (isset($_GET['action']))
       case 'displayManageLeasing':
           displayManageLeasing($_GET['idLeasing']);
           break;
+      //TODO réfléchir au(x) paramètre(s) d'entré(s) et faire cette fonction mais avant revoir la BD
+      case 'updateStatut':
+          updateStatut();
+          break;
       default :
           home();
   }

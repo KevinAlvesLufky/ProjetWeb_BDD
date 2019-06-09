@@ -33,16 +33,16 @@ ob_start();
                         <td><?= $result['startDate']; ?></td>
                         <td><?= $result['endDate']; ?></td>
                         <!-- Mettre checkbox pour choisir, tester ensuite l'état des statut -->
-                        <td><select name="StatutLocation" size="l"
-                            <option> Rendu </option>
-                            <option> En cours </option>
-                        </select></td>
+                        <td><select name="statut" id="statut">
+                                <option value="statut"><?= $leasingResults[0]['statut']?></option>
+                                <option value="statut"><?= $option2?></option>
+                            </select></td>
                     </tr>
                 <?php endforeach ?>
               </form>
             </table>
             <a href="index.php?action=displayLeasing" class="btn btn-info">Retour à la vue d'ensemble</a>
-            <a href="index.php?action=" class="btn btn-success">Enregistrer les modifications</a>
+            <a href="index.php?action=updateStatut" class="btn btn-success">Enregistrer les modifications</a>
         </div>
     </header>
 </article>
