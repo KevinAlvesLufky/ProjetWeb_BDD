@@ -52,8 +52,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Export de la structure de la table snows. leasings
 CREATE TABLE IF NOT EXISTS `leasings` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `idLeasings` int(10) UNSIGNED NOT NULL,
   `idUsers` int(10) UNSIGNED NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `statut` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- Export de la structure de la table snows. snows_leasings
+CREATE TABLE IF NOT EXISTS `snows_leasings` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idLeasings` int(10) UNSIGNED NOT NULL,
   `idSnows` int(10) UNSIGNED NOT NULL,
   `qtySelected` int(10) UNSIGNED NOT NULL,
   `startDate` date NOT NULL,
@@ -66,5 +75,8 @@ CREATE TABLE IF NOT EXISTS `leasings` (
 Alter TABLE `leasings`
 Add foreign key (`idUsers`) REFERENCES `users`(`id`);
 
-Alter TABLE `leasings`
+Alter TABLE `snows_leasings`
 Add foreign key (`idSnows`) REFERENCES `snows`(`id`);
+
+Alter TABLE `snows_leasings`
+Add foreign key (`idLeasings`) REFERENCES `leasings`(`id`);
