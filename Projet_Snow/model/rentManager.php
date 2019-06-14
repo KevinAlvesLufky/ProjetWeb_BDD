@@ -42,7 +42,7 @@ function getLeasingsUser()
     $leasingsUserQuery = 'SELECT id FROM leasings WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    $leasingsUser =executeQuerySelect($leasingsUserQuery);
+    $leasingsUser = executeQuerySelect($leasingsUserQuery);
 
     return $leasingsUser;
 }
@@ -127,14 +127,20 @@ function getSnowLeasingsUser()
     $_SESSION["haveLeasing"] = false;
 
     $strSeparator = '\'';
-    $idUser = $_SESSION["userId"];
+    $idLeasingsUser = getLeasingsUser();
+    $_SESSION["haveLeasing"] = array();
 
     //take informations leasings
-    $snowsLeasingQuery = 'SELECT snows_leasings.idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, snows_leasings.qtySelected, snows_leasings.startDate FROM snows_leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
+    for($i=0; $i < count($idLeasingsUser); $i++)
+    {
+        $idLeasingUser = $idLeasingsUser[$i]['id'];
+        $snowsLeasingQuery = 'SELECT snows_leasings.idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, snows_leasings.qtySelected, snows_leasings.startDate FROM snows_leasings INNER JOIN snows ON snows_leasings.idSnows = snows.id WHERE snows_leasings.idLeasings =' . $strSeparator . $idLeasingUser . $strSeparator;
 
-    require_once 'model/dbConnector.php';
-    $_SESSION["haveLeasing"] = executeQuerySelect($snowsLeasingQuery);
+        require_once 'model/dbConnector.php';
+        $snowLeasingsUser = executeQuerySelect($snowsLeasingQuery);
 
+        array_push($_SESSION["haveLeasing"], $snowLeasingsUser);
+    }
     return $_SESSION["haveLeasing"];
 }
 

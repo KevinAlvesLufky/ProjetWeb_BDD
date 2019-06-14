@@ -30,15 +30,18 @@ ob_start();
                     // Displays user's leasing content
                     for ($i = 0; $i < count($_SESSION["haveLeasing"]) ; $i++)
                     {
-                        echo "<tr>";
-                        echo "<td>" . $_SESSION["haveLeasing"][$i]['idLeasings'] . "</td>";
-                        echo "<td>" . $_SESSION["haveLeasing"][$i]['code'] . "</td>";
-                        echo "<td>" . $_SESSION["haveLeasing"][$i]['brand'] . "</td>";
-                        echo "<td>" . $_SESSION["haveLeasing"][$i]['model'] . "</td>";
-                        echo "<td>" . $_SESSION["haveLeasing"][$i]['dailyPrice'] . "</td>";
-                        echo "<td>" . $_SESSION["haveLeasing"][$i]['qtySelected'] . "</td>";
-                        echo "<td>" . $_SESSION["haveLeasing"][$i]['startDate'] . "</td>";
-                        echo "</tr>";
+                        for ($y = 0; $y < count($_SESSION["haveLeasing"][$i]) ; $y++)
+                        {
+                            echo "<tr>";
+                            echo "<td>" . $_SESSION["haveLeasing"][$i][$y]['idLeasings'] . "</td>";
+                            echo "<td>" . $_SESSION["haveLeasing"][$i][$y]['code'] . "</td>";
+                            echo "<td>" . $_SESSION["haveLeasing"][$i][$y]['brand'] . "</td>";
+                            echo "<td>" . $_SESSION["haveLeasing"][$i][$y]['model'] . "</td>";
+                            echo "<td>" . $_SESSION["haveLeasing"][$i][$y]['dailyPrice'] . "</td>";
+                            echo "<td>" . $_SESSION["haveLeasing"][$i][$y]['qtySelected'] . "</td>";
+                            echo "<td>" . $_SESSION["haveLeasing"][$i][$y]['startDate'] . "</td>";
+                            echo "</tr>";
+                        }
                     }
                 ?>
             </table>
