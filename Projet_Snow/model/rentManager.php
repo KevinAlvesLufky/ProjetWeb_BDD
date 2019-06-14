@@ -36,26 +36,31 @@ function getLastIdLeasing()
  */
 function getLeasingsUser()
 {
-    $leasingsUserQuery = 'SELECT id FROM leasings';
+    $strSeparator = '\'';
+    $idUser = $_SESSION["userId"];
+
+    $leasingsUserQuery = 'SELECT id FROM leasings WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    executeQuerySelect($leasingsUserQuery);
+    $leasingsUser =executeQuerySelect($leasingsUserQuery);
 
-    return $leasingsUserQuery;
+    return $leasingsUser;
 }
 
 /**
  * This function is designed to get the leasings of the user
  * @return
  */
-function getLeasingUserEmailAddress()
+function getLeasingUserEmailAddress($idLeasing)
 {
-    $userEmailAddressQuery = 'SELECT id FROM leasings';
+    $strSeparator = '\'';
+
+    $userEmailAddressQuery = 'SELECT users.userEmailAddress FROM leasings INNER JOIN users ON leasings.idUsers = users.id WHERE leasings.id = '. $strSeparator . $idLeasing . $strSeparator;
 
     require_once 'model/dbConnector.php';
-    executeQuerySelect($userEmailAddressQuery);
+    $userEmailAddressLeasing = executeQuerySelect($userEmailAddressQuery);
 
-    return $userEmailAddressQuery;
+    return $userEmailAddressLeasing;
 }
 
 /**
