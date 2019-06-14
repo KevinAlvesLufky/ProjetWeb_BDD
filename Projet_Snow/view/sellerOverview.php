@@ -23,10 +23,10 @@ ob_start();
                 <?php
                 foreach ($leasingsResults as $result) : ?>
                     <tr>
-                        <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['idLeasings']; ?>"><?= $result['idLeasings']; ?></a></td>
+                        <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['id']; ?>"><?= $result['id']; ?></a></td>
                         <td><?= $result['userEmailAddress']; ?></td>
                         <td><?= $result['startDate']; ?></td>
-                        <td><?= $result['endDate']; ?> cm</td>
+                        <td><?= $result['endDate']; ?></td>
                         <td><?= $result['statut']; ?></td>
                     </tr>
                 <?php endforeach ?>
@@ -50,10 +50,10 @@ require 'gabarit.php';
             </thead>
             <?php foreach ($leasingsResults as $snow):?>
               <tr>
-                  <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['idLeasings']; ?>"><?= $result['idLeasings']; ?></a></td>
+                  <td><a href="index.php?action=displayManageLeasing&idLeasing=<?= $result['id']; ?>"><?= $result['id']; ?></a></td>
                   <td><?= $result['userEmailAddress']; ?></td>
                   <td><?= $result['startDate']; ?></td>
-                  <td><?= $result['endDate']; ?> cm</td>
+                  <td><?= $result['endDate']; ?></td>
                   <td><?= $result['statut']; ?></td>
               </tr>
             <?php endforeach ?>
