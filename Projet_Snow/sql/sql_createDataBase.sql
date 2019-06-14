@@ -80,3 +80,5 @@ Add foreign key (`idSnows`) REFERENCES `snows`(`id`);
 
 Alter TABLE `snows_leasings`
 Add foreign key (`idLeasings`) REFERENCES `leasings`(`id`);
+
+SET GLOBAL FOREIGN_KEY_CHECKS=0;

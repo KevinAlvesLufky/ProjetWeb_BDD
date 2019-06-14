@@ -15,19 +15,47 @@ function getLastIdLeasing()
 {
     $lastId = 0;
 
-    $leasingsIdQuery = 'SELECT idLeasings FROM leasings';
+    $leasingsIdQuery = 'SELECT id FROM leasings';
 
     require_once 'model/dbConnector.php';
     $arrayId = executeQuerySelect($leasingsIdQuery);
 
     foreach($arrayId as $array)
     {
-        $lastId = $array['idLeasings'];
+        $lastId = $array['id'];
     }
 
     $lastId +=1;
 
     return $lastId;
+}
+
+/**
+ * This function is designed to get the leasings of the user
+ * @return
+ */
+function getLeasingsUser()
+{
+    $leasingsUserQuery = 'SELECT id FROM leasings';
+
+    require_once 'model/dbConnector.php';
+    executeQuerySelect($leasingsUserQuery);
+
+    return $leasingsUserQuery;
+}
+
+/**
+ * This function is designed to get the leasings of the user
+ * @return
+ */
+function getLeasingUserEmailAddress()
+{
+    $userEmailAddressQuery = 'SELECT id FROM leasings';
+
+    require_once 'model/dbConnector.php';
+    executeQuerySelect($userEmailAddressQuery);
+
+    return $userEmailAddressQuery;
 }
 
 /**
@@ -97,7 +125,7 @@ function getSnowLeasingsUser()
     $idUser = $_SESSION["userId"];
 
     //take informations leasings
-    $snowsLeasingQuery = 'SELECT idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, qtySelected, startDate FROM snows_leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
+    $snowsLeasingQuery = 'SELECT snows_leasings.idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, snows_leasings.qtySelected, snows_leasings.startDate FROM snows_leasings INNER JOIN snows ON leasings.idSnows = snows.id WHERE leasings.idUsers ='. $strSeparator . $idUser . $strSeparator;
 
     require_once 'model/dbConnector.php';
     $_SESSION["haveLeasing"] = executeQuerySelect($snowsLeasingQuery);
