@@ -17,8 +17,25 @@ function displayLeasing()
     require_once"model/rentManager.php";
 
    // $_SESSION["haveLeasing"] = getSnowLeasingsUser(); //take data leasings
-    $leasingsResults = getAllSnowLeasings();
+    $leasingsResults = getAllLeasings();
+    $snowsLeasingsUser = getAllSnowLeasings();
 
+    for($i=0;$i<count($leasingsResults); $i++)
+    {
+        for($y=0;$y<count($snowsLeasingsUser); $y++)
+        {
+            if($leasingsResults[$i]['id'] == $snowsLeasingsUser[$y]['idLeasings'])
+            {
+                if($snowsLeasingsUser[$y]['statut'] == "Rendu")
+                {
+                    $idLeasing = $leasingsResults[$i]['id'];
+                    $statut = "Rendu";
+                    insertNewStatutLeasing($idLeasing, $statut);
+                }
+            }
+        }
+    }
+    
     if (isset($_SESSION['userType']))
     {
         switch ($_SESSION['userType'])
@@ -92,7 +109,7 @@ function updateStatut($lineToChange, $idLeasing, $statutUpdateRequest)
     if(isset($lineToChange) && isset($idLeasing) && isset($statutForChange))
     {
         require_once"model/rentManager.php";
-        insertNewStatut($lineToChange, $idLeasing, $statutForChange);
+        insertNewStatutLeasings($lineToChange, $idLeasing, $statutForChange);
     }
 
     $_GET['action'] = "displayManageLeasing";

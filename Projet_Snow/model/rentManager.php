@@ -172,6 +172,17 @@ function lineInLeasingInsert($leasingResults, $idLeasing)
 
 }
 
+function getAllSnowLeasings()
+{
+    //take informations leasings
+    $snowsLeasingsQuery = 'SELECT snows_leasings.idLeasings,  snows_leasings.statut FROM snows_leasings INNER JOIN leasings ON snows_leasings.idLeasings = leasings.id';
+
+    require_once 'model/dbConnector.php';
+    $snowsLeasingsUser = executeQuerySelect($snowsLeasingsQuery);
+
+    return $snowsLeasingsUser;
+}
+
 /**
  * This function is designed to get leasings's informations
  * @return $_SESSION["haveLeasing"] : array of informations leasing or false
@@ -240,7 +251,7 @@ function getEndDateLeasing($idLeasing)
  * This function is designed to get leasings's informations
  * @return $_SESSION["haveLeasing"] : array of informations leasing or false
  */
-function getAllSnowLeasings()
+function getAllLeasings()
 {
     $leasingsResults = false;
 
@@ -253,7 +264,17 @@ function getAllSnowLeasings()
     return $leasingsResults;
 }
 
-function insertNewStatut($lineToChange, $idLeasing, $statutForChange)
+function insertNewStatutLeasing($idLeasing, $statut)
+{
+    $strSeparator = '\'';
+
+    $statutInsertQuery = 'UPDATE leasings SET leasings.statut = ' . $strSeparator . $statut . $strSeparator . '  WHERE leasings.id =' . $idLeasing;
+
+    require_once 'model/dbConnector.php';
+    executeQueryInsert($statutInsertQuery);
+}
+
+function insertNewStatutLeasings($lineToChange, $idLeasing, $statutForChange)
 {
     $strSeparator = '\'';
     $leasingResults = getASnowLeasing($idLeasing);
