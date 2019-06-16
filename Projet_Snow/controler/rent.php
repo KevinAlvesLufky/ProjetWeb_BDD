@@ -45,22 +45,27 @@ function displayLeasing()
  */
 function displayManageLeasing($idLeasing)
 {
-    $_GET['action'] = "displayManageLeasing";
     require_once"model/rentManager.php";
     $leasingResults = getASnowLeasing($idLeasing);
     lineInLeasingInsert($leasingResults, $idLeasing);
     $endDateLeasingResults =  getEndDateLeasing($idLeasing);
     $userEmailAddressLeasing = getLeasingUserEmailAddress($idLeasing);
+    $idLeasingInUrl = $leasingResults[0]['idLeasings'];
+    $statutLeasing = getStatutLeasing($idLeasing);
 
-    if($leasingResults[0]['statut'] == "En cours")
+    for ($i = 0; $i < count($leasingResults); $i++)
     {
-        $option2 = "Rendu";
-    }
-    else
-    {
-        $option2 = "En cours";
+        if ($leasingResults[$i]['statut'] == "En cours")
+        {
+            $option2 = "Rendu";
+        }
+        else
+        {
+            $option2 = "En cours";
+        }
     }
 
+    $_GET['action'] = "displayManageLeasing";
     require_once"view/sellerManageLeasing.php";
 
 }
@@ -79,9 +84,19 @@ function confirmLeasing()
     require_once "view/UserLeasing.php";
 }
 
-function updateStatut()
+function updateStatut($lineToChange, $idLeasing, $statutUpdateRequest)
 {
+    //set variables
+    $statutForChange = $statutUpdateRequest['statut'];
 
+    if(isset($lineToChange) && isset($idLeasing) && isset($statutForChange))
+    {
+        require_once"model/rentManager.php";
+        insertNewStatut($lineToChange, $idLeasing, $statutForChange);
+    }
+
+    $_GET['action'] = "displayManageLeasing";
+    displayManageLeasing($idLeasing);
 }
 
 //endregion

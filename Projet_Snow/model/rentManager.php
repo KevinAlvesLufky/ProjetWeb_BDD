@@ -63,6 +63,17 @@ function getLeasingUserEmailAddress($idLeasing)
     return $userEmailAddressLeasing;
 }
 
+function getStatutLeasing($idLeasing)
+{
+    $strSeparator = '\'';
+
+    $statutLeasingQuery = 'SELECT leasings.statut FROM leasings WHERE leasings.id = '. $strSeparator . $idLeasing . $strSeparator;
+
+    require_once 'model/dbConnector.php';
+    $statutLeasing = executeQuerySelect($statutLeasingQuery);
+
+    return $statutLeasing;
+}
 /**
  * This function is designed to manage the insert data cart in the DB
  * @return true
@@ -240,4 +251,21 @@ function getAllSnowLeasings()
     $leasingsResults = executeQuerySelect($snowLeasingsQuery);
 
     return $leasingsResults;
+}
+
+function insertNewStatut($lineToChange, $idLeasing, $statutForChange)
+{
+    $strSeparator = '\'';
+    $leasingResults = getASnowLeasing($idLeasing);
+
+    for ($i =0;$i<count($leasingResults);$i++)
+    {
+        if ($i == $lineToChange)
+        {
+            $statutInsertQuery = 'UPDATE snows_leasings SET snows_leasings.statut = ' . $strSeparator . $statutForChange . $strSeparator . ' WHERE snows_leasings.lineInLeasing =' . $lineToChange . ' AND snows_leasings.idLeasings =' . $idLeasing;
+
+            require_once 'model/dbConnector.php';
+            executeQueryInsert($statutInsertQuery);
+        }
+    }
 }

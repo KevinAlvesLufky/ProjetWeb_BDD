@@ -17,7 +17,7 @@ ob_start();
         <h2> Gestion des Retours </h2>
         <p>ID Location : <?= $leasingResults[0]['idLeasings']?>       Email : <?= $userEmailAddressLeasing[0]['userEmailAddress'] ?> </p>
         <p>Prise : <?= $leasingResults[0]['startDate']?>              Retour : <?= $endDateLeasingResults[0]['endDate']?></p>
-        <p>Statut : <?= $leasingResults[0]['statut']?></p>
+        <p>Statut : <?= $statutLeasing[0]['statut']?></p>
 
         <div class="table-responsive">
             <table class="table textcolor">
@@ -27,15 +27,15 @@ ob_start();
                 <?php
                 for ($i = 0; $i < count($leasingResults); $i++)
                 {
-                    echo "<form class='form' method='POST' action='index.php?action=updateStatut&line=$i'>";
                     echo "<tr>";
                     echo "<td>" . $leasingResults[$i]['code'] . "</td>";
                     echo "<td>" . $leasingResults[$i]['qtySelected'] . "</td>";
                     echo "<td>" . $leasingResults[$i]['startDate'] . "</td>";
                     echo "<td>" . $leasingResults[$i]['endDate'] . "</td>";
+                    echo "<form class='form' method='POST' action='index.php?action=updateStatut&line=$i&idLeasing=$idLeasingInUrl'>";
                     echo "<td><select name='statut' id='statut'>";
-                    echo "<option value='statut'>" . $leasingResults[0]['statut'] . "</option>";
-                    echo "<option value='statut'>" . $option2 . "</option>";
+                    echo "<option value='" . $leasingResults[$i]['statut'] . "'>" . $leasingResults[$i]['statut'] . "</option>";
+                    echo "<option value='$option2'>" . $option2 . "</option>";
                     echo "</select></td>";
                     echo "</tr>";
                 }

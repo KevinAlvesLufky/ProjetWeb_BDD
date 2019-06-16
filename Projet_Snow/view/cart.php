@@ -61,7 +61,7 @@ ob_start();
                     echo "<td>" . $_SESSION['cart'][$i]['code'] . "</td>";
                     echo "<td>" . $_SESSION['cart'][$i]['dateD'] . "</td>";
 
-                    echo "<form method='POST' action='index.php?action=updateCartItem&line=" . $i . "'>";
+                    echo "<form method='POST' action='index.php?action=updateCartItem&line=$i'>";
                     echo "<td><input type='number' name='uQty' value='" . $_SESSION['cart'][$i]['qty'] . "'></td>";
                     echo "<td><input type='number' name='uNbD' value='" . $_SESSION['cart'][$i]['nbD'] . "'></td>";
 

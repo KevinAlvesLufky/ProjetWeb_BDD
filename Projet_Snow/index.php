@@ -64,7 +64,7 @@ if (isset($_GET['action']))
           displayManageLeasing($_GET['idLeasing']);
           break;
       case 'updateStatut':
-          updateStatut($_GET['line'], $_POST);
+          updateStatut($_GET['line'], $_GET['idLeasing'], $_POST);
           break;
       default :
           home();
