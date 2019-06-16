@@ -18,24 +18,39 @@ function displayLeasing()
 
    // $_SESSION["haveLeasing"] = getSnowLeasingsUser(); //take data leasings
     $leasingsResults = getAllLeasings();
-    $snowsLeasingsUser = getAllSnowLeasings();
+    $snowsLeasings = getAllSnowLeasings();
 
     for($i=0;$i<count($leasingsResults); $i++)
     {
-        for($y=0;$y<count($snowsLeasingsUser); $y++)
+        for($y=0;$y<count($snowsLeasings); $y++)
         {
-            if($leasingsResults[$i]['id'] == $snowsLeasingsUser[$y]['idLeasings'])
+            if($leasingsResults[$i]['id'] == $snowsLeasings[$y]['idLeasings'])
             {
-                if($snowsLeasingsUser[$y]['statut'] == "Rendu")
+                $idLeasing = $leasingsResults[$i]['id'];
+
+                if($snowsLeasings[0]['statut'] == $snowsLeasings[$y]['statut'])
                 {
-                    $idLeasing = $leasingsResults[$i]['id'];
-                    $statut = "Rendu";
+                    if($snowsLeasings[0]['statut'] == "En cours")
+                    {
+                        $statut = "En cours";
+                        insertNewStatutLeasing($idLeasing, $statut);
+                    }
+                    else
+                    {
+                        $statut = "Rendu";
+                        insertNewStatutLeasing($idLeasing, $statut);
+                    }
+                }
+                else
+                {
+                    $statut = "Rendu partiel";
                     insertNewStatutLeasing($idLeasing, $statut);
+                    break;
                 }
             }
         }
     }
-    
+
     if (isset($_SESSION['userType']))
     {
         switch ($_SESSION['userType'])

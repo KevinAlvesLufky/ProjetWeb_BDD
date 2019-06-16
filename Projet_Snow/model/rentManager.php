@@ -178,9 +178,9 @@ function getAllSnowLeasings()
     $snowsLeasingsQuery = 'SELECT snows_leasings.idLeasings,  snows_leasings.statut FROM snows_leasings INNER JOIN leasings ON snows_leasings.idLeasings = leasings.id';
 
     require_once 'model/dbConnector.php';
-    $snowsLeasingsUser = executeQuerySelect($snowsLeasingsQuery);
+    $snowsLeasings = executeQuerySelect($snowsLeasingsQuery);
 
-    return $snowsLeasingsUser;
+    return $snowsLeasings;
 }
 
 /**
