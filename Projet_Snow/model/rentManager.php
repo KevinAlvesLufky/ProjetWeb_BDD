@@ -72,6 +72,7 @@ function dataInsert()
     $strSeparator = '\'';
     $idLeasing = getLastIdLeasing();
     $snowsData[] = "";
+    $timeStamp2 = 0;
 
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
@@ -80,9 +81,11 @@ function dataInsert()
         $addDate = $_SESSION['cart'][$i]['nbD'];
         $timeStamp = strtotime($startDate);
         $endDate = date("Y-m-d", strtotime('+'.$addDate.'days', $timeStamp ));
-        $startDate = $strSeparator . $startDate . $strSeparator;
-        $endDate = $strSeparator . $endDate . $strSeparator;
+        $startDateToInsert = $strSeparator . $startDate . $strSeparator;
+        $endDateToInsert = $strSeparator . $endDate . $strSeparator;
+        $timeStamp1 = strtotime($endDate);
         $snowCode = $_SESSION['cart'][$i]['code'];
+
 
         //take informations snows
         $snowsDataQuery = 'SELECT id, qtyAvailable FROM snows WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
@@ -104,18 +107,58 @@ function dataInsert()
         $qtySelected = $_SESSION['cart'][$i]['qty'];
         $statut = '"En cours"';
 
-        $snowsLeasingsInsertQuery = 'INSERT INTO snows_leasings (idLeasings, idSnows, qtySelected, startDate, endDate, statut) VALUES ('.$idLeasing.','.$idSnow.','.$qtySelected.','.$startDate.','.$endDate.','.$statut.')';
+        $snowsLeasingsInsertQuery = 'INSERT INTO snows_leasings (idLeasings, idSnows, qtySelected, startDate, endDate, statut) VALUES ('.$idLeasing.','.$idSnow.','.$qtySelected.','.$startDateToInsert.','.$endDateToInsert.','.$statut.')';
 
         require_once 'model/dbConnector.php';
         executeQueryInsert($snowsLeasingsInsertQuery);
-    }
 
-    $leasingsInsertQuery = 'INSERT INTO leasings (idUsers, startDate, endDate, statut) VALUES ('.$idUser.','.$startDate.','.$endDate.','.$statut.')';
+        if($timeStamp1 > $timeStamp2)
+        {
+            $laterTimeStamp = $timeStamp1;
+        }
+        else
+        {
+            $laterTimeStamp = $timeStamp2;
+        }
+
+        $timeStamp2 = strtotime($endDate);
+    }
+    $laterEndDate = date("Y-m-d", $laterTimeStamp);
+    $laterEndDate = $strSeparator . $laterEndDate . $strSeparator;
+
+    $leasingsInsertQuery = 'INSERT INTO leasings (idUsers, startDate, endDate, statut) VALUES ('.$idUser.','.$startDateToInsert.','.$laterEndDate.','.$statut.')';
 
     require_once 'model/dbConnector.php';
     executeQueryInsert($leasingsInsertQuery);
 
     return true;
+}
+
+function lineInLeasingInsert($leasingResults, $idLeasing)
+{
+    $idArticlesQuery = 'SELECT snows_leasings.id FROM snows_leasings ORDER BY snows_leasings.id';
+
+    require_once 'model/dbConnector.php';
+    $idArticlesResults = executeQuerySelect($idArticlesQuery);
+
+    $idFirstArticleQuery = 'SELECT snows_leasings.id FROM snows_leasings WHERE snows_leasings.idLeasings =' . $idLeasing;
+
+    require_once 'model/dbConnector.php';
+    $idFirstArticlesResults = executeQuerySelect($idFirstArticleQuery);
+
+    $y = $idFirstArticlesResults[0]['id'];
+    $y -=1;
+
+    for ($i = 0; $i < count($leasingResults); $i++)
+    {
+        $lineInLeasingInsertQuery = 'UPDATE snows_leasings SET snows_leasings.lineInLeasing = ' . $i . ' WHERE snows_leasings.id =' . $idArticlesResults[$y]['id'] . ' AND snows_leasings.idLeasings =' . $idLeasing;
+
+        require_once 'model/dbConnector.php';
+        executeQueryInsert($lineInLeasingInsertQuery);
+
+        $y++;
+    }
+
 }
 
 /**
@@ -161,6 +204,25 @@ function getASnowLeasing($idLeasing)
     $leasingResults = executeQuerySelect($snowLeasingQuery);
 
     return $leasingResults;
+}
+
+/**
+ * This function is designed to get leasing's informations
+ * @return $_SESSION["haveLeasing"] : array of informations leasing or false
+ */
+function getEndDateLeasing($idLeasing)
+{
+    $endDateLeasingResults = false;
+
+    $strSeparator = '\'';
+
+    //take informations leasings
+    $endDateLeasingQuery = 'SELECT leasings.endDate FROM leasings WHERE leasings.id ='. $strSeparator . $idLeasing . $strSeparator;
+
+    require_once 'model/dbConnector.php';
+    $endDateLeasingResults = executeQuerySelect($endDateLeasingQuery);
+
+    return $endDateLeasingResults;
 }
 
 /**

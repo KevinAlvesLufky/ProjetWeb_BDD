@@ -48,6 +48,8 @@ function displayManageLeasing($idLeasing)
     $_GET['action'] = "displayManageLeasing";
     require_once"model/rentManager.php";
     $leasingResults = getASnowLeasing($idLeasing);
+    lineInLeasingInsert($leasingResults, $idLeasing);
+    $endDateLeasingResults =  getEndDateLeasing($idLeasing);
     $userEmailAddressLeasing = getLeasingUserEmailAddress($idLeasing);
 
     if($leasingResults[0]['statut'] == "En cours")

@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `snows_leasings` (
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
   `statut` varchar(20) NOT NULL,
+  `lineInLeasing` int UNSIGNED,
   PRIMARY KEY (`id`)
 );
 

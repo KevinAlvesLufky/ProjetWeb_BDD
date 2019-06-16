@@ -16,33 +16,34 @@ ob_start();
     <header>
         <h2> Gestion des Retours </h2>
         <p>ID Location : <?= $leasingResults[0]['idLeasings']?>       Email : <?= $userEmailAddressLeasing[0]['userEmailAddress'] ?> </p>
-        <p>Prise : <?= $leasingResults[0]['startDate']?>              Retour : <?= $leasingResults[0]['endDate']?></p>
+        <p>Prise : <?= $leasingResults[0]['startDate']?>              Retour : <?= $endDateLeasingResults[0]['endDate']?></p>
         <p>Statut : <?= $leasingResults[0]['statut']?></p>
 
         <div class="table-responsive">
             <table class="table textcolor">
-              <form>
                 <tr>
                     <th>Code</th><th>Quantité</th><th>Prise</th><th>Retour</th><th>Statut</th>
                 </tr>
                 <?php
-                foreach ($leasingResults as $result) : ?>
-                    <tr>
-                        <td><?= $result['code']; ?></td>
-                        <td><?= $result['qtySelected']; ?></td>
-                        <td><?= $result['startDate']; ?></td>
-                        <td><?= $result['endDate']; ?></td>
-                        <!-- Mettre checkbox pour choisir, tester ensuite l'état des statut -->
-                        <td><select name="statut" id="statut">
-                                <option value="statut"><?= $leasingResults[0]['statut']?></option>
-                                <option value="statut"><?= $option2?></option>
-                            </select></td>
-                    </tr>
-                <?php endforeach ?>
-              </form>
+                for ($i = 0; $i < count($leasingResults); $i++)
+                {
+                    echo "<form class='form' method='POST' action='index.php?action=updateStatut&line=$i'>";
+                    echo "<tr>";
+                    echo "<td>" . $leasingResults[$i]['code'] . "</td>";
+                    echo "<td>" . $leasingResults[$i]['qtySelected'] . "</td>";
+                    echo "<td>" . $leasingResults[$i]['startDate'] . "</td>";
+                    echo "<td>" . $leasingResults[$i]['endDate'] . "</td>";
+                    echo "<td><select name='statut' id='statut'>";
+                    echo "<option value='statut'>" . $leasingResults[0]['statut'] . "</option>";
+                    echo "<option value='statut'>" . $option2 . "</option>";
+                    echo "</select></td>";
+                    echo "</tr>";
+                }
+                 ?>
             </table>
             <a href="index.php?action=displayLeasing" class="btn btn-info">Retour à la vue d'ensemble</a>
-            <a href="index.php?action=updateStatut" class="btn btn-success">Enregistrer les modifications</a>
+            <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
+            </form>
         </div>
     </header>
 </article>
@@ -50,22 +51,3 @@ ob_start();
 $content = ob_get_clean();
 require 'gabarit.php';
 ?>
-
-    <div  class="table-responsive">
-        <table class="table table-dark">
-            <thead class="thead-dark">
-              <tr>
-                  <th>Code</th><th>Quantité</th><th>Prise</th><th>Retour</th><th>Statut</th>
-              </tr>
-            </thead>
-            <?php foreach ($leasingResults as $snow):?>
-              <tr>
-                  <td><?= $result['code']; ?></td>
-                  <td><?= $result['qtySelected']; ?></td>
-                  <td><?= $result['startDate']; ?></td>
-                  <td><?= $result['endDate']; ?></td>
-                  <td><?= $result['statut']; ?></td>
-              </tr>
-            <?php endforeach ?>
-        </table>
-    </div>

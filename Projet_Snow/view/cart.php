@@ -55,7 +55,8 @@ ob_start();
                 <?php
 
                 // Displays cart session's content
-                for ($i = 0; $i < count($_SESSION['cart']); $i++) {
+                for ($i = 0; $i < count($_SESSION['cart']); $i++)
+                {
                     echo "<tr>";
                     echo "<td>" . $_SESSION['cart'][$i]['code'] . "</td>";
                     echo "<td>" . $_SESSION['cart'][$i]['dateD'] . "</td>";
