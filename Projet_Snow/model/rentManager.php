@@ -199,6 +199,7 @@ function getSnowLeasingsUser()
     for($i=0; $i < count($idLeasingsUser); $i++)
     {
         $idLeasingUser = $idLeasingsUser[$i]['id'];
+
         $snowsLeasingQuery = 'SELECT snows_leasings.idLeasings, snows.code, snows.brand, snows.model, snows.dailyPrice, snows_leasings.qtySelected, snows_leasings.startDate FROM snows_leasings INNER JOIN snows ON snows_leasings.idSnows = snows.id WHERE snows_leasings.idLeasings =' . $strSeparator . $idLeasingUser . $strSeparator;
 
         require_once 'model/dbConnector.php';
@@ -274,19 +275,13 @@ function insertNewStatutLeasing($idLeasing, $statut)
     executeQueryInsert($statutInsertQuery);
 }
 
-function insertNewStatutLeasings($lineToChange, $idLeasing, $statutForChange)
+function insertNewStatutLeasings($i, $idLeasing, $statutToInsert)
 {
     $strSeparator = '\'';
-    $leasingResults = getASnowLeasing($idLeasing);
 
-    for ($i =0;$i<count($leasingResults);$i++)
-    {
-        if ($i == $lineToChange)
-        {
-            $statutInsertQuery = 'UPDATE snows_leasings SET snows_leasings.statut = ' . $strSeparator . $statutForChange . $strSeparator . ' WHERE snows_leasings.lineInLeasing =' . $lineToChange . ' AND snows_leasings.idLeasings =' . $idLeasing;
+    $statutInsertQuery = 'UPDATE snows_leasings SET snows_leasings.statut = ' . $strSeparator . $statutToInsert . $strSeparator . ' WHERE snows_leasings.lineInLeasing =' . $i . ' AND snows_leasings.idLeasings =' . $idLeasing;
 
-            require_once 'model/dbConnector.php';
-            executeQueryInsert($statutInsertQuery);
-        }
-    }
+    require_once 'model/dbConnector.php';
+    executeQueryInsert($statutInsertQuery);
+
 }

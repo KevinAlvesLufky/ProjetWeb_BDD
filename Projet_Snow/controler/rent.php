@@ -116,17 +116,19 @@ function confirmLeasing()
     require_once "view/UserLeasing.php";
 }
 
-function updateStatut($lineToChange, $idLeasing, $statutUpdateRequest)
+function updateStatut($idLeasing, $statutUpdateRequest)
 {
-    //set variables
-    $statutForChange = $statutUpdateRequest['statut'];
+    require_once "model/rentManager.php";
+    $leasingResults = getASnowLeasing($idLeasing);
 
-    if(isset($lineToChange) && isset($idLeasing) && isset($statutForChange))
+    if(isset($idLeasing) && isset($statutUpdateRequest))
     {
-        require_once"model/rentManager.php";
-        insertNewStatutLeasings($lineToChange, $idLeasing, $statutForChange);
+        for ($i = 0; $i < count($leasingResults); $i++)
+        {
+            $statutToInsert = $statutUpdateRequest["statut$i"];
+            insertNewStatutLeasings($i, $idLeasing, $statutToInsert);
+        }
     }
-
     $_GET['action'] = "displayManageLeasing";
     displayManageLeasing($idLeasing);
 }
