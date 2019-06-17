@@ -42,7 +42,7 @@ INSERT INTO `snows` (`id`, `code`, `brand`, `model`, `snowLength`, `qtyAvailable
 -- Export de la structure de la table snows. users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `userEmailAddress` varchar(255) NOT NULL,
+  `userEmailAddress` varchar(55) NOT NULL,
   `userHashPsw` varchar(255) NOT NULL,
   `userType` int(10) NOT NULL,
   PRIMARY KEY (`id`),
