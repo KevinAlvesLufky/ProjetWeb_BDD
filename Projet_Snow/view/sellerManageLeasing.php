@@ -15,10 +15,11 @@ ob_start();
 <article>
     <header>
         <h2> Gestion des Retours </h2>
+        <pre>
         <p>ID Location : <?= $leasingResults[0]['idLeasings']?>       Email : <?= $userEmailAddressLeasing[0]['userEmailAddress'] ?> </p>
         <p>Prise : <?= $leasingResults[0]['startDate']?>              Retour : <?= $endDateLeasingResults[0]['endDate']?></p>
         <p>Statut : <?= $statutLeasing[0]['statut']?></p>
-
+      </pre>
         <div class="table-responsive">
             <table class="table textcolor">
                 <tr>
