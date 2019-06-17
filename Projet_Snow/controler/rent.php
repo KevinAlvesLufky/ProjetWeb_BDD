@@ -13,10 +13,9 @@
  */
 function displayLeasing()
 {
-    $_GET['action'] = "displayLeasing";
     require_once"model/rentManager.php";
 
-   // $_SESSION["haveLeasing"] = getSnowLeasingsUser(); //take data leasings
+    $_SESSION["haveLeasing"] = getSnowLeasingsUser();
     $leasingsResults = getAllLeasings();
     $snowsLeasings = getAllSnowLeasings();
 
@@ -50,6 +49,8 @@ function displayLeasing()
             }
         }
     }
+
+    $_GET['action'] = "displayLeasing";
 
     if (isset($_SESSION['userType']))
     {
