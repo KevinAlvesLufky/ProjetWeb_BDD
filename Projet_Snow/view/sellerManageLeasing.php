@@ -15,11 +15,10 @@ ob_start();
 <article>
     <header>
         <h2> Gestion des Retours </h2>
-        <pre>
         <p>ID Location : <?= $leasingResults[0]['idLeasings']?>       Email : <?= $userEmailAddressLeasing[0]['userEmailAddress'] ?> </p>
         <p>Prise : <?= $leasingResults[0]['startDate']?>              Retour : <?= $endDateLeasingResults[0]['endDate']?></p>
         <p>Statut : <?= $statutLeasing[0]['statut']?></p>
-      </pre>
+
         <div class="table-responsive">
             <table class="table textcolor">
                 <tr>
@@ -34,21 +33,16 @@ ob_start();
                     echo "<td>" . $leasingResults[$i]['startDate'] . "</td>";
                     echo "<td>" . $leasingResults[$i]['endDate'] . "</td>";
                     echo "<form class='form' method='POST' action='index.php?action=updateStatut&line=$i&idLeasing=$idLeasingInUrl'>";
-                    echo "<td><select name='statut' id='statut'>";
+                    echo "<td><select name='statut$i' id='statut$i'>";
                     echo "<option value='" . $leasingResults[$i]['statut'] . "'>" . $leasingResults[$i]['statut'] . "</option>";
                     echo "<option value='$option2'>" . $option2 . "</option>";
                     echo "</select></td>";
                     echo "</tr>";
-
-                    if ($i == count($leasingResults))
-                    {
-                        echo "<a href='index.php?action=displayLeasing' class='btn btn-info'>Retour à la vue d'ensemble</a>";
-                        echo "<button type='submit' class='btn btn-success'>Enregistrer les modifications</button>";
-
-                    }
                 }
-                 ?>
+                ?>
             </table>
+            <a href='index.php?action=displayLeasing' class='btn btn-info'>Retour à la vue d'ensemble</a>
+            <button type='submit' class='btn btn-success'>Enregistrer les modifications</button>
             </form>
         </div>
     </header>
