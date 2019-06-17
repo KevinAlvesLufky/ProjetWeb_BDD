@@ -15,8 +15,8 @@ ob_start();
 <article>
     <header>
         <h2> Gestion des Retours </h2>
-        <p>ID Location : <?= $leasingResults[0]['idLeasings']?>&#9;Email : <?= $userEmailAddressLeasing[0]['userEmailAddress'] ?> </p>
-        <p>Prise : <?= $leasingResults[0]['startDate']?>&#9;Retour : <?= $endDateLeasingResults[0]['endDate']?></p>
+        <p>ID Location : <?= $leasingResults[0]['idLeasings']?>&emsp;&emsp;Email : <?= $userEmailAddressLeasing[0]['userEmailAddress'] ?> </p>
+        <p>Prise : <?= $leasingResults[0]['startDate']?>&emsp;&emsp;Retour : <?= $endDateLeasingResults[0]['endDate']?></p>
         <p>Statut : <?= $statutLeasing[0]['statut']?></p>
 
         <div class="table-responsive">
