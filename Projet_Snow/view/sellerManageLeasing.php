@@ -35,7 +35,7 @@ ob_start();
                     echo "<form class='form' method='POST' action='index.php?action=updateStatut&idLeasing=$idLeasingInUrl'>";
                     echo "<td><select name='statut$i' id='statut$i'>";
                     echo "<option value='" . $leasingResults[$i]['statut'] . "'>" . $leasingResults[$i]['statut'] . "</option>";
-                    echo "<option value='$option2'>" . $option2 . "</option>";
+                    echo "<option value='$option2[$i]'>" . $option2[$i] . "</option>";
                     echo "</select></td>";
                     echo "</tr>";
                 }

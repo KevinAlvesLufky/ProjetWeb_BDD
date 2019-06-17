@@ -15,7 +15,6 @@ function displayLeasing()
 {
     require_once"model/rentManager.php";
 
-    $_SESSION["haveLeasing"] = getSnowLeasingsUser();
     $leasingsResults = getAllLeasings();
     $snowsLeasings = getAllSnowLeasings();
 
@@ -25,10 +24,10 @@ function displayLeasing()
         {
             if($leasingsResults[$i]['id'] == $snowsLeasings[$y]['idLeasings'])
             {
-                $idLeasing = $leasingsResults[$i]['id'];
-
                 if($snowsLeasings[0]['statut'] == $snowsLeasings[$y]['statut'])
                 {
+                    $idLeasing = $leasingsResults[$i]['id'];
+
                     if($snowsLeasings[0]['statut'] == "En cours")
                     {
                         $statut = "En cours";
@@ -90,17 +89,15 @@ function displayManageLeasing($idLeasing)
     {
         if ($leasingResults[$i]['statut'] == "En cours")
         {
-            $option2 = "Rendu";
+            $option2[$i] = "Rendu";
         }
         else
         {
-            $option2 = "En cours";
+            $option2[$i] = "En cours";
         }
     }
-
     $_GET['action'] = "displayManageLeasing";
     require_once"view/sellerManageLeasing.php";
-
 }
 
 /**
