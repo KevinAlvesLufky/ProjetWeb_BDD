@@ -39,12 +39,12 @@ ob_start();
                     echo "</select></td>";
                     echo "</tr>";
 
-                  if ($i == count($leasingResults){
-                    ?>
-                    <a href="index.php?action=displayLeasing" class="btn btn-info">Retour à la vue d'ensemble</a>
-                    <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
-                    <?php
-                  }
+                    if ($i == count($leasingResults))
+                    {
+                        echo "<a href='index.php?action=displayLeasing' class='btn btn-info'>Retour à la vue d'ensemble</a>";
+                        echo "<button type='submit' class='btn btn-success'>Enregistrer les modifications</button>";
+
+                    }
                 }
                  ?>
             </table>
