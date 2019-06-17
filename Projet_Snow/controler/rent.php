@@ -24,11 +24,13 @@ function displayLeasing()
         {
             if($leasingsResults[$i]['id'] == $snowsLeasings[$y]['idLeasings'])
             {
-                if($snowsLeasings[0]['statut'] == $snowsLeasings[$y]['statut'])
-                {
-                    $idLeasing = $leasingsResults[$i]['id'];
+                $idLeasing = $leasingsResults[$i]['id'];
+                $leasingResults = getASnowLeasing($idLeasing);
 
-                    if($snowsLeasings[0]['statut'] == "En cours")
+                if($leasingResults[0]['statut'] == $snowsLeasings[$y]['statut'])
+                {
+
+                    if($leasingResults[0]['statut'] == "En cours")
                     {
                         $statut = "En cours";
                         insertNewStatutLeasing($idLeasing, $statut);
@@ -48,6 +50,8 @@ function displayLeasing()
             }
         }
     }
+
+    $leasingsResults = getAllLeasings();
 
     $_GET['action'] = "displayLeasing";
 
