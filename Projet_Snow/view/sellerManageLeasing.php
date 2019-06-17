@@ -40,9 +40,9 @@ ob_start();
                     echo "</tr>";
                 }
                  ?>
+                 <a href="index.php?action=displayLeasing" class="btn btn-info">Retour à la vue d'ensemble</a>
+                 <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
             </table>
-            <a href="index.php?action=displayLeasing" class="btn btn-info">Retour à la vue d'ensemble</a>
-            <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
             </form>
         </div>
     </header>
