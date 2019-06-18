@@ -25,7 +25,7 @@ function login($loginRequest)
 {
     //test the database connexion
     require_once "model/dbConnector.php";
-    if(testDBConnexion())
+    if (testDBConnexion())
     {
         //if a login request was submitted
         if (isset($loginRequest['inputUserEmailAddress']) && isset($loginRequest['inputUserPsw']))
@@ -36,16 +36,17 @@ function login($loginRequest)
 
             //try to check if user/psw are matching with the database
             require_once "model/usersManager.php";
-            if (isLoginCorrect($userEmailAddress, $userPsw))
+
+            try
             {
+                isLoginCorrect($userEmailAddress, $userPsw);
                 createSession($userEmailAddress);
-                $_GET['loginError'] = false;
                 $_GET['action'] = "home";
                 require "view/home.php";
             }
-            else
+            catch (Exception $e)
             { //if the user/psw does not match, login form appears again
-                $_GET['loginError'] = true;
+                $msgError = $e->getMessage();
                 $_GET['action'] = "login";
                 require "view/login.php";
             }
@@ -76,20 +77,18 @@ function register($registerRequest)
             $userPsw = $registerRequest['inputUserPsw'];
             $userPswRepeat = $registerRequest['inputUserPswRepeat'];
 
-            if ($userPsw == $userPswRepeat)
+            require_once "model/usersManager.php";
+
+            try
             {
-                require_once "model/usersManager.php";
-                if (registerNewAccount($userEmailAddress, $userPsw))
-                {
-                    createSession($userEmailAddress);
-                    $_GET['registerError'] = false;
-                    $_GET['action'] = "home";
-                    require "view/home.php";
-                }
+                registerNewAccount($userEmailAddress, $userPsw, $userPswRepeat);
+                createSession($userEmailAddress);
+                $_GET['action'] = "home";
+                require "view/home.php";
             }
-            else
+            catch (Exception $e)
             {
-                $_GET['registerError'] = true;
+                $msgError = $e->getMessage();
                 $_GET['action'] = "register";
                 require "view/register.php";
             }

@@ -15,7 +15,6 @@
  */
 function displaySnows()
 {
-
     //test the database connexion
     require_once "model/dbConnector.php";
     if(testDBConnexion())

@@ -11,9 +11,11 @@
  * This function is designed to verify user's login
  * @param $userEmailAddress
  * @param $userPsw
+ * @throws
  * @return bool : "true" only if the user and psw match the database. In all other cases will be "false".
  */
-function isLoginCorrect($userEmailAddress, $userPsw){
+function isLoginCorrect($userEmailAddress, $userPsw)
+{
     $result = false;
 
     $strSeparator = '\'';
@@ -25,9 +27,14 @@ function isLoginCorrect($userEmailAddress, $userPsw){
     if (count($queryResult) == 1)
     {
         $userHashPsw = $queryResult[0]['userHashPsw'];
-        $hashPasswordDebug = password_hash($userPsw, PASSWORD_DEFAULT);
         $result = password_verify($userPsw, $userHashPsw);
     }
+
+    if($result == false)
+    {
+        throw new Exception('Login refusé');
+    }
+
     return $result;
 }
 
@@ -35,22 +42,38 @@ function isLoginCorrect($userEmailAddress, $userPsw){
  * This function is designed to register a new account
  * @param $userEmailAddress
  * @param $userPsw
+ * @throws
  * @return bool|null
  */
-function registerNewAccount($userEmailAddress, $userPsw){
+function registerNewAccount($userEmailAddress, $userPsw, $userPswRepeat)
+{
     $result = false;
-
     $strSeparator = '\'';
-    $userHashPsw = password_hash($userPsw, PASSWORD_DEFAULT);
     $userType = 1;
+
+    if ($userPsw == $userPswRepeat)
+    {
+        $userHashPsw = password_hash($userPsw, PASSWORD_DEFAULT);
+    }
+    else
+    {
+        throw new Exception('Inscription refusée');
+    }
 
     $registerQuery = 'INSERT INTO users (`userEmailAddress`, `userHashPsw`, `userType`) VALUES ('.$strSeparator . $userEmailAddress .$strSeparator . ','.$strSeparator . $userHashPsw .$strSeparator.','.$strSeparator . $userType .$strSeparator.')';
 
     require_once 'model/dbConnector.php';
     $queryResult = executeQueryInsert($registerQuery);
-    if($queryResult){
+
+    if($queryResult)
+    {
         $result = $queryResult;
     }
+    else
+    {
+        throw new Exception('Inscription refusée');
+    }
+
     return $result;
 }
 
@@ -60,7 +83,8 @@ function registerNewAccount($userEmailAddress, $userPsw){
  * @param $userEmailAddress
  * @return int (1 = customer ; 2 = seller)
  */
-function getUserType($userEmailAddress){
+function getUserType($userEmailAddress)
+{
     $result = 1;//we fix the result to 1 -> customer
 
     $strSeparator = '\'';

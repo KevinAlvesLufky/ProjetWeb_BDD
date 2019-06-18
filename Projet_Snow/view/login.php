@@ -12,9 +12,9 @@ $title ='Rent A Snow - Login/Logout';
 ob_start();
 ?>
 <h2>Login</h2>
-<?php if (@$_GET['loginError'] == true) :?>
-    <h5><span style="color:red">Login refusé</span></h5>
-<?php endif ?>
+<?php if (isset($msgError)) :?>
+    <p style="color: red"><?=$msgError?></p>
+<?php endif;?>
 <article>
       <form class='form' method='POST' action="index.php?action=login">
           <div class="container">

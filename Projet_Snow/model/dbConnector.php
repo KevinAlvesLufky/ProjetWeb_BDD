@@ -94,7 +94,7 @@ function testDBConnexion()
     }
     catch (PDOException $exception)
     {
-        $warning = "notre site est en maintenance, merci pour votre compréhension";
+        $msgError = "Notre site est en maintenance, merci pour votre compréhension.";
         $_GET['action'] = "home";
         require_once"view/home.php";
     }

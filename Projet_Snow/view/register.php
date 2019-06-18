@@ -11,10 +11,10 @@ $title ='Rent A Snow - Login/Logout';
 
 ob_start();
 ?>
-    <h1>S'inscrire</h1>
-    <?php if (@$_GET['registerError'] == true) :?>
-    <h5><span style="color:red">Inscription refusée</span></h5>
-    <?php endif ?>
+<h1>S'inscrire</h1>
+<?php if (isset($msgError)) :?>
+    <p style="color: red"><?=$msgError?></p>
+<?php endif;?>
     <article>
         <form class='form' method='POST' action="index.php?action=register">
 

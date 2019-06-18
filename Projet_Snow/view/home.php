@@ -13,11 +13,9 @@ $title="RentASnow - Accueil";
 ?>
 
 <!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
-<?php if(isset($warning)): ?>
-    <div class="isa_error">
-        <i class="fa fa-times-circle"></i>
-        <p> <?=$warning;?> </p>
-<?php endif ?>
+<?php if (isset($msgError)) :?>
+    <h3 style="color: red"><?=$msgError?></h3>
+<?php endif;?>
 <div class="span12" id="divMain">
   <h1>Nos activités</h1>
 
