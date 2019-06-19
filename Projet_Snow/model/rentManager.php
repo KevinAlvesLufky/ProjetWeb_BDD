@@ -7,6 +7,7 @@
  * Time: 09:10
  */
 
+//region rent management
 /**
  * This function is designed to get the last leasing's id
  * @return $lastId : the last leasing's id
@@ -20,6 +21,7 @@ function getLastIdLeasing()
     require_once 'model/dbConnector.php';
     $arrayId = executeQuerySelect($leasingsIdQuery);
 
+    //take the last leasing id
     foreach($arrayId as $array)
     {
         $lastId = $array['id'];
@@ -32,7 +34,7 @@ function getLastIdLeasing()
 
 /**
  * This function is designed to get the leasings of the user
- * @return
+ * @return $leasingsUser : array of id leasings user or false
  */
 function getLeasingsUser()
 {
@@ -49,7 +51,8 @@ function getLeasingsUser()
 
 /**
  * This function is designed to get the leasings of the user
- * @return
+ * @param $idLeasing : contains the id of the leasing
+ * @return $userEmailAddressLeasing : array of userEmailAddress of the leasing or false
  */
 function getLeasingUserEmailAddress($idLeasing)
 {
@@ -63,6 +66,11 @@ function getLeasingUserEmailAddress($idLeasing)
     return $userEmailAddressLeasing;
 }
 
+/**
+ * This function is designed to get the status of the leasing
+ * @param $idLeasing : contains the id of the leasing
+ * @return $statutLeasing : array of status's leasing or false
+ */
 function getStatutLeasing($idLeasing)
 {
     $strSeparator = '\'';
@@ -74,17 +82,20 @@ function getStatutLeasing($idLeasing)
 
     return $statutLeasing;
 }
+
 /**
  * This function is designed to manage the insert data cart in the DB
- * @return true
+ * @return true or false
  */
 function dataInsert()
 {
+    //set variables
     $strSeparator = '\'';
     $idLeasing = getLastIdLeasing();
     $snowsData[] = "";
     $timeStamp2 = 0;
 
+    //insert all informations cart in leasing
     for($i=0; $i < count($_SESSION['cart']); $i++)
     {
         //set variables
@@ -108,7 +119,6 @@ function dataInsert()
         $snowsData[$i][0]["qtyAvailable"] -= $_SESSION['cart'][$i]['qty'];
         $snowsQtyQuery = 'UPDATE snows SET qtyAvailable = '.$snowsData[$i][0]["qtyAvailable"].' WHERE snows.code =' . $strSeparator . $snowCode . $strSeparator;
 
-        require_once 'model/dbConnector.php';
         executeQueryInsert($snowsQtyQuery);
 
         //insert leasing informations
@@ -120,9 +130,9 @@ function dataInsert()
 
         $snowsLeasingsInsertQuery = 'INSERT INTO snows_leasings (idLeasings, idSnows, qtySelected, startDate, endDate, statut) VALUES ('.$idLeasing.','.$idSnow.','.$qtySelected.','.$startDateToInsert.','.$endDateToInsert.','.$statut.')';
 
-        require_once 'model/dbConnector.php';
         executeQueryInsert($snowsLeasingsInsertQuery);
 
+        //take the lastest date
         if($timeStamp1 > $timeStamp2)
         {
             $laterTimeStamp = $timeStamp1;
@@ -145,6 +155,11 @@ function dataInsert()
     return true;
 }
 
+/**
+ * This function is designed to manage the insert data cart in the DB
+ * @param  $leasingResults : contains leasings's informations
+ * @param  $idLeasing : contains the id of the leasing
+ */
 function lineInLeasingInsert($leasingResults, $idLeasing)
 {
     $idArticlesQuery = 'SELECT snows_leasings.id FROM snows_leasings ORDER BY snows_leasings.id';
@@ -160,6 +175,7 @@ function lineInLeasingInsert($leasingResults, $idLeasing)
     $y = $idFirstArticlesResults[0]['id'];
     $y -=1;
 
+    //insert line to modify leasing (this is for the status of an article)
     for ($i = 0; $i < count($leasingResults); $i++)
     {
         $lineInLeasingInsertQuery = 'UPDATE snows_leasings SET snows_leasings.lineInLeasing = ' . $i . ' WHERE snows_leasings.id =' . $idArticlesResults[$y]['id'] . ' AND snows_leasings.idLeasings =' . $idLeasing;
@@ -172,6 +188,10 @@ function lineInLeasingInsert($leasingResults, $idLeasing)
 
 }
 
+/**
+ * This function is designed to get all leasings's status
+ * @return $snowsLeasings : array of all leasings witch status or false
+ */
 function getAllSnowLeasings()
 {
     //take informations leasings
@@ -184,18 +204,18 @@ function getAllSnowLeasings()
 }
 
 /**
- * This function is designed to get leasings's informations
- * @return $_SESSION["haveLeasing"] : array of informations leasing or false
+ * This function is designed to get leasings's informations of the user
+ * @return $leasingsUser : array of informations leasing or false
  */
 function getSnowLeasingsUser()
 {
-    $_SESSION["haveLeasing"] = false;
+    $leasingsUser = false;
 
     $strSeparator = '\'';
     $idLeasingsUser = getLeasingsUser();
-    $_SESSION["haveLeasing"] = array();
+    $leasingsUser = array();
 
-    //take informations leasings
+    //take informations leasings's user
     for($i=0; $i < count($idLeasingsUser); $i++)
     {
         $idLeasingUser = $idLeasingsUser[$i]['id'];
@@ -205,14 +225,15 @@ function getSnowLeasingsUser()
         require_once 'model/dbConnector.php';
         $snowLeasingsUser = executeQuerySelect($snowsLeasingQuery);
 
-        array_push($_SESSION["haveLeasing"], $snowLeasingsUser);
+        array_push($leasingsUser, $snowLeasingsUser);
     }
-    return $_SESSION["haveLeasing"];
+    return $leasingsUser;
 }
 
 /**
  * This function is designed to get leasing's informations
- * @return $_SESSION["haveLeasing"] : array of informations leasing or false
+ * @param $idLeasing : contains the id of the leasing
+ * @return $leasingResults : array of informations leasing or false
  */
 function getASnowLeasing($idLeasing)
 {
@@ -220,7 +241,7 @@ function getASnowLeasing($idLeasing)
 
     $strSeparator = '\'';
 
-    //take informations leasings
+    //take informations leasing
     $snowLeasingQuery = 'SELECT snows_leasings.idLeasings, snows.code, snows_leasings.qtySelected, snows_leasings.startDate, snows_leasings.endDate, snows_leasings.statut FROM snows_leasings INNER JOIN snows ON snows_leasings.idSnows = snows.id INNER JOIN leasings ON snows_leasings.idLeasings = leasings.id WHERE snows_leasings.idLeasings ='. $strSeparator . $idLeasing . $strSeparator;
 
     require_once 'model/dbConnector.php';
@@ -231,7 +252,8 @@ function getASnowLeasing($idLeasing)
 
 /**
  * This function is designed to get leasing's informations
- * @return $_SESSION["haveLeasing"] : array of informations leasing or false
+ * @param $idLeasing : contains the id of the leasing
+ * @return $endDateLeasingResults : array of informations leasing or false
  */
 function getEndDateLeasing($idLeasing)
 {
@@ -250,7 +272,7 @@ function getEndDateLeasing($idLeasing)
 
 /**
  * This function is designed to get leasings's informations
- * @return $_SESSION["haveLeasing"] : array of informations leasing or false
+ * @return $leasingsResults : array of informations leasings or false
  */
 function getAllLeasings()
 {
@@ -265,6 +287,11 @@ function getAllLeasings()
     return $leasingsResults;
 }
 
+/**
+ * This function is designed to update the status's leasing
+ * @param $idLeasing : contains the id of the leasing
+ * @param $statut : contains the status to insert
+ */
 function insertNewStatutLeasing($idLeasing, $statut)
 {
     $strSeparator = '\'';
@@ -275,6 +302,12 @@ function insertNewStatutLeasing($idLeasing, $statut)
     executeQueryInsert($statutInsertQuery);
 }
 
+/**
+ * This function is designed to update leasings's status
+ * @param $i : contains the line to change
+ * @param $idLeasing : contains the if of the leasing
+ * @param $statutToInsert : contains the status to insert
+ */
 function insertNewStatutLeasings($i, $idLeasing, $statutToInsert)
 {
     $strSeparator = '\'';
@@ -285,3 +318,4 @@ function insertNewStatutLeasings($i, $idLeasing, $statutToInsert)
     executeQueryInsert($statutInsertQuery);
 
 }
+//endregion

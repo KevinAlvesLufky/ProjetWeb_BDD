@@ -18,6 +18,7 @@ function displayLeasing()
     $leasingsResults = getAllLeasings();
     $snowsLeasings = getAllSnowLeasings();
 
+    //check status of the leasings for modify the status of the (general) leasing
     for($i=0;$i<count($leasingsResults); $i++)
     {
         for($y=0;$y<count($snowsLeasings); $y++)
@@ -55,6 +56,7 @@ function displayLeasing()
 
     $_GET['action'] = "displayLeasing";
 
+    //display view depending of the tyoe of user
     if (isset($_SESSION['userType']))
     {
         switch ($_SESSION['userType'])
@@ -78,17 +80,22 @@ function displayLeasing()
 
 /**
  * This function is designed to display the manage leasing page
+ * @param $idLeasing : contains the id of the leasing
  */
 function displayManageLeasing($idLeasing)
 {
     require_once"model/rentManager.php";
+
     $leasingResults = getASnowLeasing($idLeasing);
     lineInLeasingInsert($leasingResults, $idLeasing);
+
+    //set variables
     $endDateLeasingResults =  getEndDateLeasing($idLeasing);
     $userEmailAddressLeasing = getLeasingUserEmailAddress($idLeasing);
     $idLeasingInUrl = $leasingResults[0]['idLeasings'];
     $statutLeasing = getStatutLeasing($idLeasing);
 
+    //get the option 2 depending of the option 1
     for ($i = 0; $i < count($leasingResults); $i++)
     {
         if ($leasingResults[$i]['statut'] == "En cours")
@@ -105,7 +112,7 @@ function displayManageLeasing($idLeasing)
 }
 
 /**
- * This function is designed to manage the confirmation of the leasing
+ * This function is designed to manage the confirmation of the leasing and insert leasing's informations in the BD
  */
 function confirmLeasing()
 {
@@ -118,6 +125,11 @@ function confirmLeasing()
     require_once "view/UserLeasing.php";
 }
 
+/**
+ * This function is designed to update the status of the articles's leasing
+ * @param $idLeasing : contains the id of the leasing
+ * @param $statutUpdateRequest : contains the fields of the form to update the status of an article
+ */
 function updateStatut($idLeasing, $statutUpdateRequest)
 {
     require_once "model/rentManager.php";
@@ -125,6 +137,7 @@ function updateStatut($idLeasing, $statutUpdateRequest)
 
     if(isset($idLeasing) && isset($statutUpdateRequest))
     {
+        //change the status of the article
         for ($i = 0; $i < count($leasingResults); $i++)
         {
             $statutToInsert = $statutUpdateRequest["statut$i"];
@@ -134,5 +147,4 @@ function updateStatut($idLeasing, $statutUpdateRequest)
     $_GET['action'] = "displayManageLeasing";
     displayManageLeasing($idLeasing);
 }
-
 //endregion

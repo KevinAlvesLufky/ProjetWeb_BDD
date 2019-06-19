@@ -30,6 +30,7 @@ function displaySnows()
         $_GET['action'] = "displaySnows";
         if (isset($_SESSION['userType']))
         {
+            //display a view depending of the type of user
             switch ($_SESSION['userType'])
             {
                 case 1://this is a customer
@@ -56,10 +57,6 @@ function displaySnows()
  */
 function displayASnow($snowCode)
 {
-    if (isset($registerRequest['inputUserEmailAddress']))
-    {
-        //TODO
-    }
     require_once "model/snowsManager.php";
     $snowsResults= getASnow($snowCode);
     require "view/aSnow.php";

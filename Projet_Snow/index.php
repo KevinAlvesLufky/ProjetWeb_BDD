@@ -13,6 +13,7 @@ require "controler/snows.php";
 require "controler/cart.php";
 require "controler/rent.php";
 
+//Redirect the user depending of what action he do
 if (isset($_GET['action']))
 {
   $action = $_GET['action'];

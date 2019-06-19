@@ -2,11 +2,12 @@
 /**
  * This file contains all functions to manage the connection to the database
  * Created by PhpStorm.
- * User: Kevin Alves
+ * User: Thomas Huguet
  * Date: 06.05.2017
  * Time: 09:10
  */
 
+//region DB management
 /**
  * This function is designed to execute a query received as parameter
  * @param $query : must be correctly build for sql (synthaxis) but the protection against sql injection will be done there
@@ -65,7 +66,8 @@ function openDBConnexion (){
     try{
         $tempDbConnexion = new PDO($dsn, $userName, $userPwd);
     }
-    catch (PDOException $exception) {
+    catch (PDOException $exception)
+    {
         echo 'Connection failed: ' . $exception->getMessage();
     }
     return $tempDbConnexion;
@@ -73,7 +75,7 @@ function openDBConnexion (){
 
 /**
  * This function is designed to manage the database connexion's test
- * @return PDO|null
+ * @return PDO|error
  */
 function testDBConnexion()
 {
@@ -100,3 +102,4 @@ function testDBConnexion()
     }
     return $tempDbConnexion;
 }
+//endregion

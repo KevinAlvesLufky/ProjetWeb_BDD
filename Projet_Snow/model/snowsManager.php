@@ -2,16 +2,18 @@
 /**
  * This file contain all functions to manage the snows
  * Created by PhpStorm.
- * User: Kevin Alves
+ * User: Thomas Huguet
  * Date: 06.05.2017
  * Time: 09:10
  */
 
+//region snows management
 /**
  * This function is designed to get all active snows
  * @return array : containing all information about snows. Array can be empty.
  */
-function getSnows(){
+function getSnows()
+{
     $snowsQuery = 'SELECT code, brand, model, snowLength, dailyPrice, qtyAvailable, photo, active FROM snows';
 
     require_once 'model/dbConnector.php';
@@ -25,7 +27,8 @@ function getSnows(){
  * @param $snow_code : snow code to display (selected by the user)
  * @return array|null : snow to display. Can be empty.
  */
-function getASnow($snow_code){
+function getASnow($snow_code)
+{
     $strgSeparator = '\'';
 
     // Query to get the selected snow. The active code must be set to 1 to display only snows to display. It avoids possibilty to user selecting a wrong code (get paramater in url)
@@ -36,3 +39,4 @@ function getASnow($snow_code){
 
     return $snowResults;
 }
+//endregion

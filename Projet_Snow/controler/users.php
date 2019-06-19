@@ -8,7 +8,7 @@
  */
 
 /**
- * This function is designed to redirect the user to the home page (depending on the action received by the index)
+ * This function is designed to redirect the user to the home page
  */
 function home()
 {
@@ -39,20 +39,22 @@ function login($loginRequest)
 
             try
             {
-                isLoginCorrect($userEmailAddress, $userPsw);
+                isLoginCorrect($userEmailAddress, $userPsw); //check if the login fields are correct
                 createSession($userEmailAddress);
                 $_GET['action'] = "home";
                 require "view/home.php";
             }
             catch (Exception $e)
-            { //if the user/psw does not match, login form appears again
+            {
+                //if the user/psw does not match, login form appears again
                 $msgError = $e->getMessage();
                 $_GET['action'] = "login";
                 require "view/login.php";
             }
         }
         else
-        {   //the user does not yet fills the form
+        {
+            //the user does not yet fills the form
             $_GET['action'] = "login";
             require "view/login.php";
         }
@@ -81,13 +83,14 @@ function register($registerRequest)
 
             try
             {
-                registerNewAccount($userEmailAddress, $userPsw, $userPswRepeat);
+                registerNewAccount($userEmailAddress, $userPsw, $userPswRepeat); // Insert register fields in the BD
                 createSession($userEmailAddress);
                 $_GET['action'] = "home";
                 require "view/home.php";
             }
             catch (Exception $e)
             {
+                //if the user/psw does not match, register form appears again
                 $msgError = $e->getMessage();
                 $_GET['action'] = "register";
                 require "view/register.php";
@@ -95,6 +98,7 @@ function register($registerRequest)
         }
         else
         {
+            //the user does not yet fills the form
             $_GET['action'] = "register";
             require "view/register.php";
         }
@@ -114,7 +118,6 @@ function createSession($userEmailAddress)
     $userId = getUserId($userEmailAddress); //take user id
     $userId = (int)$userId; //convert var in int
 
-    require_once "model/usersManager.php";
     $userType = getUserType($userEmailAddress); //take user type
 
     $_SESSION['userType'] = $userType;
@@ -123,11 +126,11 @@ function createSession($userEmailAddress)
     require_once 'model/rentManager.php';
     if(!getSnowLeasingsUser())
     {
-        unset($_SESSION["haveLeasing"]);
+        unset($_SESSION["haveLeasing"]); //if the user doesn't have snows, delete haveLeasing
     }
     else
     {
-        $_SESSION["haveLeasing"] = getSnowLeasingsUser();
+        $_SESSION["haveLeasing"] = getSnowLeasingsUser(); //take all snows of the user
     }
 }
 
@@ -141,5 +144,4 @@ function logout()
     $_GET['action'] = "home";
     require "view/home.php";
 }
-
 //endregion

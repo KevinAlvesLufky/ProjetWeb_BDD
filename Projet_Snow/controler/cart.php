@@ -19,7 +19,7 @@ function displayCart()
 /**
  * This function is designed to get only one snow results (for aSnow view)
  * @param $snowCode : contains the code of the snow
- * @param $error : contains the error of the command (error quantity)
+ * @param $msgError : contains the error of the command (error quantity or date)
  */
 function snowLeasingRequest($snowCode,$msgError)
 {
@@ -28,7 +28,7 @@ function snowLeasingRequest($snowCode,$msgError)
     {
          require_once "model/snowsManager.php";
          $snowsResults = getASnow($snowCode);
-         if ($msgError !="") //check if there is an error
+         if ($msgError !="") //check if there is already an error
          {
              $warning = $msgError;
          }
@@ -43,7 +43,7 @@ function snowLeasingRequest($snowCode,$msgError)
 }
 
 /**
- * This function designed to put the leasing request in the cart
+ * This function is designed to put the leasing request in the cart
  * @param $snowCode : contains the code of the snow
  * @param $snowLocationRequest : contains the updates request fields
  */
@@ -57,24 +57,22 @@ function updateCartRequest($snowCode, $snowLocationRequest)
     //check the fields of the form
     if(isset($snowLocationRequest) && isset($snowCode))
     {
-
         //check if the user have something in the cart
         if (isset($_SESSION['cart']))
         {
             $cartArrayTemp = $_SESSION['cart'];
         }
 
-
         //insert data snow in cart
         try
         {
             require_once "model/cartManager.php";
-            $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
-
+            $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days); //put informations in the cart
             $_SESSION['cart'] = $cartArrayTemp;
         }
         catch (Exception $e)
         {
+            //if there is an error in the request
             $msgError = $e->getMessage();
             $_GET["action"]="snowLeasingRequest";
             snowLeasingRequest($snowCode,$msgError);
@@ -127,12 +125,13 @@ function updateCartItem($snowLine, $snowUpdateRequest)
         try
         {
             require_once "model/cartManager.php";
-            $currentCart = updateInCart($snowLine, $qty, $days, $cartArrayTemp);
+            $currentCart = updateInCart($snowLine, $qty, $days, $cartArrayTemp); //modify informations's cart
 
             $_SESSION['cart'] = $currentCart;
         }
         catch (Exception $e)
         {
+            //if there is an error of the quantity or date
             $msgError = $e->getMessage();
         }
 

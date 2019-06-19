@@ -2,16 +2,17 @@
 /**
  * This file contain all functions to manage the users
  * Created by PhpStorm.
- * User: Kevin Alves
+ * User: Thomas Huguet
  * Date: 06.05.2017
  * Time: 09:10
  */
 
+//region users management
 /**
  * This function is designed to verify user's login
- * @param $userEmailAddress
- * @param $userPsw
- * @throws
+ * @param $userEmailAddress : contains the email
+ * @param $userPsw : contains the password
+ * @throws : error if the login or password aren't correct
  * @return bool : "true" only if the user and psw match the database. In all other cases will be "false".
  */
 function isLoginCorrect($userEmailAddress, $userPsw)
@@ -24,12 +25,15 @@ function isLoginCorrect($userEmailAddress, $userPsw)
     require_once 'model/dbConnector.php';
     $queryResult = executeQuerySelect($loginQuery);
 
+    // if the select is successful
     if (count($queryResult) == 1)
     {
+        //check password
         $userHashPsw = $queryResult[0]['userHashPsw'];
         $result = password_verify($userPsw, $userHashPsw);
     }
 
+    //throw error if the password isn't correct
     if($result == false)
     {
         throw new Exception('Login refusé');
@@ -40,17 +44,20 @@ function isLoginCorrect($userEmailAddress, $userPsw)
 
 /**
  * This function is designed to register a new account
- * @param $userEmailAddress
- * @param $userPsw
- * @throws
+ * @param $userEmailAddress : contains the email
+ * @param $userPsw : contains the password
+ * @param $userPswRepeat : contains the second password
+ * @throws : error if the insert doesn't work or the password isn't correct
  * @return bool|null
  */
 function registerNewAccount($userEmailAddress, $userPsw, $userPswRepeat)
 {
+    //set variables
     $result = false;
     $strSeparator = '\'';
     $userType = 1;
 
+    //check the password
     if ($userPsw == $userPswRepeat)
     {
         $userHashPsw = password_hash($userPsw, PASSWORD_DEFAULT);
@@ -65,6 +72,7 @@ function registerNewAccount($userEmailAddress, $userPsw, $userPswRepeat)
     require_once 'model/dbConnector.php';
     $queryResult = executeQueryInsert($registerQuery);
 
+    //check if the insert has worked
     if($queryResult)
     {
         $result = $queryResult;
@@ -80,13 +88,12 @@ function registerNewAccount($userEmailAddress, $userPsw, $userPswRepeat)
 /**
  * This function is designed to get the type of user
  * For the webapp, it will adapt the behavior of the GUI
- * @param $userEmailAddress
+ * @param $userEmailAddress : contains the email
  * @return int (1 = customer ; 2 = seller)
  */
 function getUserType($userEmailAddress)
 {
     $result = 1;//we fix the result to 1 -> customer
-
     $strSeparator = '\'';
 
     //take the id of the user
@@ -95,7 +102,10 @@ function getUserType($userEmailAddress)
     require_once 'model/dbConnector.php';
     $queryResult = executeQuerySelect($getUserTypeQuery);
 
-    if (count($queryResult) == 1){
+    //check if the select has worked
+    if (count($queryResult) == 1)
+    {
+        //take the userType
         $result = $queryResult[0]['userType'];
     }
     return $result;
@@ -104,7 +114,7 @@ function getUserType($userEmailAddress)
 /**
  * This function is designed to get the id of user
  * @param $userEmailAddress : contain the user email address
- * @return $result : the id of the user connected
+ * @return $result : the id of the user connected or false
  */
 function getUserId($userEmailAddress)
 {
@@ -118,8 +128,12 @@ function getUserId($userEmailAddress)
     require_once 'model/dbConnector.php';
     $queryResult = executeQuerySelect($getUserIdQuery);
 
-    if (count($queryResult) == 1) {
+    //if the select has worked
+    if (count($queryResult) == 1)
+    {
+        //take the id
         $result = $queryResult[0]['id'];
     }
     return $result;
 }
+//endregion
