@@ -21,16 +21,16 @@ function displayCart()
  * @param $snowCode : contains the code of the snow
  * @param $error : contains the error of the command (error quantity)
  */
-function snowLeasingRequest($snowCode,$error)
+function snowLeasingRequest($snowCode,$msgError)
 {
     //if the user is connected, display the rent page
     if(isset($_SESSION['userEmailAddress']))
     {
          require_once "model/snowsManager.php";
          $snowsResults = getASnow($snowCode);
-         if ($error !="") //check if there is an error
+         if ($msgError !="") //check if there is an error
          {
-             $warning = $error;
+             $warning = $msgError;
          }
          $_GET['action'] = "snowLeasingRequest";
          require_once "view/snowLeasingRequest.php";
@@ -54,41 +54,34 @@ function updateCartRequest($snowCode, $snowLocationRequest)
     $days = $snowLocationRequest['inputDays'];
     $cartArrayTemp = array();
 
-        //check the fields of the form
-        if(isset($snowLocationRequest) && isset($snowCode))
+    //check the fields of the form
+    if(isset($snowLocationRequest) && isset($snowCode))
+    {
+
+        //check if the user have something in the cart
+        if (isset($_SESSION['cart']))
         {
-            if($qty > 0 && $days > 0) //check if there are negative numbers
-            {
-                    //check if the user have something in the cart
-                    if (isset($_SESSION['cart']))
-                    {
-                        $cartArrayTemp = $_SESSION['cart'];
-                    }
-                    require_once "model/cartManager.php";
-
-                    //insert data snow in cart
-                    $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
-
-                    //if the quantity isn't correct display an error
-                    if ($cartArrayTemp == false)
-                    {
-                        $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
-                        $_GET["action"]="snowLeasingRequest";
-                        snowLeasingRequest($snowCode,$warning);
-                    }else
-                    {
-                        $_SESSION['cart'] = $cartArrayTemp;
-                    }
-            }
-            else
-            {
-                $warning ="Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
-                $_GET["action"]="snowLeasingRequest";
-                snowLeasingRequest($snowCode,$warning);
-            }
+            $cartArrayTemp = $_SESSION['cart'];
         }
-        $_GET['action'] = "displayCart";
-        require "view/cart.php";
+
+
+        //insert data snow in cart
+        try
+        {
+            require_once "model/cartManager.php";
+            $cartArrayTemp = updateCart($cartArrayTemp, $snowCode, $qty, $days);
+
+            $_SESSION['cart'] = $cartArrayTemp;
+        }
+        catch (Exception $e)
+        {
+            $msgError = $e->getMessage();
+            $_GET["action"]="snowLeasingRequest";
+            snowLeasingRequest($snowCode,$msgError);
+        }
+    }
+    $_GET['action'] = "displayCart";
+    require "view/cart.php";
 }
 
 /**
@@ -97,24 +90,24 @@ function updateCartRequest($snowCode, $snowLocationRequest)
  */
 function deleteCartRequest($snowLine)
 {
-        if (isset($snowLine))
-        {
-            //Reorders the data of selected snow
-            array_splice($_SESSION['cart'],$snowLine,1);
+    if (isset($snowLine))
+    {
+        //Reorders the data of selected snow
+        array_splice($_SESSION['cart'],$snowLine,1);
 
-            // Test if the cart is empty
-            if (count($_SESSION['cart'])<1)
-            {
-                unset ($_SESSION['cart']); //Delete cart
-                $_GET['action'] = "displayCart";
-                require "view/cart.php";
-            }
-            else
-            {
-                $_GET['action'] = "cartManage";
-                require "view/cart.php";
-            }
+        // Test if the cart is empty
+        if (count($_SESSION['cart'])<1)
+        {
+            unset ($_SESSION['cart']); //Delete cart
+            $_GET['action'] = "displayCart";
+            require "view/cart.php";
         }
+        else
+        {
+            $_GET['action'] = "cartManage";
+            require "view/cart.php";
+        }
+    }
 }
 
 /**
@@ -131,22 +124,18 @@ function updateCartItem($snowLine, $snowUpdateRequest)
 
     if (isset($snowLine))
     {
-        if ($qty > 0 && $days > 0)
+        try
         {
             require_once "model/cartManager.php";
             $currentCart = updateInCart($snowLine, $qty, $days, $cartArrayTemp);
 
-            //if the quantity isn't correct display an error
-            if ($currentCart == false)
-            {
-                $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
-            }
             $_SESSION['cart'] = $currentCart;
         }
-        else
+        catch (Exception $e)
         {
-            $warning = "Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock";
+            $msgError = $e->getMessage();
         }
+
     }
     require"view/cart.php";
 }
@@ -159,7 +148,7 @@ function emptyCart()
     unset ($_SESSION['cart']); //delete cart
 
     require_once "model/snowsManager.php";
-    $snowsResults=getSnows();
+    $snowsResults = getSnows();
 
     $_GET['action'] = "displaySnows";
     require "view/snows.php";

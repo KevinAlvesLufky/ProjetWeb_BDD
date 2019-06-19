@@ -37,12 +37,9 @@ ob_start();
     ?>
         <article>
             <!-- If warning is active,  show a redbox with an error message.  class in custom.css-->
-            <?php if (isset($warning)): ?>
-                <div class="isa_error">
-                    <i class="fa fa-times-circle"></i>
-                    <p> <?= $warning; ?> </p>
-                </div>
-            <?php endif; ?>
+            <?php if (isset($msgError)) :?>
+                <p style="color: red"><?=$msgError?></p>
+            <?php endif;?>
             <table class="table">
                 <tr>
                     <th>Code</th>

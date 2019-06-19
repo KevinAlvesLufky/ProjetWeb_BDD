@@ -15,34 +15,50 @@
  * @param $howManyLeasingDays : contains the days
  * @return $cartUpdated : contains array of the cart update
  */
-function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays){
+function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howManyLeasingDays)
+{
 
     //set variables
     $cartUpdated = array();
     $alreadyExist = false;
-
-    //take data cart
-    if($currentCartArray != null){
-        $cartUpdated = $currentCartArray;
-    }
-    //foreach the cart to see if the cart to update exist already, and need just to add the quantity to the good cart
-    foreach ($cartUpdated as $key => &$cart){
-
-        if ($snowCodeToAdd==$cart["code"]){
-            if ($howManyLeasingDays==$cart["nbD"]) {
-                $tempQty = $cart["qty"];
-                $cart["qty"] = $tempQty + $qtyOfSnowsToAdd;
-                $alreadyExist = true;
+    if($qtyOfSnowsToAdd > 0 && $howManyLeasingDays > 0) //check if there are negative numbers
+    {
+        //take data cart
+        if ($currentCartArray != null)
+        {
+            $cartUpdated = $currentCartArray;
+        }
+        //foreach the cart to see if the cart to update exist already, and need just to add the quantity to the good cart
+        foreach ($cartUpdated as $key => &$cart)
+        {
+            if ($snowCodeToAdd == $cart["code"])
+            {
+                if ($howManyLeasingDays == $cart["nbD"])
+                {
+                    $tempQty = $cart["qty"];
+                    $cart["qty"] = $tempQty + $qtyOfSnowsToAdd;
+                    $qtyOfSnowsToAdd = $cart["qty"];
+                    $alreadyExist = true;
+                }
             }
         }
-    }
-    if (!$alreadyExist) {
 
-        //put data in the array
-        $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("Y-m-d"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
-        array_push($cartUpdated, $newSnowLeasing);
+        if (!isDispo($snowCodeToAdd, $qtyOfSnowsToAdd, $cartUpdated))
+        {
+            throw new Exception('Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock');
+            return false;
+        }
+
+        if (!$alreadyExist)
+        {
+            //put data in the array
+            $newSnowLeasing = array('code' => $snowCodeToAdd, 'dateD' => Date("Y-m-d"), 'nbD' => $howManyLeasingDays, 'qty' => $qtyOfSnowsToAdd);
+            array_push($cartUpdated, $newSnowLeasing);
+        }
     }
-    if (!isDispo($snowCodeToAdd,$qtyOfSnowsToAdd,$cartUpdated)){
+    else
+    {
+        throw new Exception('Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock');
         return false;
     }
     return $cartUpdated;
@@ -56,21 +72,27 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
  * @param $currentCart : contains the array of the cart
  * @return $currentCart : contains array of the cart update
  */
-function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
-
-    //change data in cart
-    for ($i =0;$i<count($currentCart);$i++){
-        if ($i == $lineToChange)
+function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart)
+{
+    if ($qtyToChange > 0 && $nbDaysToChange > 0)
+    {
+        //change data in cart
+        for ($i = 0; $i < count($currentCart); $i++)
         {
-            if (isDispo($currentCart[$i]["code"],$qtyToChange,$currentCart))
+            if ($i == $lineToChange)
             {
-                $currentCart[$i]["qty"] = $qtyToChange;
-                $currentCart[$i]["nbD"] = $nbDaysToChange;
-            }else
-            {
-                return false;
+                if (isDispo($currentCart[$i]["code"], $qtyToChange, $currentCart))
+                {
+                    $currentCart[$i]["qty"] = $qtyToChange;
+                    $currentCart[$i]["nbD"] = $nbDaysToChange;
+                }
             }
         }
+    }
+    else
+    {
+        throw new Exception('Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock');
+        return false;
     }
     return $currentCart;
 }
@@ -82,8 +104,8 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart){
  * @param $cart : contains the array of the cart
  * @return true or false
  */
-function isDispo($snowCode,$qtyOfSnowRequested,$cart){
-
+function isDispo($snowCode,$qtyOfSnowRequested,$cart)
+{
     require_once "model/snowsManager.php";
     $theSnow = getASnow($snowCode);
     if (isset($cart))
@@ -93,19 +115,13 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
         {
             if ($snowCode == $item["code"])
             {
-                if (isset($tempQty))
-                {
-                    $tempQty = $tempQty + $item["qty"];
-                }
-                else
-                {
-                    $tempQty = $item["qty"];
-                }
+                $tempQty = $qtyOfSnowRequested;
             }
         }
     }
 
-    if (isset($tempQty)){
+    if (isset($tempQty))
+    {
         $qtyOfSnowRequested = $tempQty;
     }
 
@@ -113,5 +129,9 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart){
     {
         return true;
     }
-    return false;
+    else
+    {
+        throw new Exception('Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock');
+        return false;
+    }
 }
