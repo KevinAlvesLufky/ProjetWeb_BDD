@@ -49,7 +49,7 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
         //if the informations isn't correct, throw an error
         if (!isDispo($snowCodeToAdd, $qtyOfSnowsToAdd, $cartUpdated))
         {
-            throw new Exception('Valeurs trop élevées ou inférieures à 1, vérifiez la disponibilité du stock');
+            throw new Exception('Valeurs trop élevées ou inférieures à 1 (vérifiez la disponibilité du stock)');
             return false;
         }
 
@@ -62,7 +62,7 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
     }
     else
     {
-        throw new Exception('Valeurs trop élevées ou inférieures à 1, vérifiez la disponibilité du stock');
+        throw new Exception('Valeurs trop élevées ou inférieures à 1 (vérifiez la disponibilité du stock)');
         return false;
     }
     return $cartUpdated;
@@ -97,7 +97,7 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart)
     }
     else
     {
-        throw new Exception('Valeurs trop élevées ou inférieures à 1, vérifiez la disponibilité du stock');
+        throw new Exception('Valeurs trop élevées ou inférieures à 1 (vérifiez la disponibilité du stock)');
         return false;
     }
     return $currentCart;
@@ -139,7 +139,7 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart)
     }
     else
     {
-        throw new Exception('Quantité trop élevée ou inférieure à 1, Vérifiez la disponibilité du stock');
+        throw new Exception('Valeurs trop élevées ou inférieures à 1 (vérifiez la disponibilité du stock)');
         return false;
     }
 }

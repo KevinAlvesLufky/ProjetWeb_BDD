@@ -90,6 +90,7 @@ function testDBConnexion()
     $userPwd = '123qweasD$';
     $dsn = $sqlDriver . ':host=' . $hostname . ';dbname=' . $dbName . ';port=' . $port . ';charset=' . $charset;
 
+    //test the connexion to the DB
     try
     {
         $tempDbConnexion = new PDO($dsn, $userName, $userPwd);
