@@ -16,43 +16,6 @@ function displayLeasing()
     require_once"model/rentManager.php";
 
     $leasingsResults = getAllLeasings();
-    $snowsLeasings = getAllSnowLeasings();
-
-    //check status of the leasings for modify the status of the (general) leasing
-    for($i=0;$i<count($leasingsResults); $i++)
-    {
-        for($y=0;$y<count($snowsLeasings); $y++)
-        {
-            if($leasingsResults[$i]['id'] == $snowsLeasings[$y]['idLeasings'])
-            {
-                $idLeasing = $leasingsResults[$i]['id'];
-                $leasingResults = getASnowLeasing($idLeasing);
-
-                if($leasingResults[0]['statut'] == $snowsLeasings[$y]['statut'])
-                {
-
-                    if($leasingResults[0]['statut'] == "En cours")
-                    {
-                        $statut = "En cours";
-                        insertNewStatutLeasing($idLeasing, $statut);
-                    }
-                    else
-                    {
-                        $statut = "Rendu";
-                        insertNewStatutLeasing($idLeasing, $statut);
-                    }
-                }
-                else
-                {
-                    $statut = "Rendu partiel";
-                    insertNewStatutLeasing($idLeasing, $statut);
-                    break;
-                }
-            }
-        }
-    }
-
-    $leasingsResults = getAllLeasings();
 
     $_GET['action'] = "displayLeasing";
 
@@ -86,10 +49,47 @@ function displayManageLeasing($idLeasing)
 {
     require_once"model/rentManager.php";
 
-    $leasingResults = getASnowLeasing($idLeasing);
-    lineInLeasingInsert($leasingResults, $idLeasing);
+    //set variables
+    $leasingsResults = getAllLeasings();
+    $snowsLeasings = getAllSnowLeasings();
+
+    //check status of the leasings for modify the status of the (general) leasing
+    for($i=0;$i<count($leasingsResults); $i++)
+    {
+        for($y=0;$y<count($snowsLeasings); $y++)
+        {
+            if($leasingsResults[$i]['id'] == $snowsLeasings[$y]['idLeasings'])
+            {
+                $leasingId = $leasingsResults[$i]['id'];
+                $statut = getASnowLeasing($leasingId);
+
+                if($statut[0]['statut'] == $snowsLeasings[$y]['statut'])
+                {
+
+                    if($statut[0]['statut'] == "En cours")
+                    {
+                        $statut = "En cours";
+                        insertNewStatutLeasing($leasingId, $statut);
+                    }
+                    else
+                    {
+                        $statut = "Rendu";
+                        insertNewStatutLeasing($leasingId, $statut);
+                    }
+                }
+                else
+                {
+                    $statut = "Rendu partiel";
+                    insertNewStatutLeasing($leasingId, $statut);
+                    break;
+                }
+            }
+        }
+    }
 
     //set variables
+    $leasingResults = getASnowLeasing($idLeasing);
+    lineInLeasingInsert($leasingResults, $idLeasing);
     $endDateLeasingResults =  getEndDateLeasing($idLeasing);
     $userEmailAddressLeasing = getLeasingUserEmailAddress($idLeasing);
     $idLeasingInUrl = $leasingResults[0]['idLeasings'];
@@ -107,6 +107,7 @@ function displayManageLeasing($idLeasing)
             $option2[$i] = "En cours";
         }
     }
+
     $_GET['action'] = "displayManageLeasing";
     require_once"view/sellerManageLeasing.php";
 }
