@@ -79,6 +79,9 @@ function updateCart($currentCartArray, $snowCodeToAdd, $qtyOfSnowsToAdd, $howMan
  */
 function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart)
 {
+    //set variables
+    $cart = $currentCart;
+
     //if the informations isn't equal to 0
     if ($qtyToChange > 0 && $nbDaysToChange > 0)
     {
@@ -87,10 +90,15 @@ function updateInCart($lineToChange,$qtyToChange,$nbDaysToChange,$currentCart)
         {
             if ($i == $lineToChange)
             {
-                if (isDispo($currentCart[$i]["code"], $qtyToChange, $currentCart))
+                $currentCart[$i]["qty"] = $qtyToChange;
+                $currentCart[$i]["nbD"] = $nbDaysToChange;
+
+                if (!isDispo($currentCart[$i]["code"], $qtyToChange, $currentCart))
                 {
-                    $currentCart[$i]["qty"] = $qtyToChange;
-                    $currentCart[$i]["nbD"] = $nbDaysToChange;
+                    $currentCart[$i]["qty"] = $cart[$i]["qty"];
+
+                    throw new Exception('Valeurs trop élevées ou inférieures à 1 (vérifiez la disponibilité du stock)');
+                    return false;
                 }
             }
         }
@@ -122,14 +130,12 @@ function isDispo($snowCode,$qtyOfSnowRequested,$cart)
         {
             if ($snowCode == $item["code"])
             {
-                $tempQty = $qtyOfSnowRequested;
+                if($qtyOfSnowRequested != $item['qty'])
+                {
+                    $qtyOfSnowRequested = $qtyOfSnowRequested + $item['qty'];
+                }
             }
         }
-    }
-
-    if (isset($tempQty))
-    {
-        $qtyOfSnowRequested = $tempQty;
     }
 
     //check if the quantity is correct
